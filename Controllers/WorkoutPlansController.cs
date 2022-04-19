@@ -7,17 +7,17 @@ namespace WorkoutPlannerWebApp.Controllers
 {
   public class WorkoutPlansController : Controller
   {
-    private readonly ApplicationDbContext applicationDbContext;
+    private readonly ApplicationDbContext _context;
 
     public WorkoutPlansController(ApplicationDbContext applicationDbContext)
     {
-      this.applicationDbContext = applicationDbContext;
+      this._context = applicationDbContext;
     }
 
     // GET: WorkoutPlansController
     public ActionResult Index()
     {
-      var workoutPrograms = applicationDbContext.WorkoutPrograms
+      var workoutPrograms = _context.WorkoutPrograms
           .Where(p => p.Published);
 
       var workoutPlansViewModel = new WorkoutPlansViewModel
@@ -29,9 +29,23 @@ namespace WorkoutPlannerWebApp.Controllers
     }
 
     // GET: WorkoutPlansController/Details/5
-    public ActionResult Details(int id)
+    public ActionResult Details(string id)
     {
-      return View();
+      if (id is null)
+        return new BadRequestResult();
+
+      var workoutProgram = _context.WorkoutPrograms
+        .FirstOrDefault(p => p.Id == id);
+
+      if (workoutProgram is null)
+        return new NotFoundResult();
+
+      var workoutPlanDetailViewModel = new WorkoutPlanDetailViewModel
+      {
+        WorkoutProgram = workoutProgram
+      };
+
+      return View(workoutPlanDetailViewModel);
     }
 
     // GET: WorkoutPlansController/Create

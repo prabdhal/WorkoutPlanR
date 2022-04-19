@@ -1,4 +1,4 @@
-﻿@model WorkoutPlannerWebApp.Models.WorkoutProgram
+﻿@model WorkoutPlannerWebApp.ViewModels.WorkoutPlanDetailViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -11,46 +11,46 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.WorkoutProgram.Name)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.WorkoutProgram.Name)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Difficulty)
+            @Html.DisplayNameFor(model => model.WorkoutProgram.Difficulty)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Difficulty)
+            @Html.DisplayFor(model => model.WorkoutProgram.Difficulty)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ShortDescription)
+            @Html.DisplayNameFor(model => model.WorkoutProgram.ShortDescription)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ShortDescription)
+            @Html.DisplayFor(model => model.WorkoutProgram.ShortDescription)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LongDescription)
+            @Html.DisplayNameFor(model => model.WorkoutProgram.LongDescription)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LongDescription)
+            @Html.DisplayFor(model => model.WorkoutProgram.LongDescription)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedOn)
+            @Html.DisplayNameFor(model => model.WorkoutProgram.CreatedOn)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedOn)
+            @Html.DisplayFor(model => model.WorkoutProgram.CreatedOn)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UpdatedOn)
+            @Html.DisplayNameFor(model => model.WorkoutProgram.UpdatedOn)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UpdatedOn)
+            @Html.DisplayFor(model => model.WorkoutProgram.UpdatedOn)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Published)
+            @Html.DisplayNameFor(model => model.WorkoutProgram.Published)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Published)
+            @Html.DisplayFor(model => model.WorkoutProgram.Published)
         </dd>
     </dl>
 </div>
