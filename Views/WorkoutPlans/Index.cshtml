@@ -1,0 +1,48 @@
+﻿@model WorkoutPlannerWebApp.ViewModels.WorkoutPlansViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Workout Plans</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+             Workout Plans
+            </th>
+            <th>
+              Difficulty
+            </th>
+            <th>
+              Description<
+            </th>
+            <th>
+              Last Update
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.WorkoutPrograms) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Difficulty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShortDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedOn)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

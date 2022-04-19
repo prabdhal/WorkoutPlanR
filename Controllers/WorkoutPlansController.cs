@@ -1,31 +1,46 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WorkoutPlannerWebApp.Data;
+using WorkoutPlannerWebApp.ViewModels;
 
 namespace WorkoutPlannerWebApp.Controllers
 {
-  [Authorize]
-  public class AdminController : Controller
+  public class WorkoutPlansController : Controller
   {
-    // GET: AdminController
-    public ActionResult Index()
+    private readonly ApplicationDbContext applicationDbContext;
+
+    public WorkoutPlansController(ApplicationDbContext applicationDbContext)
     {
-      return View();
+      this.applicationDbContext = applicationDbContext;
     }
 
-    // GET: AdminController/Details/5
+    // GET: WorkoutPlansController
+    public ActionResult Index()
+    {
+      var workoutPrograms = applicationDbContext.WorkoutPrograms
+          .Where(p => p.Published);
+
+      var workoutPlansViewModel = new WorkoutPlansViewModel
+      {
+        WorkoutPrograms = workoutPrograms,
+      };
+
+      return View(workoutPlansViewModel);
+    }
+
+    // GET: WorkoutPlansController/Details/5
     public ActionResult Details(int id)
     {
       return View();
     }
 
-    // GET: AdminController/Create
+    // GET: WorkoutPlansController/Create
     public ActionResult Create()
     {
       return View();
     }
 
-    // POST: AdminController/Create
+    // POST: WorkoutPlansController/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
     public ActionResult Create(IFormCollection collection)
@@ -40,13 +55,13 @@ namespace WorkoutPlannerWebApp.Controllers
       }
     }
 
-    // GET: AdminController/Edit/5
+    // GET: WorkoutPlansController/Edit/5
     public ActionResult Edit(int id)
     {
       return View();
     }
 
-    // POST: AdminController/Edit/5
+    // POST: WorkoutPlansController/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
     public ActionResult Edit(int id, IFormCollection collection)
@@ -61,13 +76,13 @@ namespace WorkoutPlannerWebApp.Controllers
       }
     }
 
-    // GET: AdminController/Delete/5
+    // GET: WorkoutPlansController/Delete/5
     public ActionResult Delete(int id)
     {
       return View();
     }
 
-    // POST: AdminController/Delete/5
+    // POST: WorkoutPlansController/Delete/5
     [HttpPost]
     [ValidateAntiForgeryToken]
     public ActionResult Delete(int id, IFormCollection collection)
