@@ -68,7 +68,7 @@
               {
                 <tr>
                   <td>@exercise.Name</td>
-                    @if (exercise.MaxRepetition <= 0)
+                    @if (exercise.MaxRepetition == null)
                     {
                         <td>@exercise.Sets x @exercise.MinRepetition</td>
                     } else
@@ -79,8 +79,11 @@
                   <td>@if (@exercise.ReferenceLink != null){
                   <a href="@exercise.ReferenceLink">How to perform @exercise.Name</a>
                   } </td>
-                  <td><a asp-action="DeleteExercise" asp-route-id="@exercise.Id" class="btn btn-danger">X</a></td>
-                  <td><a asp-action="DeleteExercise" asp-route-id="@exercise.Id" class="btn btn-success">edit</a></td>
+                  <td>
+                    <form asp-action="DeleteExerciseConfirmed" asp-route-id="@exercise.Id">    
+                      <button class="btn btn-danger">X</button>
+                    </form>
+                  </td>
                 </tr>
               } 
         </tbody>
@@ -125,7 +128,7 @@
             <br />
             <div class="form-group">
                 <label asp-for="Exercise.ReferenceLink" class="control-label"></label>
-                <input asp-for="Exercise.ReferenceLink" class="form-control" />
+                <input type="url" asp-for="Exercise.ReferenceLink" class="form-control" />
                 <span asp-validation-for="Exercise.ReferenceLink" class="text-danger"></span>
             </div>
             <br />

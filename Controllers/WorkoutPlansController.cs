@@ -19,6 +19,7 @@ namespace WorkoutPlannerWebApp.Controllers
     public ActionResult Index()
     {
       var workoutPrograms = _context.WorkoutPrograms
+        .OrderByDescending(p => p.UpdatedOn)
         .Include(p => p.Publisher)
         .Where(p => p.Published);
 

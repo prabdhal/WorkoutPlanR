@@ -69,7 +69,7 @@
             {
                 <tr>
                   <td>@exercise.Name</td>
-                    @if (exercise.MaxRepetition <= 0)
+                    @if (exercise.MaxRepetition == null)
                     {
                         <td>@exercise.Sets X @exercise.MinRepetition</td>
                     } else

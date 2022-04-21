@@ -25,7 +25,8 @@ namespace WorkoutPlannerWebApp.Controllers
     // GET: MyWorkoutPlans
     public async Task<IActionResult> Index()
     {
-      var workoutPrograms = _context.WorkoutPrograms;
+      var workoutPrograms = _context.WorkoutPrograms
+        .OrderByDescending(p => p.UpdatedOn);
 
       if (workoutPrograms is null)
         return new BadRequestResult();
@@ -199,15 +200,19 @@ namespace WorkoutPlannerWebApp.Controllers
       return RedirectToAction(nameof(Index));
     }
 
-    [HttpPost, ActionName("DeleteExercise")]
+    [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteExerciseConfirmed(int id, MyWorkoutPlanCreateExerciseViewModel createViewModel)
+    public async Task<IActionResult> DeleteExerciseConfirmed(int id)
     {
-      var exercise = await _context.Exercises.FindAsync(id);
+      var exercise = _context.Exercises.FirstOrDefault(e => e.Id == id);
 
-      _context.Exercises.Remove(exercise);
-      await _context.SaveChangesAsync(); 
-      return RedirectToAction("CreateExercise", new { createViewModel.WorkoutProgram.Id });
+      var workoutProgram = _context.Exercises
+        .Include(e => e.WorkoutProgram)
+        .FirstOrDefault(e => e.Id == exercise.Id).WorkoutProgram;
+
+      _context.Remove(exercise);
+      await _context.SaveChangesAsync();
+      return RedirectToAction("CreateExercise", new { workoutProgram.Id });
     }
 
     private bool WorkoutProgramExists(int id)
