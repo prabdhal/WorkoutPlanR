@@ -6,24 +6,24 @@
 
   public enum Difficulty
   {
-    BEGINNER,
-    INTERMEDIATE,
-    ADVANCED
+    Beginner,
+    Intermediate,
+    Advanced
   }
 
   public enum MuscleGroup 
   {
-    CHEST,
-    SHOULDER,
-    TRICEP,
-    BICEP,
-    FOREARM,
-    UPPERBACK,
-    LOWERBACK,
-    ABDOMEN,
-    GLUTE,
-    HAMSTRING,
-    QUADRICEP,
-    CALF
+    Chest,
+    Shoulder,
+    Tricep,
+    Bicep,
+    Forearm,
+    UpperBack,
+    LowerBack,
+    Abdomen,
+    Glute,
+    Hamstring,
+    Quadricep,
+    Calf
   }
 }

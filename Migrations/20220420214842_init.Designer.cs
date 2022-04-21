@@ -12,8 +12,8 @@ using WorkoutPlannerWebApp.Data;
 namespace WorkoutPlannerWebApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220419070621_Initialize")]
-    partial class Initialize
+    [Migration("20220420214842_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -234,8 +234,11 @@ namespace WorkoutPlannerWebApp.Migrations
 
             modelBuilder.Entity("WorkoutPlannerWebApp.Models.Exercise", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -252,34 +255,36 @@ namespace WorkoutPlannerWebApp.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ReferenceLink")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Sets")
                         .HasColumnType("int");
 
+                    b.Property<int?>("Workout Program")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("Workout Program");
 
                     b.ToTable("Exercises");
                 });
 
             modelBuilder.Entity("WorkoutPlannerWebApp.Models.WorkoutProgram", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatorId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Difficulty")
                         .HasColumnType("int");
 
                     b.Property<string>("LongDescription")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -288,6 +293,9 @@ namespace WorkoutPlannerWebApp.Migrations
 
                     b.Property<bool>("Published")
                         .HasColumnType("bit");
+
+                    b.Property<string>("PublisherId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ShortDescription")
                         .IsRequired()
@@ -299,7 +307,7 @@ namespace WorkoutPlannerWebApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatorId");
+                    b.HasIndex("PublisherId");
 
                     b.ToTable("WorkoutPrograms");
                 });
@@ -355,15 +363,27 @@ namespace WorkoutPlannerWebApp.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("WorkoutPlannerWebApp.Models.Exercise", b =>
+                {
+                    b.HasOne("WorkoutPlannerWebApp.Models.WorkoutProgram", "WorkoutProgram")
+                        .WithMany("Exercises")
+                        .HasForeignKey("Workout Program");
+
+                    b.Navigation("WorkoutProgram");
+                });
+
             modelBuilder.Entity("WorkoutPlannerWebApp.Models.WorkoutProgram", b =>
                 {
-                    b.HasOne("WorkoutPlannerWebApp.Models.ApplicationUser", "Creator")
+                    b.HasOne("WorkoutPlannerWebApp.Models.ApplicationUser", "Publisher")
                         .WithMany()
-                        .HasForeignKey("CreatorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PublisherId");
 
-                    b.Navigation("Creator");
+                    b.Navigation("Publisher");
+                });
+
+            modelBuilder.Entity("WorkoutPlannerWebApp.Models.WorkoutProgram", b =>
+                {
+                    b.Navigation("Exercises");
                 });
 #pragma warning restore 612, 618
         }

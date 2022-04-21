@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WorkoutPlannerWebApp.Data;
 using WorkoutPlannerWebApp.ViewModels;
 
@@ -18,7 +19,8 @@ namespace WorkoutPlannerWebApp.Controllers
     public ActionResult Index()
     {
       var workoutPrograms = _context.WorkoutPrograms
-          .Where(p => p.Published);
+        .Include(p => p.Publisher)
+        .Where(p => p.Published);
 
       var workoutPlansViewModel = new WorkoutPlansViewModel
       {
@@ -29,12 +31,11 @@ namespace WorkoutPlannerWebApp.Controllers
     }
 
     // GET: WorkoutPlansController/Details/5
-    public ActionResult Details(string id)
+    public ActionResult Details(int id)
     {
-      if (id is null)
-        return new BadRequestResult();
-
       var workoutProgram = _context.WorkoutPrograms
+        .Include(p => p.Publisher)
+        .Include(p => p.Exercises)
         .FirstOrDefault(p => p.Id == id);
 
       if (workoutProgram is null)

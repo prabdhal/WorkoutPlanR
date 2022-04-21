@@ -16,10 +16,10 @@
               Difficulty
             </th>
             <th>
-              Description<
+              Description
             </th>
             <th>
-              Last Update
+              Publisher
             </th>
             <th></th>
         </tr>
@@ -37,10 +37,13 @@
                 @Html.DisplayFor(modelItem => item.ShortDescription)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UpdatedOn)
+                @item.Publisher.FirstName @item.Publisher.LastName
+                Updated On: @item.UpdatedOn.ToString("MM/dd/yy hh:mm tt")
             </td>
             <td>
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">
+                  Details
+                </a>
             </td>
         </tr>
         }

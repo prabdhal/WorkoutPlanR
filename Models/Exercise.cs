@@ -1,22 +1,26 @@
-﻿using System.ComponentModel.DataAnnotations;
-using WorkoutPlannerWebApp.HelperMethods;
+﻿#nullable disable
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WorkoutPlannerWebApp.Models
 {
   public class Exercise
   {
-    [Key]
-    public string Id { get; set; }
-    
+    public int Id { get; set; }
+
+    [ForeignKey("Workout Program")]
+    public WorkoutProgram WorkoutProgram { get; set; }
+
     [Required(ErrorMessage = "Please enter the name of the exercise.")]
     public string Name { get; set; }
 
     [Required(ErrorMessage = "Please enter the description of the exercise.")]
     public string Description { get; set; }
 
+    [Url]
     public string ReferenceLink { get; set; }
 
-    [Range(1,20)]
+    [Range(1, 20)]
     [Required(ErrorMessage = "Please enter the number of sets for this exercise.")]
     public int Sets { get; set; }
 

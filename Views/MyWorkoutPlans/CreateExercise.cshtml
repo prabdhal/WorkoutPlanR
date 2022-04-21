@@ -1,0 +1,144 @@
+﻿@using WorkoutPlannerWebApp.HelperMethods
+@model WorkoutPlannerWebApp.ViewModels.MyWorkoutPlanCreateExerciseViewModel
+
+@{
+    ViewData["Title"] = "Create Workout Program";
+}
+
+<h1>My Workout Program</h1>
+
+<div>
+    <h4>@Model.WorkoutProgram.Name</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.WorkoutProgram.Difficulty)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.WorkoutProgram.Difficulty)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.WorkoutProgram.ShortDescription)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.WorkoutProgram.ShortDescription)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.WorkoutProgram.LongDescription)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.WorkoutProgram.LongDescription)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.WorkoutProgram.CreatedOn)
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.WorkoutProgram.CreatedOn.ToString("MM/dd/yy hh:mm tt")
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.WorkoutProgram.UpdatedOn)
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.WorkoutProgram.UpdatedOn.ToString("MM/dd/yy hh:mm tt")
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.WorkoutProgram.Published)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.WorkoutProgram.Published)
+        </dd>
+    </dl>
+
+    <table class="col-12">
+      <thead>
+        <tr>
+          <th>Exercise</th>
+          <th>Sets x Reps</th>
+          <th>Description</th>
+          <th>Reference Link</th>
+          <th></th>
+        </tr>
+      </thead>
+            @if (Model.WorkoutProgram.Exercises == null)
+            {
+                <p>There are no exercises added for this program as of yet.</p>
+            }
+      <tbody>
+              @foreach (var exercise in Model.WorkoutProgram.Exercises)
+              {
+                <tr>
+                  <td>@exercise.Name</td>
+                    @if (exercise.MaxRepetition <= 0)
+                    {
+                        <td>@exercise.Sets x @exercise.MinRepetition</td>
+                    } else
+                    {
+                        <td>@exercise.Sets x @exercise.MinRepetition - @exercise.MaxRepetition</td>  
+                    }
+                  <td>@exercise.Description</td>
+                  <td>@if (@exercise.ReferenceLink != null){
+                  <a href="@exercise.ReferenceLink">How to perform @exercise.Name</a>
+                  } </td>
+                  <td><a asp-action="DeleteExercise" asp-route-id="@exercise.Id" class="btn btn-danger">X</a></td>
+                  <td><a asp-action="DeleteExercise" asp-route-id="@exercise.Id" class="btn btn-success">edit</a></td>
+                </tr>
+              } 
+        </tbody>
+    </table>
+</div>
+      <br />
+<hr />
+<div class="row">
+    <div class="col-12">
+        <form asp-action="CreateExercise">
+            <input asp-for="WorkoutProgram.Id" readonly hidden />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Exercise.Name" class="control-label"></label>
+                <input asp-for="Exercise.Name" class="form-control" />
+                <span asp-validation-for="Exercise.Name" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Exercise.Description" class="control-label"></label>
+                <input asp-for="Exercise.Description" class="form-control" />
+                <span asp-validation-for="Exercise.Description" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Exercise.Sets" class="control-label"></label>
+                <input asp-for="Exercise.Sets" class="form-control" />
+                <span asp-validation-for="Exercise.Sets" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Exercise.MinRepetition" class="control-label"></label>
+                <input asp-for="Exercise.MinRepetition" class="form-control" />
+                <span asp-validation-for="Exercise.MinRepetition" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Exercise.MaxRepetition" class="control-label"></label>
+                <input asp-for="Exercise.MaxRepetition" class="form-control" />
+                <span asp-validation-for="Exercise.MaxRepetition" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Exercise.ReferenceLink" class="control-label"></label>
+                <input asp-for="Exercise.ReferenceLink" class="form-control" />
+                <span asp-validation-for="Exercise.ReferenceLink" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Add Exercise" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-action="Details" asp-route-id="@Model?.WorkoutProgram.Id" class="btn btn-success">Finish</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

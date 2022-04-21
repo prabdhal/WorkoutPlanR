@@ -1,49 +1,55 @@
-﻿@model WorkoutPlannerWebApp.Models.WorkoutProgram
+﻿@using WorkoutPlannerWebApp.HelperMethods
+@model WorkoutPlannerWebApp.ViewModels.MyWorkoutPlanCreateViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Workout Program";
 }
 
 <h1>Create Workout Program</h1>
 
-<h4>WorkoutProgram</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-12">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="WorkoutProgram.Name" class="control-label"></label>
+                <input asp-for="WorkoutProgram.Name" class="form-control" />
+                <span asp-validation-for="WorkoutProgram.Name" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
-                <label asp-for="Difficulty" class="control-label"></label>
-                <select asp-for="Difficulty" class="form-control"></select>
-                <span asp-validation-for="Difficulty" class="text-danger"></span>
+                <label asp-for="WorkoutProgram.ShortDescription" class="control-label"></label>
+                <input asp-for="WorkoutProgram.ShortDescription" class="form-control" />
+                <span asp-validation-for="WorkoutProgram.ShortDescription" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
-                <label asp-for="ShortDescription" class="control-label"></label>
-                <input asp-for="ShortDescription" class="form-control" />
-                <span asp-validation-for="ShortDescription" class="text-danger"></span>
+                <label asp-for="WorkoutProgram.Difficulty" class="control-label"></label>
+                <select asp-for="WorkoutProgram.Difficulty" class="form-control" asp-items="Html.GetEnumSelectList<Difficulty>()">
+                  <option value="">Please choose the difficulty</option>
+                </select>
+                <span asp-validation-for="WorkoutProgram.Difficulty" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
-                <label asp-for="LongDescription" class="control-label"></label>
-                <input asp-for="LongDescription" class="form-control" />
-                <span asp-validation-for="LongDescription" class="text-danger"></span>
+                <label asp-for="WorkoutProgram.LongDescription" class="control-label"></label>
+                <textarea asp-for="WorkoutProgram.LongDescription" class="form-control" style="resize:none; min-height:200px;"></textarea>
+                <span asp-validation-for="WorkoutProgram.LongDescription" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Published" /> @Html.DisplayNameFor(model => model.Published)
+                    <input class="form-check-input" asp-for="WorkoutProgram.Published" /> @Html.DisplayNameFor(model => model.WorkoutProgram.Published)
                 </label>
             </div>
+            <br />
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Add Exercises" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
-
 <div>
     <a asp-action="Index">Back to List</a>
 </div>

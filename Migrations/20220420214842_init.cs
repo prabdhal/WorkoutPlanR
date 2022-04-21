@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WorkoutPlannerWebApp.Migrations
 {
-    public partial class Initialize : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -48,23 +48,6 @@ namespace WorkoutPlannerWebApp.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Exercises",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ReferenceLink = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Sets = table.Column<int>(type: "int", nullable: false),
-                    MinRepetition = table.Column<int>(type: "int", nullable: false),
-                    MaxRepetition = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Exercises", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -177,25 +160,49 @@ namespace WorkoutPlannerWebApp.Migrations
                 name: "WorkoutPrograms",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Difficulty = table.Column<int>(type: "int", nullable: false),
                     ShortDescription = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    LongDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LongDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PublisherId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Published = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_WorkoutPrograms", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_WorkoutPrograms_AspNetUsers_CreatorId",
-                        column: x => x.CreatorId,
+                        name: "FK_WorkoutPrograms_AspNetUsers_PublisherId",
+                        column: x => x.PublisherId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Exercises",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    WorkoutProgram = table.Column<int>(name: "Workout Program", type: "int", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ReferenceLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Sets = table.Column<int>(type: "int", nullable: false),
+                    MinRepetition = table.Column<int>(type: "int", nullable: false),
+                    MaxRepetition = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Exercises", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Exercises_WorkoutPrograms_Workout Program",
+                        column: x => x.WorkoutProgram,
+                        principalTable: "WorkoutPrograms",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -238,9 +245,14 @@ namespace WorkoutPlannerWebApp.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_WorkoutPrograms_CreatorId",
+                name: "IX_Exercises_Workout Program",
+                table: "Exercises",
+                column: "Workout Program");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WorkoutPrograms_PublisherId",
                 table: "WorkoutPrograms",
-                column: "CreatorId");
+                column: "PublisherId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -264,10 +276,10 @@ namespace WorkoutPlannerWebApp.Migrations
                 name: "Exercises");
 
             migrationBuilder.DropTable(
-                name: "WorkoutPrograms");
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "WorkoutPrograms");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

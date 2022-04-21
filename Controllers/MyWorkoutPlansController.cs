@@ -1,12 +1,9 @@
 ﻿#nullable disable
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using WorkoutPlannerWebApp.Data;
 using WorkoutPlannerWebApp.Models;
 using WorkoutPlannerWebApp.ViewModels;
@@ -17,10 +14,12 @@ namespace WorkoutPlannerWebApp.Controllers
   public class MyWorkoutPlansController : Controller
   {
     private readonly ApplicationDbContext _context;
+    private readonly UserManager<ApplicationUser> _user;
 
-    public MyWorkoutPlansController(ApplicationDbContext context)
+    public MyWorkoutPlansController(ApplicationDbContext context, UserManager<ApplicationUser> user)
     {
       _context = context;
+      _user = user;
     }
 
     // GET: MyWorkoutPlans
@@ -31,32 +30,12 @@ namespace WorkoutPlannerWebApp.Controllers
       if (workoutPrograms is null)
         return new BadRequestResult();
 
-      var myWorkoutPlansViewModel = new MyWorkoutPlansViewModel
+      var workoutPlansViewModel = new MyWorkoutPlansViewModel
       {
         WorkoutPrograms = workoutPrograms,
       };
 
-      return View(myWorkoutPlansViewModel);
-    }
-
-    // GET: MyWorkoutPlans/Details/5
-    public async Task<IActionResult> Details(string id)
-    {
-      if (id is null)
-        return new BadRequestResult();
-
-      var workoutProgram = _context.WorkoutPrograms
-        .FirstOrDefault(p => p.Id == id);
-
-      if (workoutProgram is null)
-        return new NotFoundResult();
-
-      var myWorkoutPlanDetailViewModel = new MyWorkoutPlanDetailViewModel
-      {
-        WorkoutProgram = workoutProgram,
-      };
-
-      return View(myWorkoutPlanDetailViewModel);
+      return View(workoutPlansViewModel);
     }
 
     // GET: MyWorkoutPlans/Create
@@ -70,31 +49,97 @@ namespace WorkoutPlannerWebApp.Controllers
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Name,Difficulty,ShortDescription,LongDescription,CreatedOn,UpdatedOn,Published")] WorkoutProgram workoutProgram)
+    public async Task<IActionResult> Create(MyWorkoutPlanCreateViewModel createViewModel)
     {
-      if (ModelState.IsValid)
+      var workoutProgram = createViewModel.WorkoutProgram;
+
+      workoutProgram.Publisher = await _user.GetUserAsync(User);
+      workoutProgram.CreatedOn = DateTime.Now;
+      workoutProgram.UpdatedOn = DateTime.Now;
+
+      _context.WorkoutPrograms.Add(workoutProgram);
+      await _context.SaveChangesAsync();
+      return RedirectToAction("CreateExercise", new { createViewModel.WorkoutProgram.Id });
+    }
+
+    // GET: MyWorkoutPlans/CreateExercise/id
+    public IActionResult CreateExercise(int id)
+    {
+      var workoutProgram = _context.WorkoutPrograms
+        .Include(p => p.Publisher)
+        .Include(p => p.Exercises)
+        .FirstOrDefault(p => p.Id == id);
+
+      if (workoutProgram is null)
+        return new NotFoundResult();
+
+      var createExerciseViewModel = new MyWorkoutPlanCreateExerciseViewModel
       {
-        _context.Add(workoutProgram);
-        await _context.SaveChangesAsync();
-        return RedirectToAction(nameof(Index));
-      }
-      return View(workoutProgram);
+        WorkoutProgram = workoutProgram,
+        Exercise = null
+      };
+
+      return View(createExerciseViewModel);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> CreateExercise(MyWorkoutPlanCreateExerciseViewModel createViewModel)
+    {
+      var workoutProgram = _context.WorkoutPrograms
+        .Include(p => p.Publisher)
+        .Include(p => p.Exercises)
+        .FirstOrDefault(p => p.Id == createViewModel.WorkoutProgram.Id);
+
+      if (workoutProgram is null)
+        return new NotFoundResult();
+
+      var exercise = createViewModel.Exercise;
+
+      exercise.WorkoutProgram = workoutProgram;
+
+      _context.Exercises.Add(exercise);
+      await _context.SaveChangesAsync();
+      ModelState.Clear();
+      return RedirectToAction("CreateExercise", new { createViewModel.WorkoutProgram.Id });
+    }
+
+    // GET: MyWorkoutPlans/Details/5
+    public async Task<IActionResult> Details(int id)
+    {
+      var workoutProgram = _context.WorkoutPrograms
+        .Include(p => p.Publisher)
+        .Include(p => p.Exercises)
+        .FirstOrDefault(p => p.Id == id);
+
+      if (workoutProgram is null)
+        return new NotFoundResult();
+
+      var detailViewModel = new MyWorkoutPlanDetailViewModel
+      {
+        WorkoutProgram = workoutProgram,
+      };
+
+      return View(detailViewModel);
     }
 
     // GET: MyWorkoutPlans/Edit/5
-    public async Task<IActionResult> Edit(string id)
+    public async Task<IActionResult> Edit(int id)
     {
-      if (id == null)
-      {
-        return NotFound();
-      }
+      var workoutProgram = _context.WorkoutPrograms
+        .Include(p => p.Publisher)
+        .Include(p => p.Exercises)
+        .FirstOrDefault(p => p.Id == id);
 
-      var workoutProgram = await _context.WorkoutPrograms.FindAsync(id);
-      if (workoutProgram == null)
+      if (workoutProgram is null)
+        return new NotFoundResult();
+
+      var editViewModel = new MyWorkoutPlanEditViewModel
       {
-        return NotFound();
-      }
-      return View(workoutProgram);
+        WorkoutProgram = workoutProgram,
+      };
+
+      return View(editViewModel);
     }
 
     // POST: MyWorkoutPlans/Edit/5
@@ -102,66 +147,70 @@ namespace WorkoutPlannerWebApp.Controllers
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Difficulty,ShortDescription,LongDescription,CreatedOn,UpdatedOn,Published")] WorkoutProgram workoutProgram)
+    public async Task<IActionResult> Edit(int id, MyWorkoutPlanEditViewModel editViewModel)
     {
-      if (id != workoutProgram.Id)
-      {
-        return NotFound();
-      }
+      var workoutProgram = _context.WorkoutPrograms
+        .FirstOrDefault(p => p.Id == editViewModel.WorkoutProgram.Id);
 
-      if (ModelState.IsValid)
-      {
-        try
-        {
-          _context.Update(workoutProgram);
-          await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-          if (!WorkoutProgramExists(workoutProgram.Id))
-          {
-            return NotFound();
-          }
-          else
-          {
-            throw;
-          }
-        }
-        return RedirectToAction(nameof(Index));
-      }
-      return View(workoutProgram);
-    }
+      if (workoutProgram is null)
+        return RedirectToAction("Details", new { editViewModel.WorkoutProgram.Id });
 
-    // GET: MyWorkoutPlans/Delete/5
-    public async Task<IActionResult> Delete(string id)
-    {
-      if (id == null)
-      {
-        return NotFound();
-      }
+      workoutProgram.Name = editViewModel.WorkoutProgram.Name;
+      workoutProgram.ShortDescription = editViewModel.WorkoutProgram.ShortDescription;
+      workoutProgram.LongDescription = editViewModel.WorkoutProgram.LongDescription;
+      workoutProgram.Difficulty = editViewModel.WorkoutProgram.Difficulty;
+      workoutProgram.Published = editViewModel.WorkoutProgram.Published;
+      workoutProgram.UpdatedOn = DateTime.Now;
 
-      var workoutProgram = await _context.WorkoutPrograms
-          .FirstOrDefaultAsync(m => m.Id == id);
-      if (workoutProgram == null)
-      {
-        return NotFound();
-      }
+      _context.WorkoutPrograms.Update(workoutProgram);
+      await _context.SaveChangesAsync();
 
-      return View(workoutProgram);
+      var updatedViewModel = new MyWorkoutPlanEditViewModel
+      {
+        WorkoutProgram = workoutProgram,
+      };
+
+      return RedirectToAction("CreateExercise", new { editViewModel.WorkoutProgram.Id });
     }
 
     // POST: MyWorkoutPlans/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(string id)
+    public async Task<IActionResult> DeleteConfirmed(int id)
     {
-      var workoutProgram = await _context.WorkoutPrograms.FindAsync(id);
+      var workoutProgram = _context.WorkoutPrograms
+        .Include(p => p.Publisher)
+        .Include(p => p.Exercises)
+        .FirstOrDefault(p => p.Id == id);
+
+      if (workoutProgram.Exercises != null)
+      {
+        // delete all the exercises of the workout
+        foreach (var exercise in workoutProgram.Exercises)
+        {
+          _context.Remove(exercise);
+          await _context.SaveChangesAsync();
+        }
+      }
+
+      // delete workout
       _context.WorkoutPrograms.Remove(workoutProgram);
       await _context.SaveChangesAsync();
       return RedirectToAction(nameof(Index));
     }
 
-    private bool WorkoutProgramExists(string id)
+    [HttpPost, ActionName("DeleteExercise")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteExerciseConfirmed(int id, MyWorkoutPlanCreateExerciseViewModel createViewModel)
+    {
+      var exercise = await _context.Exercises.FindAsync(id);
+
+      _context.Exercises.Remove(exercise);
+      await _context.SaveChangesAsync(); 
+      return RedirectToAction("CreateExercise", new { createViewModel.WorkoutProgram.Id });
+    }
+
+    private bool WorkoutProgramExists(int id)
     {
       return _context.WorkoutPrograms.Any(e => e.Id == id);
     }
