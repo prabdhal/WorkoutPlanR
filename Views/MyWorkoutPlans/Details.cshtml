@@ -10,14 +10,17 @@
     <h4>@Model.WorkoutProgram.Name</h4>
     <hr />
     <dl class="row">
+        <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.WorkoutProgram.Publisher)</dt>
+        <dd class = "col-sm-10">@Model.WorkoutProgram.Publisher.FirstName @Model.WorkoutProgram.Publisher.LastName</dd>
+        <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.WorkoutProgram.CreatedOn)</dt>
+        <dd class = "col-sm-10">@Model.WorkoutProgram.CreatedOn.ToString("MM/dd/yy hh:mm tt")</dd>
+        <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.WorkoutProgram.UpdatedOn)</dt>
+        <dd class = "col-sm-10">@Model.WorkoutProgram.UpdatedOn.ToString("MM/dd/yy hh:mm tt")</dd>
+        <hr />
         <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.WorkoutProgram.Difficulty)</dt>
         <dd class = "col-sm-10">@Html.DisplayFor(model => model.WorkoutProgram.Difficulty)</dd>
         <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.WorkoutProgram.ShortDescription)</dt>
         <dd class = "col-sm-10">@Html.DisplayFor(model => model.WorkoutProgram.ShortDescription)</dd>
-        <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.WorkoutProgram.CreatedOn)</dt>
-        <dd class = "col-sm-10">@Html.DisplayFor(model => model.WorkoutProgram.CreatedOn)</dd>
-        <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.WorkoutProgram.UpdatedOn)</dt>
-        <dd class = "col-sm-10">@Html.DisplayFor(model => model.WorkoutProgram.UpdatedOn)</dd>
         <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.WorkoutProgram.LongDescription)</dt>
         <dd class = "col-sm-10">@Html.DisplayFor(model => model.WorkoutProgram.LongDescription)</dd>
         <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.WorkoutProgram.Published)</dt>

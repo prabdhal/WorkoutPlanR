@@ -1,32 +1,116 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using WorkoutPlannerWebApp.Models;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using WorkoutPlannerWebApp.Data;
+using WorkoutPlannerWebApp.ViewModels;
 
 namespace WorkoutPlannerWebApp.Controllers
 {
   public class HomeController : Controller
   {
-    private readonly ILogger<HomeController> _logger;
+    private readonly ApplicationDbContext _context;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ApplicationDbContext applicationDbContext)
     {
-      _logger = logger;
+      this._context = applicationDbContext;
     }
 
-    public IActionResult Index()
+    // GET: WorkoutPlansController
+    public ActionResult Index()
+    {
+      var workoutPrograms = _context.WorkoutPrograms
+        .OrderByDescending(p => p.UpdatedOn)
+        .Include(p => p.Publisher)
+        .Where(p => p.Published);
+
+      var workoutPlansViewModel = new WorkoutPlansViewModel
+      {
+        WorkoutPrograms = workoutPrograms,
+      };
+
+      return View(workoutPlansViewModel);
+    }
+
+    // GET: WorkoutPlansController/Details/5
+    public ActionResult Details(int id)
+    {
+      var workoutProgram = _context.WorkoutPrograms
+        .Include(p => p.Publisher)
+        .Include(p => p.Exercises)
+        .FirstOrDefault(p => p.Id == id);
+
+      if (workoutProgram is null)
+        return new NotFoundResult();
+
+      var workoutPlanDetailViewModel = new WorkoutPlanDetailViewModel
+      {
+        WorkoutProgram = workoutProgram
+      };
+
+      return View(workoutPlanDetailViewModel);
+    }
+
+    // GET: WorkoutPlansController/Create
+    public ActionResult Create()
     {
       return View();
     }
 
-    public IActionResult Privacy()
+    // POST: WorkoutPlansController/Create
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public ActionResult Create(IFormCollection collection)
+    {
+      try
+      {
+        return RedirectToAction(nameof(Index));
+      }
+      catch
+      {
+        return View();
+      }
+    }
+
+    // GET: WorkoutPlansController/Edit/5
+    public ActionResult Edit(int id)
     {
       return View();
     }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
+    // POST: WorkoutPlansController/Edit/5
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public ActionResult Edit(int id, IFormCollection collection)
     {
-      return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+      try
+      {
+        return RedirectToAction(nameof(Index));
+      }
+      catch
+      {
+        return View();
+      }
+    }
+
+    // GET: WorkoutPlansController/Delete/5
+    public ActionResult Delete(int id)
+    {
+      return View();
+    }
+
+    // POST: WorkoutPlansController/Delete/5
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public ActionResult Delete(int id, IFormCollection collection)
+    {
+      try
+      {
+        return RedirectToAction(nameof(Index));
+      }
+      catch
+      {
+        return View();
+      }
     }
   }
 }

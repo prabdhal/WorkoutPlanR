@@ -40,7 +40,7 @@
             <br />
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="WorkoutProgram.Published" /> @Html.DisplayNameFor(model => model.WorkoutProgram.Published)
+                    <input class="form-check-input" asp-for="WorkoutProgram.Published" />Publish
                 </label>
             </div>
             <br />
@@ -54,6 +54,9 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+            <CKEditor:CKEditorControl ID="CKEditor" runat="server">
+</CKEditor:CKEditorControl>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="//cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
 }
