@@ -11,62 +11,44 @@
     <h4>@Model.WorkoutProgram.Name</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.WorkoutProgram.Difficulty)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.WorkoutProgram.Difficulty)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.WorkoutProgram.ShortDescription)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.WorkoutProgram.ShortDescription)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.WorkoutProgram.LongDescription)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.WorkoutProgram.LongDescription)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.WorkoutProgram.CreatedOn)
-        </dt>
-        <dd class = "col-sm-10">
-            @Model.WorkoutProgram.CreatedOn.ToString("MM/dd/yy hh:mm tt")
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.WorkoutProgram.UpdatedOn)
-        </dt>
-        <dd class = "col-sm-10">
-            @Model.WorkoutProgram.UpdatedOn.ToString("MM/dd/yy hh:mm tt")
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.WorkoutProgram.Published)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.WorkoutProgram.Published)
-        </dd>
+        <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.WorkoutProgram.Difficulty)</dt>
+        <dd class = "col-sm-10">@Html.DisplayFor(model => model.WorkoutProgram.Difficulty)</dd>
+        <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.WorkoutProgram.ShortDescription)</dt>
+        <dd class = "col-sm-10">@Html.DisplayFor(model => model.WorkoutProgram.ShortDescription)</dd>
+        <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.WorkoutProgram.CreatedOn)</dt>
+        <dd class = "col-sm-10">@Model.WorkoutProgram.CreatedOn.ToString("MM/dd/yy hh:mm tt")</dd>
+        <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.WorkoutProgram.UpdatedOn)</dt>
+        <dd class = "col-sm-10">@Model.WorkoutProgram.UpdatedOn.ToString("MM/dd/yy hh:mm tt")</dd>
+        <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.WorkoutProgram.LongDescription)</dt>
+        <dd class = "col-sm-10">@Html.DisplayFor(model => model.WorkoutProgram.LongDescription)</dd>
+        <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.WorkoutProgram.Published)</dt>
+        <dd class = "col-sm-10">@Html.DisplayFor(model => model.WorkoutProgram.Published)</dd>
     </dl>
-
-    <table class="col-12">
-      <thead>
+    
+    <h5>Add Exercise</h5>
+    <hr />
+    <table class="col-12 table table-striped table-bordered table-hover table-responsive">
+    <caption>List of exercises</caption>
+      <thead class="thead-dark">
         <tr>
-          <th>Exercise</th>
-          <th>Sets x Reps</th>
-          <th>Description</th>
-          <th>Reference Link</th>
-          <th></th>
+          <th scope="col">Exercise</th>
+          <th scope="col">Sets x Reps</th>
+          <th scope="col">Description</th>
+          <th scope="col">Reference Link</th>
+          <th scope="col"></th>
         </tr>
       </thead>
             @if (Model.WorkoutProgram.Exercises == null)
             {
                 <p>There are no exercises added for this program as of yet.</p>
             }
-      <tbody>
+      <tbody> @{
+              int idx = 0;
               @foreach (var exercise in Model.WorkoutProgram.Exercises)
               {
+                idx++;
                 <tr>
+                  <th scope="row">@idx</th>
                   <td>@exercise.Name</td>
                     @if (exercise.MaxRepetition == null)
                     {
@@ -76,9 +58,11 @@
                         <td>@exercise.Sets x @exercise.MinRepetition - @exercise.MaxRepetition</td>  
                     }
                   <td>@exercise.Description</td>
-                  <td>@if (@exercise.ReferenceLink != null){
-                  <a href="@exercise.ReferenceLink">How to perform @exercise.Name</a>
-                  } </td>
+                  <td>
+                    @if (@exercise.ReferenceLink != null){
+                    <a href="@exercise.ReferenceLink" target="_blank">How to perform @exercise.Name</a>
+                    } 
+                  </td>
                   <td>
                     <form asp-action="DeleteExerciseConfirmed" asp-route-id="@exercise.Id">    
                       <button class="btn btn-danger">X</button>
@@ -86,6 +70,7 @@
                   </td>
                 </tr>
               } 
+              }
         </tbody>
     </table>
 </div>
