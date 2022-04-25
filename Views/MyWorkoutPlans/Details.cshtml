@@ -4,19 +4,13 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>My Workout Program</h1>
+<h1>@Model.WorkoutProgram.Name</h1>
 
 <div>
-    <h4>@Model.WorkoutProgram.Name</h4>
+    <h5>@Model.WorkoutProgram.Publisher.FirstName @Model.WorkoutProgram.Publisher.LastName</h5>
+    <p>Last Update: @Model.WorkoutProgram.UpdatedOn</p>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.WorkoutProgram.Publisher)</dt>
-        <dd class = "col-sm-10">@Model.WorkoutProgram.Publisher.FirstName @Model.WorkoutProgram.Publisher.LastName</dd>
-        <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.WorkoutProgram.CreatedOn)</dt>
-        <dd class = "col-sm-10">@Model.WorkoutProgram.CreatedOn.ToString("MM/dd/yy hh:mm tt")</dd>
-        <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.WorkoutProgram.UpdatedOn)</dt>
-        <dd class = "col-sm-10">@Model.WorkoutProgram.UpdatedOn.ToString("MM/dd/yy hh:mm tt")</dd>
-        <hr />
         <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.WorkoutProgram.Difficulty)</dt>
         <dd class = "col-sm-10">@Html.DisplayFor(model => model.WorkoutProgram.Difficulty)</dd>
         <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.WorkoutProgram.ShortDescription)</dt>
@@ -33,7 +27,7 @@
         <tr>
           <th scope="col">#</th>
           <th scope="col">Exercise</th>
-          <th scope="col">Sets X Reps</th>
+          <th scope="col">Sets x Reps</th>
           <th scope="col">Description</th>
           <th scope="col">Reference Link</th>
           <th scope="col"></th>
@@ -50,10 +44,10 @@
                   <td>@exercise.Name</td>
                     @if (exercise.MaxRepetition == null)
                     {
-                        <td>@exercise.Sets X @exercise.MinRepetition</td>
+                        <td>@exercise.Sets x @exercise.MinRepetition</td>
                     } else
                     {
-                        <td>@exercise.Sets X @exercise.MinRepetition - @exercise.MaxRepetition</td>  
+                        <td>@exercise.Sets x @exercise.MinRepetition - @exercise.MaxRepetition</td>  
                     }
                   <td>@exercise.Description</td>
                   <td>@if (@exercise.ReferenceLink != null){
