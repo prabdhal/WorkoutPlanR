@@ -16,15 +16,19 @@ namespace WorkoutPlannerWebApp.Controllers
     }
 
     // GET: WorkoutPlansController
-    public ActionResult Index()
+    public ActionResult Index(string searchString)
     {
       var workoutPrograms = _context.WorkoutPrograms
         .OrderByDescending(p => p.UpdatedOn)
         .Include(p => p.Publisher)
+        .Where(p => p.Name.Contains(searchString ?? String.Empty) ||
+                    p.Publisher.FirstName.Contains(searchString ?? String.Empty) ||
+                    p.Publisher.LastName.Contains(searchString ?? String.Empty))
         .Where(p => p.Published);
 
       var workoutPlansViewModel = new WorkoutPlansViewModel
       {
+        SearchString = searchString,
         WorkoutPrograms = workoutPrograms,
       };
 

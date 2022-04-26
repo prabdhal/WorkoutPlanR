@@ -30,10 +30,14 @@
             <td>@Html.DisplayFor(modelItem => item.UpdatedOn)</td>
             <td>@Html.DisplayFor(modelItem => item.Published)</td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a>
-                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-success">Details</a>
+                <form asp-action="Edit" asp-route-id="@item.Id">
+                  <button type="submit" class="fa fa-pen text-success my-1" style="border:none;font-size:20px;"></button>
+                </form>
+                <form asp-action="Details" asp-route-id="@item.Id">
+                  <button type="submit" class="fa fa-circle-info text-primary my-1" style="border:none;font-size:20px;"></button>
+                </form>
                 <form asp-action="Delete" asp-route-id="@item.Id">
-                  <input type="submit" value="Delete" class="btn btn-danger"/>
+                  <button type="submit" class="fa fa-trash text-danger my-1" style="border:none;font-size:20px;"></button>
                 </form>
             </td>
         </tr>

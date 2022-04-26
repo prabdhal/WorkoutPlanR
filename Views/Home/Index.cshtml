@@ -6,14 +6,23 @@
 
 <h1>Workout Programs</h1>
 
+<div class="py-5">
+  <form asp-action="Index">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+      <input asp-for="SearchString" type="text" class="form-control" placeholder="Search workout programs..." />
+      <span asp-validation-for="SearchString" class="text-danger"></span>
+    </div>
+  </form>
+</div>
 <table class="table table-striped table-bordered table-hover table-responsive">
   <caption>List of workout programs</caption>
     <thead class="thead-dark">
         <tr>
             <th scope="col">Workout Program</th>
+            <th scope="col">Publisher</th>
             <th scope="col">Difficulty</th>
             <th scope="col">Description</th>
-            <th scope="col">Publisher</th>
             <th scope="col"></th>
         </tr>
     </thead>
@@ -21,9 +30,9 @@
         @foreach (var item in Model.WorkoutPrograms) {
         <tr scope="row">
             <td>@Html.DisplayFor(modelItem => item.Name)</td>
+            <td>@item.Publisher.FirstName @item.Publisher.LastName</td>
             <td>@Html.DisplayFor(modelItem => item.Difficulty)</td>
             <td>@Html.DisplayFor(modelItem => item.ShortDescription)</td>
-            <td>@item.Publisher.FirstName @item.Publisher.LastName</td>
             <td>
                 <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">
                   Details
