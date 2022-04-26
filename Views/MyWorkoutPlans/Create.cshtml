@@ -27,7 +27,7 @@
             <div class="form-group">
                 <label asp-for="WorkoutProgram.Difficulty" class="control-label"></label>
                 <select asp-for="WorkoutProgram.Difficulty" class="form-control" asp-items="Html.GetEnumSelectList<Difficulty>()">
-                  <option value="">Please choose the difficulty</option>
+                  <option value="">-- Select Difficulty --</option>
                 </select>
                 <span asp-validation-for="WorkoutProgram.Difficulty" class="text-danger"></span>
             </div>

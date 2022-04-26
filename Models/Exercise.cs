@@ -1,5 +1,4 @@
-﻿#nullable disable
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WorkoutPlannerWebApp.Models
@@ -11,11 +10,10 @@ namespace WorkoutPlannerWebApp.Models
     [ForeignKey("Workout Program")]
     public WorkoutProgram WorkoutProgram { get; set; }
 
-    [Required(ErrorMessage = "Please enter the name of the exercise.")]
-    public string Name { get; set; }
-
-    [Required(ErrorMessage = "Please enter the description of the exercise.")]
-    public string Description { get; set; }
+    [Display(Name = "Exercise")]
+    [ForeignKey("Workout Program")]
+    [Required(ErrorMessage = "Please select an exercise.")]
+    public ExerciseAPI ExerciseAPI { get; set; }
 
     [Range(1, 20)]
     [Required(ErrorMessage = "Please enter the number of sets for this exercise.")]
@@ -29,9 +27,5 @@ namespace WorkoutPlannerWebApp.Models
     [Range(0, 50)]
     [Display(Name = "Maximum Repetitions")]
     public int? MaxRepetition { get; set; }
-
-    [Url]
-    [Display(Name = "Reference Link")]
-    public string ReferenceLink { get; set; }
   }
 }

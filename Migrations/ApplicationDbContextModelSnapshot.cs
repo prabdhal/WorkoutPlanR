@@ -238,15 +238,36 @@ namespace WorkoutPlannerWebApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int?>("MaxRepetition")
                         .HasColumnType("int");
 
                     b.Property<int>("MinRepetition")
                         .HasColumnType("int");
+
+                    b.Property<int>("Sets")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Workout Program")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Workout Program");
+
+                    b.ToTable("Exercises");
+                });
+
+            modelBuilder.Entity("WorkoutPlannerWebApp.Models.ExerciseAPI", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -255,17 +276,9 @@ namespace WorkoutPlannerWebApp.Migrations
                     b.Property<string>("ReferenceLink")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Sets")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Workout Program")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("Workout Program");
-
-                    b.ToTable("Exercises");
+                    b.ToTable("ExerciseAPIs");
                 });
 
             modelBuilder.Entity("WorkoutPlannerWebApp.Models.WorkoutProgram", b =>
@@ -363,9 +376,19 @@ namespace WorkoutPlannerWebApp.Migrations
 
             modelBuilder.Entity("WorkoutPlannerWebApp.Models.Exercise", b =>
                 {
+                    b.HasOne("WorkoutPlannerWebApp.Models.ExerciseAPI", "ExerciseAPI")
+                        .WithMany("Exercises")
+                        .HasForeignKey("Workout Program")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("WorkoutPlannerWebApp.Models.WorkoutProgram", "WorkoutProgram")
                         .WithMany("Exercises")
-                        .HasForeignKey("Workout Program");
+                        .HasForeignKey("Workout Program")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ExerciseAPI");
 
                     b.Navigation("WorkoutProgram");
                 });
@@ -377,6 +400,11 @@ namespace WorkoutPlannerWebApp.Migrations
                         .HasForeignKey("PublisherId");
 
                     b.Navigation("Publisher");
+                });
+
+            modelBuilder.Entity("WorkoutPlannerWebApp.Models.ExerciseAPI", b =>
+                {
+                    b.Navigation("Exercises");
                 });
 
             modelBuilder.Entity("WorkoutPlannerWebApp.Models.WorkoutProgram", b =>

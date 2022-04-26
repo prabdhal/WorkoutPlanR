@@ -51,6 +51,21 @@ namespace WorkoutPlannerWebApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ExerciseAPIs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ReferenceLink = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExerciseAPIs", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -187,22 +202,26 @@ namespace WorkoutPlannerWebApp.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    WorkoutProgram = table.Column<int>(name: "Workout Program", type: "int", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ReferenceLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    WorkoutProgram = table.Column<int>(name: "Workout Program", type: "int", nullable: false),
                     Sets = table.Column<int>(type: "int", nullable: false),
                     MinRepetition = table.Column<int>(type: "int", nullable: false),
-                    MaxRepetition = table.Column<int>(type: "int", nullable: false)
+                    MaxRepetition = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Exercises", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Exercises_ExerciseAPIs_Workout Program",
+                        column: x => x.WorkoutProgram,
+                        principalTable: "ExerciseAPIs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Exercises_WorkoutPrograms_Workout Program",
                         column: x => x.WorkoutProgram,
                         principalTable: "WorkoutPrograms",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -277,6 +296,9 @@ namespace WorkoutPlannerWebApp.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "ExerciseAPIs");
 
             migrationBuilder.DropTable(
                 name: "WorkoutPrograms");

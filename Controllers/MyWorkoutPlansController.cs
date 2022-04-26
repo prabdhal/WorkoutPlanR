@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using WorkoutPlannerWebApp.Data;
@@ -71,12 +72,20 @@ namespace WorkoutPlannerWebApp.Controllers
         .Include(p => p.Exercises)
         .FirstOrDefault(p => p.Id == id);
 
+      var exerciseAPIs = _context.ExerciseAPIs
+        .Include(e => e.Exercises)
+        .OrderByDescending(e => e.Name)
+        .ToList();
+
+      ViewBag.ExerciseAPIs = new SelectList(exerciseAPIs, "Id", "Name");
+
       if (workoutProgram is null)
         return new NotFoundResult();
 
       var createExerciseViewModel = new MyWorkoutPlanCreateExerciseViewModel
       {
         WorkoutProgram = workoutProgram,
+        ExerciseAPIs = exerciseAPIs,
         Exercise = null
       };
 
@@ -111,6 +120,7 @@ namespace WorkoutPlannerWebApp.Controllers
       var workoutProgram = _context.WorkoutPrograms
         .Include(p => p.Publisher)
         .Include(p => p.Exercises)
+          .ThenInclude(e => e.ExerciseAPI)
         .FirstOrDefault(p => p.Id == id);
 
       if (workoutProgram is null)

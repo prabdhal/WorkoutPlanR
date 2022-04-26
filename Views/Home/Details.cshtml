@@ -25,7 +25,6 @@
           <th scope="col">Sets x Reps</th>
           <th scope="col">Description</th>
           <th scope="col">Reference Link</th>
-          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
@@ -36,7 +35,7 @@
                     idx++;
                     <tr>
                   <th scope="row">@idx</th>
-                  <td>@exercise.Name</td>
+                  <td>@exercise.ExerciseAPI.Name</td>
                     @if (exercise.MaxRepetition == null)
                     {
                         <td>@exercise.Sets x @exercise.MinRepetition</td>
@@ -44,9 +43,9 @@
                     {
                         <td>@exercise.Sets x @exercise.MinRepetition - @exercise.MaxRepetition</td>  
                     }
-                  <td>@exercise.Description</td>
-                  <td>@if (@exercise.ReferenceLink != null){
-                  <a href="@exercise.ReferenceLink" target="_blank">How to perform @exercise.Name</a>
+                  <td>@exercise.ExerciseAPI.Description</td>
+                  <td>@if (@exercise.ExerciseAPI.ReferenceLink != null){
+                  <a href="@exercise.ExerciseAPI.ReferenceLink" target="_blank">How to perform @exercise.ExerciseAPI.Name</a>
                   } </td>
                 </tr>
             }

@@ -24,23 +24,23 @@ namespace WorkoutPlannerWebApp.Controllers.Api
 
     // GET: api/Exercises
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Exercise>>> GetExercises()
+    public async Task<ActionResult<IEnumerable<ExerciseAPI>>> GetExercises()
     {
-      return await _context.Exercises.ToListAsync();
+      return await _context.ExerciseAPIs.ToListAsync();
     }
 
     // GET: api/Exercises/searchString
     [HttpGet("Search/{searchString}")]
-    public async Task<ActionResult<IEnumerable<Exercise>>> GetExercises(string searchString)
+    public async Task<ActionResult<IEnumerable<ExerciseAPI>>> GetExercises(string searchString)
     {
-      return await _context.Exercises.Where(e => e.Name.Contains(searchString) || e.Description.Contains(searchString)).ToListAsync();
+      return await _context.ExerciseAPIs.Where(e => e.Name.Contains(searchString) || e.Description.Contains(searchString)).ToListAsync();
     }
 
     // GET: api/Exercises/5
     [HttpGet("{id}")]
-    public async Task<ActionResult<Exercise>> GetExercise(int id)
+    public async Task<ActionResult<ExerciseAPI>> GetExercise(int id)
     {
-      var exercise = await _context.Exercises.FindAsync(id);
+      var exercise = await _context.ExerciseAPIs.FindAsync(id);
 
       if (exercise == null)
       {
@@ -53,7 +53,7 @@ namespace WorkoutPlannerWebApp.Controllers.Api
     // PUT: api/Exercises/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutExercise(int id, Exercise exercise)
+    public async Task<IActionResult> PutExercise(int id, ExerciseAPI exercise)
     {
       if (id != exercise.Id)
       {
@@ -84,9 +84,9 @@ namespace WorkoutPlannerWebApp.Controllers.Api
     // POST: api/Exercises
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
-    public async Task<ActionResult<Exercise>> PostExercise(Exercise exercise)
+    public async Task<ActionResult<ExerciseAPI>> PostExercise(ExerciseAPI exercise)
     {
-      _context.Exercises.Add(exercise);
+      _context.ExerciseAPIs.Add(exercise);
       try
       {
         await _context.SaveChangesAsync();
@@ -110,13 +110,13 @@ namespace WorkoutPlannerWebApp.Controllers.Api
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteExercise(string id)
     {
-      var exercise = await _context.Exercises.FindAsync(id);
+      var exercise = await _context.ExerciseAPIs.FindAsync(id);
       if (exercise == null)
       {
         return NotFound();
       }
 
-      _context.Exercises.Remove(exercise);
+      _context.ExerciseAPIs.Remove(exercise);
       await _context.SaveChangesAsync();
 
       return NoContent();
@@ -124,7 +124,7 @@ namespace WorkoutPlannerWebApp.Controllers.Api
 
     private bool ExerciseExists(int id)
     {
-      return _context.Exercises.Any(e => e.Id == id);
+      return _context.ExerciseAPIs.Any(e => e.Id == id);
     }
   }
 }

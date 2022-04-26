@@ -23,9 +23,11 @@ namespace WorkoutPlannerWebApp.Models
     public string LongDescription { get; set; }
 
     [Display(Name = "Created On")]
+    [DisplayFormat(DataFormatString = "{0:MMM dd hh:mm tt}", ApplyFormatInEditMode = true)]
     public DateTime CreatedOn { get; set; }
 
     [Display(Name = "Last Updated")]
+    [DisplayFormat(DataFormatString = "{0:MMM dd hh:mm tt}", ApplyFormatInEditMode = true)]
     public DateTime UpdatedOn { get; set; }
 
     public ApplicationUser Publisher { get; set; }

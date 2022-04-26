@@ -37,6 +37,7 @@ namespace WorkoutPlannerWebApp.Controllers
       var workoutProgram = _context.WorkoutPrograms
         .Include(p => p.Publisher)
         .Include(p => p.Exercises)
+          .ThenInclude(e => e.ExerciseAPI)
         .FirstOrDefault(p => p.Id == id);
 
       if (workoutProgram is null)

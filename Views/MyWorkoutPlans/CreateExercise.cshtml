@@ -31,6 +31,7 @@
     <caption>List of exercises</caption>
       <thead class="thead-dark">
         <tr>
+          <th scope="col">#</th>
           <th scope="col">Exercise</th>
           <th scope="col">Sets x Reps</th>
           <th scope="col">Description</th>
@@ -38,7 +39,7 @@
           <th scope="col"></th>
         </tr>
       </thead>
-            @if (Model.WorkoutProgram.Exercises == null)
+            @if (!Model.WorkoutProgram.Exercises.Any())
             {
                 <p>There are no exercises added for this program as of yet.</p>
             }
@@ -49,7 +50,7 @@
                 idx++;
                 <tr>
                   <th scope="row">@idx</th>
-                  <td>@exercise.Name</td>
+                  <td>@exercise.ExerciseAPI.Name</td>
                     @if (exercise.MaxRepetition == null)
                     {
                         <td>@exercise.Sets x @exercise.MinRepetition</td>
@@ -57,10 +58,10 @@
                     {
                         <td>@exercise.Sets x @exercise.MinRepetition - @exercise.MaxRepetition</td>  
                     }
-                  <td>@exercise.Description</td>
+                  <td>@exercise.ExerciseAPI.Description</td>
                   <td>
-                    @if (@exercise.ReferenceLink != null){
-                    <a href="@exercise.ReferenceLink" target="_blank">How to perform @exercise.Name</a>
+                    @if (@exercise.ExerciseAPI.ReferenceLink != null){
+                    <a href="@exercise.ExerciseAPI.ReferenceLink" target="_blank">How to perform @exercise.ExerciseAPI.Name</a>
                     } 
                   </td>
                   <td>
@@ -82,15 +83,9 @@
             <input asp-for="WorkoutProgram.Id" readonly hidden />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Exercise.Name" class="control-label"></label>
-                <input asp-for="Exercise.Name" class="form-control" />
-                <span asp-validation-for="Exercise.Name" class="text-danger"></span>
-            </div>
-            <br />
-            <div class="form-group">
-                <label asp-for="Exercise.Description" class="control-label"></label>
-                <input asp-for="Exercise.Description" class="form-control" />
-                <span asp-validation-for="Exercise.Description" class="text-danger"></span>
+                <label asp-for="Exercise.ExerciseAPI" class="control-label"></label> 
+                @Html.DropDownListFor(m => m.Exercise.ExerciseAPI, ViewBag.ExerciseAPIs as SelectList, "-- Select Exercise --", htmlAttributes: new {@class = "form-control"})
+                <span asp-validation-for="Exercise.ExerciseAPI" class="text-danger"></span>
             </div>
             <br />
             <div class="form-group">
@@ -109,12 +104,6 @@
                 <label asp-for="Exercise.MaxRepetition" class="control-label"></label>
                 <input asp-for="Exercise.MaxRepetition" class="form-control" />
                 <span asp-validation-for="Exercise.MaxRepetition" class="text-danger"></span>
-            </div>
-            <br />
-            <div class="form-group">
-                <label asp-for="Exercise.ReferenceLink" class="control-label"></label>
-                <input type="url" asp-for="Exercise.ReferenceLink" class="form-control" />
-                <span asp-validation-for="Exercise.ReferenceLink" class="text-danger"></span>
             </div>
             <br />
             <div class="form-group">
