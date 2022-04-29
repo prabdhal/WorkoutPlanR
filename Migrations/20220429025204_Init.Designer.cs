@@ -12,8 +12,8 @@ using WorkoutPlannerWebApp.Data;
 namespace WorkoutPlannerWebApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220426222808_init")]
-    partial class init
+    [Migration("20220429025204_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -232,13 +232,19 @@ namespace WorkoutPlannerWebApp.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("WorkoutPlannerWebApp.Models.Exercise", b =>
+            modelBuilder.Entity("WorkoutPlannerWebApp.Models.CustomExercise", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Exercise API")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ExerciseId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("MaxRepetition")
                         .HasColumnType("int");
@@ -249,17 +255,19 @@ namespace WorkoutPlannerWebApp.Migrations
                     b.Property<int>("Sets")
                         .HasColumnType("int");
 
-                    b.Property<int>("Workout Program")
+                    b.Property<int?>("WorkoutProgramId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Workout Program");
+                    b.HasIndex("Exercise API");
 
-                    b.ToTable("Exercises");
+                    b.HasIndex("WorkoutProgramId");
+
+                    b.ToTable("CustomExercises");
                 });
 
-            modelBuilder.Entity("WorkoutPlannerWebApp.Models.ExerciseAPI", b =>
+            modelBuilder.Entity("WorkoutPlannerWebApp.Models.Exercise", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -280,7 +288,7 @@ namespace WorkoutPlannerWebApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ExerciseAPIs");
+                    b.ToTable("Exercises");
                 });
 
             modelBuilder.Entity("WorkoutPlannerWebApp.Models.WorkoutProgram", b =>
@@ -376,21 +384,19 @@ namespace WorkoutPlannerWebApp.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WorkoutPlannerWebApp.Models.Exercise", b =>
+            modelBuilder.Entity("WorkoutPlannerWebApp.Models.CustomExercise", b =>
                 {
-                    b.HasOne("WorkoutPlannerWebApp.Models.ExerciseAPI", "ExerciseAPI")
-                        .WithMany("Exercises")
-                        .HasForeignKey("Workout Program")
+                    b.HasOne("WorkoutPlannerWebApp.Models.Exercise", "Exercise")
+                        .WithMany()
+                        .HasForeignKey("Exercise API")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("WorkoutPlannerWebApp.Models.WorkoutProgram", "WorkoutProgram")
-                        .WithMany("Exercises")
-                        .HasForeignKey("Workout Program")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("CustomExercises")
+                        .HasForeignKey("WorkoutProgramId");
 
-                    b.Navigation("ExerciseAPI");
+                    b.Navigation("Exercise");
 
                     b.Navigation("WorkoutProgram");
                 });
@@ -404,14 +410,9 @@ namespace WorkoutPlannerWebApp.Migrations
                     b.Navigation("Publisher");
                 });
 
-            modelBuilder.Entity("WorkoutPlannerWebApp.Models.ExerciseAPI", b =>
-                {
-                    b.Navigation("Exercises");
-                });
-
             modelBuilder.Entity("WorkoutPlannerWebApp.Models.WorkoutProgram", b =>
                 {
-                    b.Navigation("Exercises");
+                    b.Navigation("CustomExercises");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,121 +1,37 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using WorkoutPlannerWebApp.Data;
-using WorkoutPlannerWebApp.ViewModels;
+﻿using Microsoft.AspNetCore.Mvc;
+using WorkoutPlannerWebApp.BusinessManager.Interfaces;
 
 namespace WorkoutPlannerWebApp.Controllers
 {
-  public class HomeController : Controller
-  {
-    private readonly ApplicationDbContext _context;
-
-    public HomeController(ApplicationDbContext applicationDbContext)
+    public class HomeController : Controller
     {
-      this._context = applicationDbContext;
+        private readonly IWorkoutProgramBusinessManager workoutProgramsBusinessManager;
+        private readonly IExerciseBusinessManager exerciseBusinessManager;
+
+        public IExerciseBusinessManager ExerciseBusinessManager => exerciseBusinessManager;
+
+        public HomeController(
+            IWorkoutProgramBusinessManager workoutProgramBusinessManager,
+            IExerciseBusinessManager exerciseBusinessManager)
+        {
+            this.workoutProgramsBusinessManager = workoutProgramBusinessManager;
+            this.exerciseBusinessManager = exerciseBusinessManager;
+        }
+
+        // GET: WorkoutPlansController
+        public ActionResult Index(string searchString)
+        {
+            var indexViewModel = workoutProgramsBusinessManager.GetIndexWorkoutProgramsViewModel(searchString);
+
+            return View(indexViewModel);
+        }
+
+        // GET: WorkoutPlansController/Details/5
+        public ActionResult Details(int id)
+        {
+            var detailViewModel = workoutProgramsBusinessManager.GetDetailWorkoutProgramsViewModel(id);
+
+            return View(detailViewModel);
+        }
     }
-
-    // GET: WorkoutPlansController
-    public ActionResult Index(string searchString)
-    {
-      var workoutPrograms = _context.WorkoutPrograms
-        .OrderByDescending(p => p.UpdatedOn)
-        .Include(p => p.Publisher)
-        .Where(p => p.Name.Contains(searchString ?? String.Empty) ||
-                    p.Publisher.FirstName.Contains(searchString ?? String.Empty) ||
-                    p.Publisher.LastName.Contains(searchString ?? String.Empty))
-        .Where(p => p.Published);
-
-      var workoutPlansViewModel = new WorkoutPlansViewModel
-      {
-        SearchString = searchString,
-        WorkoutPrograms = workoutPrograms,
-      };
-
-      return View(workoutPlansViewModel);
-    }
-
-    // GET: WorkoutPlansController/Details/5
-    public ActionResult Details(int id)
-    {
-      var workoutProgram = _context.WorkoutPrograms
-        .Include(p => p.Publisher)
-        .Include(p => p.Exercises)
-          .ThenInclude(e => e.ExerciseAPI)
-        .FirstOrDefault(p => p.Id == id);
-
-      if (workoutProgram is null)
-        return new NotFoundResult();
-
-      var workoutPlanDetailViewModel = new WorkoutPlanDetailViewModel
-      {
-        WorkoutProgram = workoutProgram
-      };
-
-      return View(workoutPlanDetailViewModel);
-    }
-
-    // GET: WorkoutPlansController/Create
-    public ActionResult Create()
-    {
-      return View();
-    }
-
-    // POST: WorkoutPlansController/Create
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public ActionResult Create(IFormCollection collection)
-    {
-      try
-      {
-        return RedirectToAction(nameof(Index));
-      }
-      catch
-      {
-        return View();
-      }
-    }
-
-    // GET: WorkoutPlansController/Edit/5
-    public ActionResult Edit(int id)
-    {
-      return View();
-    }
-
-    // POST: WorkoutPlansController/Edit/5
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public ActionResult Edit(int id, IFormCollection collection)
-    {
-      try
-      {
-        return RedirectToAction(nameof(Index));
-      }
-      catch
-      {
-        return View();
-      }
-    }
-
-    // GET: WorkoutPlansController/Delete/5
-    public ActionResult Delete(int id)
-    {
-      return View();
-    }
-
-    // POST: WorkoutPlansController/Delete/5
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public ActionResult Delete(int id, IFormCollection collection)
-    {
-      try
-      {
-        return RedirectToAction(nameof(Index));
-      }
-      catch
-      {
-        return View();
-      }
-    }
-  }
 }

@@ -4,7 +4,7 @@ using WorkoutPlannerWebApp.Models;
 
 namespace WorkoutPlannerWebApp.ViewModels
 {
-  public class WorkoutPlansViewModel
+  public class IndexWorkoutProgramViewModel
   {
     [Display(Name = "Search")]
     public string SearchString { get; set; }

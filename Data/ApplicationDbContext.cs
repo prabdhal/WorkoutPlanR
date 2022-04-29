@@ -13,7 +13,7 @@ namespace WorkoutPlannerWebApp.Data
     }
 
     public DbSet<WorkoutProgram> WorkoutPrograms { get; set; }
+    public DbSet<CustomExercise> CustomExercises { get; set; }
     public DbSet<Exercise> Exercises { get; set; }
-    public DbSet<ExerciseAPI> ExerciseAPIs { get; set; }
   }
 }

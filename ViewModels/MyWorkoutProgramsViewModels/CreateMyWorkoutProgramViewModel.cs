@@ -3,7 +3,7 @@ using WorkoutPlannerWebApp.Models;
 
 namespace WorkoutPlannerWebApp.ViewModels
 {
-  public class WorkoutPlanDetailViewModel
+  public class CreateMyWorkoutProgramViewModel
   {
     public WorkoutProgram WorkoutProgram { get; set; }
   }

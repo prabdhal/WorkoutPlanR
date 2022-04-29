@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WorkoutPlannerWebApp.Migrations
 {
-    public partial class init : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -51,7 +51,7 @@ namespace WorkoutPlannerWebApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ExerciseAPIs",
+                name: "Exercises",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -62,7 +62,7 @@ namespace WorkoutPlannerWebApp.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ExerciseAPIs", x => x.Id);
+                    table.PrimaryKey("PK_Exercises", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -197,31 +197,32 @@ namespace WorkoutPlannerWebApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Exercises",
+                name: "CustomExercises",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    WorkoutProgram = table.Column<int>(name: "Workout Program", type: "int", nullable: false),
+                    WorkoutProgramId = table.Column<int>(type: "int", nullable: true),
+                    ExerciseId = table.Column<int>(type: "int", nullable: false),
+                    ExerciseAPI = table.Column<int>(name: "Exercise API", type: "int", nullable: false),
                     Sets = table.Column<int>(type: "int", nullable: false),
                     MinRepetition = table.Column<int>(type: "int", nullable: false),
                     MaxRepetition = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Exercises", x => x.Id);
+                    table.PrimaryKey("PK_CustomExercises", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Exercises_ExerciseAPIs_Workout Program",
-                        column: x => x.WorkoutProgram,
-                        principalTable: "ExerciseAPIs",
+                        name: "FK_CustomExercises_Exercises_Exercise API",
+                        column: x => x.ExerciseAPI,
+                        principalTable: "Exercises",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Exercises_WorkoutPrograms_Workout Program",
-                        column: x => x.WorkoutProgram,
+                        name: "FK_CustomExercises_WorkoutPrograms_WorkoutProgramId",
+                        column: x => x.WorkoutProgramId,
                         principalTable: "WorkoutPrograms",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -264,9 +265,14 @@ namespace WorkoutPlannerWebApp.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Exercises_Workout Program",
-                table: "Exercises",
-                column: "Workout Program");
+                name: "IX_CustomExercises_Exercise API",
+                table: "CustomExercises",
+                column: "Exercise API");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CustomExercises_WorkoutProgramId",
+                table: "CustomExercises",
+                column: "WorkoutProgramId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_WorkoutPrograms_PublisherId",
@@ -292,13 +298,13 @@ namespace WorkoutPlannerWebApp.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Exercises");
+                name: "CustomExercises");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "ExerciseAPIs");
+                name: "Exercises");
 
             migrationBuilder.DropTable(
                 name: "WorkoutPrograms");

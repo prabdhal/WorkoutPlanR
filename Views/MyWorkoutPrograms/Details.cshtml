@@ -1,4 +1,4 @@
-﻿@model WorkoutPlannerWebApp.ViewModels.MyWorkoutPlanDetailViewModel
+﻿@model WorkoutPlannerWebApp.ViewModels.DetailMyWorkoutProgramViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -35,12 +35,12 @@
       <tbody>
         @{
           int idx = 0;
-        @foreach (var exercise in Model.WorkoutProgram.Exercises)
+        @foreach (var exercise in Model.WorkoutProgram.CustomExercises)
             {
               idx++;
                  <tr>
                   <th scope="row">@idx</th>
-                  <td>@exercise.ExerciseAPI.Name</td>
+                  <td>@exercise.Exercise.Name</td>
                     @if (exercise.MaxRepetition == null)
                     {
                         <td>@exercise.Sets x @exercise.MinRepetition</td>
@@ -48,9 +48,9 @@
                     {
                         <td>@exercise.Sets x @exercise.MinRepetition - @exercise.MaxRepetition</td>  
                     }
-                  <td>@exercise.ExerciseAPI.Description</td>
-                  <td>@if (@exercise.ExerciseAPI.ReferenceLink != null){
-                  <a href="@exercise.ExerciseAPI.ReferenceLink" target="_blank">How to perform @exercise.ExerciseAPI.Name</a>
+                  <td>@exercise.Exercise.Description</td>
+                  <td>@if (@exercise.Exercise.ReferenceLink != null){
+                  <a href="@exercise.Exercise.ReferenceLink" target="_blank">How to perform @exercise.Exercise.Name</a>
                   } </td>
                 </tr>
             }

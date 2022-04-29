@@ -34,6 +34,6 @@ namespace WorkoutPlannerWebApp.Models
 
     public bool Published { get; set; }
 
-    public IEnumerable<Exercise> Exercises { get; set; }
+    public IEnumerable<CustomExercise> CustomExercises { get; set; }
   }
 }

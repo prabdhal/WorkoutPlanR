@@ -1,0 +1,46 @@
+﻿@model WorkoutPlannerWebApp.ViewModels.IndexMyWorkoutProgramViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>My Workout Plans</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+<table class="table table-striped table-bordered table-hover table-responsive">
+  <caption>List of workout programs</caption>
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Workout Program</th>
+            <th scope="col">Difficulty</th>
+            <th scope="col">Description</th>
+            <th scope="col">Last Updated</th>
+            <th scope="col">Published</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var program in Model.WorkoutPrograms) {
+        <tr scope="row">
+            <td>@Html.DisplayFor(modelItem => program.Name)</td>
+            <td>@Html.DisplayFor(modelItem => program.Difficulty)</td>
+            <td>@Html.DisplayFor(modelItem => program.ShortDescription)</td>
+            <td>@Html.DisplayFor(modelItem => program.UpdatedOn)</td>
+            <td>@Html.DisplayFor(modelItem => program.Published)</td>
+            <td>
+                <form asp-action="Edit" asp-route-id="@program.Id">
+                  <button type="submit" formmethod="get" class="fa fa-pen text-success my-1" style="border:none;font-size:20px;"></button>
+                </form>
+                <form asp-action="Details" asp-route-id="@program.Id">
+                  <button type="submit" formmethod="get" class="fa fa-circle-info text-primary my-1" style="border:none;font-size:20px;"></button>
+                </form>
+                <form asp-action="Delete" asp-route-id="@program.Id">
+                  <button type="submit" class="fa fa-trash text-danger my-1" style="border:none;font-size:20px;"></button>
+                </form>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

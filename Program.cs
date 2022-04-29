@@ -1,7 +1,11 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using WorkoutPlannerWebApp.BusinessManager;
+using WorkoutPlannerWebApp.BusinessManager.Interfaces;
 using WorkoutPlannerWebApp.Data;
 using WorkoutPlannerWebApp.Models;
+using WorkoutPlannerWebApp.Services;
+using WorkoutPlannerWebApp.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +17,15 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
-builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation(); 
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IExerciseService, ExerciseService>();
+builder.Services.AddScoped<IWorkoutProgramService, WorkoutProgramService>();
+
+builder.Services.AddScoped<IExerciseBusinessManager, ExerciseBusinessManager>();
+builder.Services.AddScoped<IWorkoutProgramBusinessManager, WorkoutProgramBusinessManager>();
+builder.Services.AddScoped<IMyWorkoutProgramBusinessManager, MyWorkoutProgramBusinessManager>();
 
 var app = builder.Build();
 
