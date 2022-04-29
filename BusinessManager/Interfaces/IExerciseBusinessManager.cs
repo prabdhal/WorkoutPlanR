@@ -5,6 +5,7 @@ namespace WorkoutPlannerWebApp.BusinessManager.Interfaces
 {
     public interface IExerciseBusinessManager
     {
+        CustomExercise GetCustomExercise(int exerciseId);
         IEnumerable<Exercise> GetExercises();
         Task<CustomExercise> CreateCustomExercise(CreateExerciseMyWorkoutProgramViewModel createViewModel);
         Task<CustomExercise> DeleteCustomExercise(int id);

@@ -19,7 +19,7 @@ namespace WorkoutPlannerWebApp.BusinessManager
 
         public IndexWorkoutProgramViewModel GetIndexWorkoutProgramsViewModel(string searchString)
         {
-            var programs = workoutProgramService.GetWorkoutProgramList(searchString);
+            var programs = workoutProgramService.GetPublishedWorkoutProgramList(searchString ?? String.Empty);
 
             return new IndexWorkoutProgramViewModel
             {

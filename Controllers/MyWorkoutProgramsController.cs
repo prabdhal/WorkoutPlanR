@@ -112,8 +112,9 @@ namespace WorkoutPlannerWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteExercise(int id)
         {
-            var exercise = await exerciseBusinessManager.DeleteCustomExercise(id);
-            var program = workoutProgramBusinessManager.GetWorkoutProgram(id);
+            var exercise = exerciseBusinessManager.GetCustomExercise(id);
+            var program = workoutProgramBusinessManager.GetWorkoutProgram(exercise.WorkoutProgram.Id);
+            exercise = await exerciseBusinessManager.DeleteCustomExercise(id);
 
             return RedirectToAction("CreateExercise", new { program.Id });
         }

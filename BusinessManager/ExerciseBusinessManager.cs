@@ -24,6 +24,11 @@ namespace WorkoutPlannerWebApp.BusinessManager
             this.workoutProgramService = workoutProgramService;
         }
 
+        public CustomExercise GetCustomExercise(int exerciseId)
+        {
+            return exerciseService.GetCustomExercise(exerciseId);
+        }
+
         public IEnumerable<Exercise> GetExercises()
         {
             return exerciseService.GetExerciseList();
