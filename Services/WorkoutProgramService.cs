@@ -19,8 +19,9 @@ namespace WorkoutPlannerWebApp.Services
         public WorkoutProgram GetWorkoutProgram(int programId)
         {
              return context.WorkoutPrograms
-                .Include(p => p.CustomExercises)
-                    .ThenInclude(e => e.Exercise)
+                .Include(p => p.WorkoutPhases)
+                    .ThenInclude(ph => ph.WorkoutDays)
+                        .ThenInclude(e => e.CustomExercises)
                 .Include(p => p.Publisher)
                 .FirstOrDefault(p => p.Id == programId);
         }
@@ -28,11 +29,12 @@ namespace WorkoutPlannerWebApp.Services
         public IEnumerable<WorkoutProgram> GetWorkoutProgramList(string searchString)
         {
             return context.WorkoutPrograms
-                .Include(p => p.CustomExercises)
-                    .ThenInclude(e => e.Exercise)
+                .Include(p => p.WorkoutPhases)
+                    .ThenInclude(ph => ph.WorkoutDays)
+                        .ThenInclude(e => e.CustomExercises)
                 .Include(p => p.Publisher)
                 .Where(p => p.Name.Contains(searchString) ||
-                            p.Publisher.FirstName.Contains(searchString) || 
+                            p.Publisher.FirstName.Contains(searchString) ||
                             p.Publisher.LastName.Contains(searchString) ||
                             p.ShortDescription.Contains(searchString))
                 .ToList();
@@ -41,8 +43,9 @@ namespace WorkoutPlannerWebApp.Services
         public IEnumerable<WorkoutProgram> GetPublishedWorkoutProgramList(string searchString)
         {
             return context.WorkoutPrograms
-                .Include(p => p.CustomExercises)
-                    .ThenInclude(e => e.Exercise)
+                .Include(p => p.WorkoutPhases)
+                    .ThenInclude(ph => ph.WorkoutDays)
+                        .ThenInclude(e => e.CustomExercises)
                 .Include(p => p.Publisher)
                 .Where(p => p.Name.Contains(searchString) ||
                             p.Publisher.FirstName.Contains(searchString) ||
@@ -55,8 +58,9 @@ namespace WorkoutPlannerWebApp.Services
         public IEnumerable<WorkoutProgram> GetWorkoutProgramList(ApplicationUser user)
         {
             return context.WorkoutPrograms
-                .Include(p => p.CustomExercises)
-                    .ThenInclude(e => e.Exercise)
+                .Include(p => p.WorkoutPhases)
+                    .ThenInclude(ph => ph.WorkoutDays)
+                        .ThenInclude(e => e.CustomExercises)
                 .Include(p => p.Publisher)
                 .Where(p => p.Publisher == user)
                 .ToList();

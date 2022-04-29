@@ -44,9 +44,12 @@
                 <p>There are no exercises added for this program as of yet.</p>
             }
       <tbody> 
+              @{ int idx = 0;
               @foreach (var exercise in Model.CustomExercises)
               {
-                <tr>
+                    idx++;
+                    <tr>
+                  <td>@idx</td>
                   <td>@exercise.Exercise.Name</td>
                     @if (@exercise.MaxRepetition == null)
                     {
@@ -68,11 +71,14 @@
                   </td>
                 </tr>
               } 
+              }
         </tbody>
     </table>
 </div>
-      <br />
+      
+<br />
 <hr />
+
 <div class="row">
     <div class="col-12">
         <form asp-action="CreateExercise">

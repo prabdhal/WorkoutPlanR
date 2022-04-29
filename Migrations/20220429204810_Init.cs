@@ -197,12 +197,60 @@ namespace WorkoutPlannerWebApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "WorkoutPhases",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    WorkoutProgramId = table.Column<int>(type: "int", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Duration = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WorkoutPhases", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_WorkoutPhases_WorkoutPrograms_WorkoutProgramId",
+                        column: x => x.WorkoutProgramId,
+                        principalTable: "WorkoutPrograms",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WorkoutDays",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    WorkoutProgramId = table.Column<int>(type: "int", nullable: true),
+                    WorkoutPhaseId = table.Column<int>(type: "int", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WorkoutDays", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_WorkoutDays_WorkoutPhases_WorkoutPhaseId",
+                        column: x => x.WorkoutPhaseId,
+                        principalTable: "WorkoutPhases",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_WorkoutDays_WorkoutPrograms_WorkoutProgramId",
+                        column: x => x.WorkoutProgramId,
+                        principalTable: "WorkoutPrograms",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CustomExercises",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     WorkoutProgramId = table.Column<int>(type: "int", nullable: true),
+                    WorkoutPhaseId = table.Column<int>(type: "int", nullable: true),
+                    WorkoutDayId = table.Column<int>(type: "int", nullable: true),
                     ExerciseId = table.Column<int>(type: "int", nullable: false),
                     ExerciseAPI = table.Column<int>(name: "Exercise API", type: "int", nullable: false),
                     Sets = table.Column<int>(type: "int", nullable: false),
@@ -218,6 +266,16 @@ namespace WorkoutPlannerWebApp.Migrations
                         principalTable: "Exercises",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CustomExercises_WorkoutDays_WorkoutDayId",
+                        column: x => x.WorkoutDayId,
+                        principalTable: "WorkoutDays",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_CustomExercises_WorkoutPhases_WorkoutPhaseId",
+                        column: x => x.WorkoutPhaseId,
+                        principalTable: "WorkoutPhases",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_CustomExercises_WorkoutPrograms_WorkoutProgramId",
                         column: x => x.WorkoutProgramId,
@@ -270,8 +328,33 @@ namespace WorkoutPlannerWebApp.Migrations
                 column: "Exercise API");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CustomExercises_WorkoutDayId",
+                table: "CustomExercises",
+                column: "WorkoutDayId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CustomExercises_WorkoutPhaseId",
+                table: "CustomExercises",
+                column: "WorkoutPhaseId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CustomExercises_WorkoutProgramId",
                 table: "CustomExercises",
+                column: "WorkoutProgramId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WorkoutDays_WorkoutPhaseId",
+                table: "WorkoutDays",
+                column: "WorkoutPhaseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WorkoutDays_WorkoutProgramId",
+                table: "WorkoutDays",
+                column: "WorkoutProgramId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WorkoutPhases_WorkoutProgramId",
+                table: "WorkoutPhases",
                 column: "WorkoutProgramId");
 
             migrationBuilder.CreateIndex(
@@ -305,6 +388,12 @@ namespace WorkoutPlannerWebApp.Migrations
 
             migrationBuilder.DropTable(
                 name: "Exercises");
+
+            migrationBuilder.DropTable(
+                name: "WorkoutDays");
+
+            migrationBuilder.DropTable(
+                name: "WorkoutPhases");
 
             migrationBuilder.DropTable(
                 name: "WorkoutPrograms");

@@ -8,6 +8,8 @@ namespace WorkoutPlannerWebApp.Models
         public int Id { get; set; }
 
         public WorkoutProgram WorkoutProgram { get; set; }
+        public WorkoutPhase WorkoutPhase { get; set; }
+        public WorkoutDay WorkoutDay { get; set; }
 
         public int ExerciseId { get; set; }
 

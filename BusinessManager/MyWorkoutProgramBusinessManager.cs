@@ -13,14 +13,23 @@ namespace WorkoutPlannerWebApp.BusinessManager
 
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IWorkoutProgramService workoutProgramService;
+        private readonly IWorkoutPhaseService workoutPhaseService;
+        private readonly IWorkoutDayService workoutDayService;
+        private readonly IExerciseService exerciseService;
 
 
         public MyWorkoutProgramBusinessManager(
             UserManager<ApplicationUser> userManager,
-            IWorkoutProgramService workoutProgramService)
+            IWorkoutProgramService workoutProgramService,
+            IWorkoutPhaseService workoutPhaseService,
+            IWorkoutDayService workoutDayService,
+            IExerciseService exerciseService)
         {
             this.userManager = userManager;
             this.workoutProgramService = workoutProgramService;
+            this.workoutPhaseService = workoutPhaseService;
+            this.workoutDayService = workoutDayService;
+            this.exerciseService = exerciseService;
         }
 
 
@@ -101,7 +110,30 @@ namespace WorkoutPlannerWebApp.BusinessManager
             var program = workoutProgramService.GetWorkoutProgram(programId);
             if (program is null)
                 return new NotFoundResult();
+            
+            var phases = workoutPhaseService.GetWorkoutPhaseList(programId);
+            var days = workoutDayService.GetWorkoutDayFromProgramList(programId);
+            var exercises = exerciseService.GetCustomExerciseFromProgramList(programId);
 
+            // Delete custom exercises per day
+            foreach (var exercise in exercises)
+            {
+                await exerciseService.RemoveCustomExercise(exercise);
+            }
+
+            // Delete all 7 days per phase
+            foreach (var day in days)
+            {
+                await workoutDayService.RemoveWorkoutDay(day);
+            }
+
+            // Delete all workout phases 
+            foreach (var phase in phases)
+            {
+                await workoutPhaseService.RemoveWorkoutPhase(phase);
+            }
+
+            // Delete workout program
             await workoutProgramService.RemoveWorkoutProgram(program);
             return program;
         }

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using WorkoutPlannerWebApp.BusinessManager.Interfaces;
 using WorkoutPlannerWebApp.Models;
 using WorkoutPlannerWebApp.ViewModels;
+using WorkoutPlannerWebApp.ViewModels.MyWorkoutProgramsViewModels;
 
 namespace WorkoutPlannerWebApp.Controllers
 {
@@ -12,18 +13,21 @@ namespace WorkoutPlannerWebApp.Controllers
     public class MyWorkoutProgramsController : Controller
     {
         private readonly IMyWorkoutProgramBusinessManager workoutProgramBusinessManager;
+        private readonly IMyWorkoutPhaseBusinessManager workoutPhaseBusinessManager;
         private readonly IExerciseBusinessManager exerciseBusinessManager;
 
         public MyWorkoutProgramsController(
             IMyWorkoutProgramBusinessManager workoutProgramBusinessManager,
+            IMyWorkoutPhaseBusinessManager workoutPhaseBusinessManager,
             IExerciseBusinessManager exerciseBusinessManager)
         {
             this.workoutProgramBusinessManager = workoutProgramBusinessManager;
+            this.workoutPhaseBusinessManager = workoutPhaseBusinessManager;
             this.exerciseBusinessManager = exerciseBusinessManager;
         }
 
         // GET: MyWorkoutPlans
-        public async Task<IActionResult> Index(string search)
+        public IActionResult Index(string search)
         {
             var indexViewModel = workoutProgramBusinessManager.GetIndexMyWorkoutProgramsViewModel(search);
 
@@ -47,7 +51,25 @@ namespace WorkoutPlannerWebApp.Controllers
         {
             await workoutProgramBusinessManager.CreateWorkoutProgram(createViewModel, User);
 
-            return RedirectToAction("CreateExercise", new { createViewModel.WorkoutProgram.Id });
+            return RedirectToAction("CreateWorkoutPhase", new { createViewModel.WorkoutProgram.Id });
+        }
+
+        // GET: MyWorkoutPlans/CreateExercise/id
+        public IActionResult CreateWorkoutPhase(int id)
+        {
+            var createViewModel = workoutPhaseBusinessManager.GetCreateWorkoutPhaseMyWorkoutProgramViewModel(id);
+
+            return View(createViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateWorkoutPhase(CreateWorkoutPhaseMyWorkoutProgramViewModel createViewModel)
+        {
+            var exercise = await workoutPhaseBusinessManager.CreateWorkoutPhase(createViewModel);
+
+            ModelState.Clear();
+            return RedirectToAction("CreateWorkoutPhase", new { createViewModel.WorkoutProgram.Id });
         }
 
         // GET: MyWorkoutPlans/CreateExercise/id

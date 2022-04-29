@@ -62,7 +62,7 @@ namespace WorkoutPlannerWebApp.BusinessManager
 
             var e = exerciseService.GetExerciseList();
 
-            var customExercises = exerciseService.GetCustomExerciseList(programId);
+            var customExercises = exerciseService.GetCustomExerciseFromDayList(programId);
 
             exercises = e;
 

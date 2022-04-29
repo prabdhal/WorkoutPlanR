@@ -20,12 +20,15 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IExerciseService, ExerciseService>();
 builder.Services.AddScoped<IWorkoutProgramService, WorkoutProgramService>();
+builder.Services.AddScoped<IWorkoutPhaseService, WorkoutPhaseService>();
+builder.Services.AddScoped<IWorkoutDayService, WorkoutDayService>();
+builder.Services.AddScoped<IExerciseService, ExerciseService>();
 
 builder.Services.AddScoped<IExerciseBusinessManager, ExerciseBusinessManager>();
 builder.Services.AddScoped<IWorkoutProgramBusinessManager, WorkoutProgramBusinessManager>();
 builder.Services.AddScoped<IMyWorkoutProgramBusinessManager, MyWorkoutProgramBusinessManager>();
+builder.Services.AddScoped<IMyWorkoutPhaseBusinessManager, MyWorkoutPhaseBusinessManager>();
 
 var app = builder.Build();
 

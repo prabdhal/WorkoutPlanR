@@ -16,3 +16,8 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/* Create Workout Phase View Page */
+.flex {
+    display: flex !important;
+}

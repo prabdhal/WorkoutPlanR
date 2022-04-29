@@ -1,0 +1,165 @@
+﻿@model WorkoutPlannerWebApp.ViewModels.MyWorkoutProgramsViewModels.CreateWorkoutPhaseMyWorkoutProgramViewModel
+
+@{
+    ViewData["Title"] = "View";
+}
+
+<h1>My Workout Program</h1>
+
+<div>
+    <h4>@Model.WorkoutProgram.Name</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.WorkoutProgram.Difficulty)</dt>
+        <dd class = "col-sm-10">@Html.DisplayFor(model => model.WorkoutProgram.Difficulty)</dd>
+        <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.WorkoutProgram.ShortDescription)</dt>
+        <dd class = "col-sm-10">@Html.DisplayFor(model => model.WorkoutProgram.ShortDescription)</dd>
+        <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.WorkoutProgram.CreatedOn)</dt>
+        <dd class = "col-sm-10">@Model.WorkoutProgram.CreatedOn.ToString("MM/dd/yy hh:mm tt")</dd>
+        <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.WorkoutProgram.UpdatedOn)</dt>
+        <dd class = "col-sm-10">@Model.WorkoutProgram.UpdatedOn.ToString("MM/dd/yy hh:mm tt")</dd>
+        <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.WorkoutProgram.LongDescription)</dt>
+        <dd class = "col-sm-10">@Html.DisplayFor(model => model.WorkoutProgram.LongDescription)</dd>
+        <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.WorkoutProgram.Published)</dt>
+        <dd class = "col-sm-10">@Html.DisplayFor(model => model.WorkoutProgram.Published)</dd>
+    </dl>
+
+    <h4>Workout Phases</h4>
+    <hr />
+
+    @foreach (var phase in Model.WorkoutPhases)
+              {
+                <div class="container">
+                    <div class="row justify-content-between">
+                        <div class="col-11">
+                            <h5>@phase.Name</h5>
+                            <div>@phase.Duration</div>
+                            <div>
+                                <p>@phase.Content</p>
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <form asp-action="DeleteWorkoutPhase" asp-route-id="@phase.Id">    
+                                <button class="btn btn-danger">delete phase</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div>
+                        @*If all exercise days are empty set all to rest days*@
+                            @foreach (var day in @phase.WorkoutDays)
+                            {
+                        <div class="container">
+                            <div class="row justify-content-between">
+                                <div class="col-10">
+                                    <h5>Day 1: @day.Name</h5>
+                                </div>
+                                <div class="row col-2">
+                                @if (day.Name == "Rest")
+                                {
+                                    <td class="row justify-content-end">
+                                    <form asp-action="CreateExercise" asp-route-id="@day.Id">    
+                                        <button class="btn btn-primary">Add Exercises</button>
+                                    </form>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td class="row justify-content-between">
+                                    <form class="flex col-6" asp-action="ClearWorkoutDay" asp-route-id="@day.Id">    
+                                        <button class="btn btn-danger">Clear</button>
+                                    </form>
+                                    <form class="flex col-6" asp-action="EditWorkoutDay" asp-route-id="@day.Id">    
+                                        <button class="btn btn-success">Edit</button>
+                                    </form>
+                                    </td>
+                                }
+                            </div>
+                            </div>
+                        @if (day.Name == "Rest")
+                        {
+                            <p>This is a rest day, there are no exercises here.</p>
+                        }
+                        else
+                        {
+                        <table class="col-12 table table-striped table-bordered table-hover table-responsive">
+                            <caption>List of exercises</caption>
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Exercise</th>
+                                    <th scope="col">Sets x Reps</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody> 
+                            @foreach (var exercise in @day.CustomExercises)
+                            {
+                                <tr>
+                                    <td>@exercise.Exercise.Name</td>
+                                    @if (@exercise.MaxRepetition == null)
+                                    {
+                                    <td>@exercise.Sets x @exercise.MinRepetition</td>
+                                    } else
+                                    {
+                                    <td>@exercise.Sets x @exercise.MinRepetition - @exercise.MaxRepetition</td>  
+                                    }
+                                    <td>@exercise.Exercise.Description</td>
+                                    <td>
+                                        <form asp-action="DeleteExercise" asp-route-id="@exercise.Id">    
+                                            <button class="btn btn-danger">Delete</button>
+                                        </form>
+                                        <form asp-action="EditExercise" asp-route-id="@exercise.Id">    
+                                            <button class="btn btn-danger">Edit</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }  
+                            </tbody>
+                        </table>
+                            
+                        }
+                         </div>
+                            }
+                    </div>
+                </div>
+              } 
+</div>
+
+<br />
+<hr />
+
+<div class="row">
+    <div class="col-12">
+        <form asp-action="CreateWorkoutPhase">
+            <input asp-for="WorkoutProgram.Id" readonly hidden />
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="WorkoutPhase.Name" class="control-label"></label>
+                <input asp-for="WorkoutPhase.Name" class="form-control" />
+                <span asp-validation-for="WorkoutPhase.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WorkoutPhase.Duration" class="control-label"></label>
+                <input asp-for="WorkoutPhase.Duration" class="form-control" />
+                <span asp-validation-for="WorkoutPhase.Duration" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WorkoutPhase.Content" class="control-label"></label>
+                <input asp-for="WorkoutPhase.Content" class="form-control" />
+                <span asp-validation-for="WorkoutPhase.Content" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Add Workout Phase" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -8,13 +8,9 @@ namespace WorkoutPlannerWebApp.Services
     public class ExerciseService : IExerciseService
     {
         private readonly ApplicationDbContext context;
-        private readonly IWorkoutProgramService workoutProgramService;
 
-        public ExerciseService(
-            ApplicationDbContext context,
-            IWorkoutProgramService workoutProgramService)
+        public ExerciseService(ApplicationDbContext context)
         {
-            this.workoutProgramService = workoutProgramService;
             this.context = context;
         }
 
@@ -27,22 +23,49 @@ namespace WorkoutPlannerWebApp.Services
         public CustomExercise GetCustomExercise(int id)
         {
             return context.CustomExercises
-                .Include(e => e.Exercise)
                 .Include(e => e.WorkoutProgram)
+                .Include(e => e.WorkoutPhase)
+                .Include(e => e.WorkoutDay)
+                .Include(e => e.Exercise)
                 .FirstOrDefault(e => e.Id == id);
         }
 
         public IEnumerable<Exercise> GetExerciseList()
         {
-            return context.Exercises.ToList();
+            return context.Exercises
+                .ToList();
         }
 
-        public IEnumerable<CustomExercise> GetCustomExerciseList(int programId)
+        public IEnumerable<CustomExercise> GetCustomExerciseFromProgramList(int programId)
         {
             return context.CustomExercises
-                .Include(e => e.Exercise)
                 .Include(e => e.WorkoutProgram)
+                .Include(e => e.WorkoutPhase)
+                .Include(e => e.WorkoutDay)
+                .Include(e => e.Exercise)
                 .Where(e => e.WorkoutProgram.Id == programId)
+                .ToList();
+        }
+
+        public IEnumerable<CustomExercise> GetCustomExerciseFromPhaseList(int phaseId)
+        {
+            return context.CustomExercises
+                .Include(e => e.WorkoutProgram)
+                .Include(e => e.WorkoutPhase)
+                .Include(e => e.WorkoutDay)
+                .Include(e => e.Exercise)
+                .Where(e => e.WorkoutPhase.Id == phaseId)
+                .ToList();
+        }
+
+        public IEnumerable<CustomExercise> GetCustomExerciseFromDayList(int dayId)
+        {
+            return context.CustomExercises
+                .Include(e => e.WorkoutProgram)
+                .Include(e => e.WorkoutPhase)
+                .Include(e => e.WorkoutDay)
+                .Include(e => e.Exercise)
+                .Where(e => e.WorkoutDay.Id == dayId)
                 .ToList();
         }
 
@@ -53,10 +76,10 @@ namespace WorkoutPlannerWebApp.Services
             return exercise;
         }
 
-        public async Task<CustomExercise> UpdateCustomExercise(CustomExercise exercise)
+        public CustomExercise UpdateCustomExercise(CustomExercise exercise)
         {
             context.CustomExercises.Update(exercise);
-            await context.SaveChangesAsync();
+            context.SaveChanges();
             return exercise;
         }
 
