@@ -9,7 +9,7 @@ namespace WorkoutPlannerWebApp.BusinessManager.Interfaces
     {
         WorkoutProgram GetWorkoutProgram(int programId);
         Task<WorkoutProgram> CreateWorkoutProgram(CreateMyWorkoutProgramViewModel createViewModel, ClaimsPrincipal claims);
-        Task<ActionResult<WorkoutProgram>> EditWorkoutProgram(EditMyWorkoutProgramViewModel editViewModel);
+        ActionResult<WorkoutProgram> EditWorkoutProgram(EditMyWorkoutProgramViewModel editViewModel);
         Task<ActionResult<WorkoutProgram>> DeleteWorkoutProgram(int programId);
         IndexMyWorkoutProgramViewModel GetIndexMyWorkoutProgramsViewModel(string searchString);
         CreateMyWorkoutProgramViewModel GetCreateMyWorkoutProgramsViewModel();

@@ -16,13 +16,13 @@ namespace WorkoutPlannerWebApp.Services
             this.context = context;
         }
 
-        public WorkoutProgram GetWorkoutProgram(int id)
+        public WorkoutProgram GetWorkoutProgram(int programId)
         {
              return context.WorkoutPrograms
                 .Include(p => p.CustomExercises)
                     .ThenInclude(e => e.Exercise)
                 .Include(p => p.Publisher)
-                .FirstOrDefault(p => p.Id == id);
+                .FirstOrDefault(p => p.Id == programId);
         }
 
         public IEnumerable<WorkoutProgram> GetWorkoutProgramList(string searchString)
@@ -69,10 +69,10 @@ namespace WorkoutPlannerWebApp.Services
             return program;
         }
 
-        public async Task<WorkoutProgram> UpdateWorkoutProgram(WorkoutProgram program)
+        public WorkoutProgram UpdateWorkoutProgram(WorkoutProgram program)
         {
             context.WorkoutPrograms.Update(program);
-            await context.SaveChangesAsync();
+            context.SaveChanges();
             return program;
         }
 
