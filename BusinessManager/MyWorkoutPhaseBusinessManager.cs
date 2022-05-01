@@ -1,26 +1,55 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using WorkoutPlannerWebApp.BusinessManager.Interfaces;
 using WorkoutPlannerWebApp.Models;
 using WorkoutPlannerWebApp.Services.Interfaces;
+using WorkoutPlannerWebApp.ViewModels;
 using WorkoutPlannerWebApp.ViewModels.MyWorkoutProgramsViewModels;
 
 namespace WorkoutPlannerWebApp.BusinessManager
 {
     public class MyWorkoutPhaseBusinessManager : IMyWorkoutPhaseBusinessManager
     {
-        private readonly UserManager<ApplicationUser> userManager;
         private readonly IWorkoutProgramService workoutProgramService;
         private readonly IWorkoutPhaseService workoutPhaseService;
+        private readonly IWorkoutDayService workoutDayService;
+        private readonly IExerciseService exerciseService;
 
 
         public MyWorkoutPhaseBusinessManager(
-            UserManager<ApplicationUser> userManager,
             IWorkoutProgramService workoutProgramService,
-            IWorkoutPhaseService workoutPhaseService)
+            IWorkoutPhaseService workoutPhaseService,
+            IWorkoutDayService workoutDayService,
+            IExerciseService exerciseService)
         {
-            this.userManager = userManager;
-            this.workoutPhaseService = workoutPhaseService;
             this.workoutProgramService = workoutProgramService;
+            this.workoutPhaseService = workoutPhaseService;
+            this.workoutDayService = workoutDayService;
+            this.exerciseService = exerciseService;
+        }
+
+        public CreateWorkoutPhaseMyWorkoutProgramViewModel GetCreateWorkoutPhaseMyWorkoutProgramViewModel(int programId)
+        {
+            var program = workoutProgramService.GetWorkoutProgram(programId);
+
+            var phases = workoutPhaseService.GetWorkoutPhaseList(programId, ModelType.WorkoutProgram);
+
+            return new CreateWorkoutPhaseMyWorkoutProgramViewModel
+            {
+                WorkoutProgram = program,
+                WorkoutPhases = phases,
+                WorkoutPhase = null,
+            };
+        }
+
+        public WorkoutDay GetWorkoutDay(int id, ModelType modelType)
+        {
+            return workoutDayService.GetWorkoutDay(id, modelType);
+        }
+
+        public WorkoutPhase GetWorkoutPhase(int phaseId, ModelType modelType)
+        {
+            return workoutPhaseService.GetWorkoutPhase(phaseId, ModelType.WorkoutPhase);
         }
 
         public async Task<WorkoutPhase> CreateWorkoutPhase(CreateWorkoutPhaseMyWorkoutProgramViewModel createViewModel)
@@ -51,33 +80,58 @@ namespace WorkoutPlannerWebApp.BusinessManager
             return phase;
         }
 
-        public Task<WorkoutPhase> DeleteWorkoutPhase(int id)
+        public ActionResult<WorkoutDay> EditWorkoutDay(CreateExerciseMyWorkoutProgramViewModel editViewModel)
         {
-            throw new NotImplementedException();
+            var day = workoutDayService.GetWorkoutDay(editViewModel.WorkoutDay.Id, ModelType.WorkoutDay);
+
+            day.Name = editViewModel.WorkoutDay.Name;
+
+            workoutDayService.UpdateWorkoutDay(day);
+
+            return day;
         }
 
-        public CreateWorkoutPhaseMyWorkoutProgramViewModel GetCreateWorkoutPhaseMyWorkoutProgramViewModel(int programId)
+        public async Task<WorkoutPhase> DeleteWorkoutPhase(int phaseId)
         {
-            var program = workoutProgramService.GetWorkoutProgram(programId);
+            var phase = workoutPhaseService.GetWorkoutPhase(phaseId, ModelType.WorkoutPhase);
+            var days = workoutDayService.GetWorkoutDayList(phaseId, ModelType.WorkoutPhase);
+            var exercises = exerciseService.GetCustomExerciseList(phaseId, ModelType.WorkoutPhase);
 
-            var phases = workoutPhaseService.GetWorkoutPhaseList(programId);
-
-            return new CreateWorkoutPhaseMyWorkoutProgramViewModel
+            // delete exercises
+            foreach (var exercise in exercises)
             {
-                WorkoutProgram = program,
-                WorkoutPhases = phases,
-                WorkoutPhase = null,
-            };
+                await exerciseService.RemoveCustomExercise(exercise);
+            }
+
+            // delete days
+            foreach (var day in days)
+            {
+                await workoutDayService.RemoveWorkoutDay(day);
+            }
+
+            // delete phase
+            await workoutPhaseService.RemoveWorkoutPhase(phase);
+            return phase;
         }
 
-        public WorkoutPhase GetWorkoutPhase(int phaseId)
+        public async Task<ActionResult<WorkoutDay>> ClearWorkoutDay(int dayId)
         {
-            throw new NotImplementedException();
-        }
+            var day = workoutDayService.GetWorkoutDay(dayId, ModelType.WorkoutDay);
+            var exercises = exerciseService.GetCustomExerciseList(dayId, ModelType.WorkoutDay);
 
-        public IEnumerable<WorkoutPhase> GetWorkoutPhases()
-        {
-            throw new NotImplementedException();
+            // delete exercises
+            foreach (var exercise in exercises)
+            {
+                await exerciseService.RemoveCustomExercise(exercise);
+            }
+
+            // reset day
+            day.Name = "Rest";
+            day.CustomExercises = null;
+
+            workoutDayService.UpdateWorkoutDay(day);
+
+            return day;
         }
     }
 }

@@ -40,7 +40,7 @@
                         </div>
                         <div class="col-1">
                             <form asp-action="DeleteWorkoutPhase" asp-route-id="@phase.Id">    
-                                <button class="btn btn-danger">delete phase</button>
+                                <button type="submit" class="btn btn-danger">delete phase</button>
                             </form>
                         </div>
                     </div>
@@ -54,28 +54,26 @@
                                     <h5>Day 1: @day.Name</h5>
                                 </div>
                                 <div class="row col-2">
-                                @if (day.Name == "Rest")
+                                @if (!day.CustomExercises.Any())
                                 {
                                     <td class="row justify-content-end">
-                                    <form asp-action="CreateExercise" asp-route-id="@day.Id">    
-                                        <button class="btn btn-primary">Add Exercises</button>
-                                    </form>
+                                        <a class="btn btn-primary" asp-area="" asp-controller="MyWorkoutPrograms" asp-action="CreateExercise" asp-route-id="@day.Id">Add Exercises</a>
                                     </td>
                                 }
                                 else
                                 {
                                     <td class="row justify-content-between">
-                                    <form class="flex col-6" asp-action="ClearWorkoutDay" asp-route-id="@day.Id">    
+                                    <form class="flex col-6" asp-action="ClearWorkoutDay" asp-route-id="@day.Id">   
+                                        <input asp-for="WorkoutProgram.Id" readonly hidden />
+                                        <input asp-for="WorkoutPhase.Id" readonly hidden />
                                         <button class="btn btn-danger">Clear</button>
                                     </form>
-                                    <form class="flex col-6" asp-action="EditWorkoutDay" asp-route-id="@day.Id">    
-                                        <button class="btn btn-success">Edit</button>
-                                    </form>
+                                    <a class="flex col-6 btn btn-primary" asp-area="" asp-controller="MyWorkoutPrograms" asp-action="CreateExercise" asp-route-id="@day.Id">Edit</a>
                                     </td>
                                 }
                             </div>
                             </div>
-                        @if (day.Name == "Rest")
+                        @if (!day.CustomExercises.Any())
                         {
                             <p>This is a rest day, there are no exercises here.</p>
                         }
@@ -88,7 +86,6 @@
                                     <th scope="col">Exercise</th>
                                     <th scope="col">Sets x Reps</th>
                                     <th scope="col">Description</th>
-                                    <th scope="col"></th>
                                 </tr>
                             </thead>
                             <tbody> 
@@ -104,14 +101,6 @@
                                     <td>@exercise.Sets x @exercise.MinRepetition - @exercise.MaxRepetition</td>  
                                     }
                                     <td>@exercise.Exercise.Description</td>
-                                    <td>
-                                        <form asp-action="DeleteExercise" asp-route-id="@exercise.Id">    
-                                            <button class="btn btn-danger">Delete</button>
-                                        </form>
-                                        <form asp-action="EditExercise" asp-route-id="@exercise.Id">    
-                                            <button class="btn btn-danger">Edit</button>
-                                        </form>
-                                    </td>
                                 </tr>
                             }  
                             </tbody>
@@ -157,7 +146,10 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.WorkoutProgram.Id">Back to List</a>
+</div>
+<div>
+    <a asp-action="Details" asp-route-id="@Model?.WorkoutProgram.Id" class="btn btn-success">Finish</a>
 </div>
 
 @section Scripts {

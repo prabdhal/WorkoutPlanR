@@ -75,7 +75,7 @@ namespace WorkoutPlannerWebApp.Controllers
         // GET: MyWorkoutPlans/CreateExercise/id
         public IActionResult CreateExercise(int id)
         {
-            var createViewModel = exerciseBusinessManager.GetCreateExerciseMyWorkoutProgramsViewModel(id, out IEnumerable<Exercise> exercises);
+            var createViewModel = exerciseBusinessManager.GetCreateExerciseMyWorkoutProgramsViewModel(id, ModelType.WorkoutDay, out IEnumerable<Exercise> exercises);
 
             ViewBag.Exercises = new SelectList(exercises, "Id", "Name");
 
@@ -89,7 +89,7 @@ namespace WorkoutPlannerWebApp.Controllers
             var exercise = await exerciseBusinessManager.CreateCustomExercise(createViewModel);
 
             ModelState.Clear();
-            return RedirectToAction("CreateExercise", new { createViewModel.WorkoutProgram.Id });
+            return RedirectToAction("CreateExercise", new { exercise.WorkoutDay.Id });
         }
 
         // GET: MyWorkoutPlans/Details/5
@@ -117,11 +117,23 @@ namespace WorkoutPlannerWebApp.Controllers
         {
             var program = workoutProgramBusinessManager.EditWorkoutProgram(editViewModel);
 
-            return RedirectToAction("CreateExercise", new { editViewModel.WorkoutProgram.Id });
+            return RedirectToAction("CreateWorkoutPhase", new { editViewModel.WorkoutProgram.Id });
+        }
+
+        // POST: MyWorkoutPlans/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditWorkoutDay(int id, CreateExerciseMyWorkoutProgramViewModel editViewModel)
+        {
+            var day = workoutPhaseBusinessManager.EditWorkoutDay(editViewModel);
+
+            return RedirectToAction("CreateWorkoutPhase", new { editViewModel.WorkoutProgram.Id });
         }
 
         // POST: MyWorkoutPlans/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteWorkoutProgram(int id)
         {
@@ -130,15 +142,38 @@ namespace WorkoutPlannerWebApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // POST: MyWorkoutPlans/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteWorkoutPhase(int id)
+        {
+
+            var phase = workoutPhaseBusinessManager.GetWorkoutPhase(id, ModelType.WorkoutPhase);   
+            var program = workoutProgramBusinessManager.GetWorkoutProgram(phase.WorkoutProgram.Id);
+            phase = await workoutPhaseBusinessManager.DeleteWorkoutPhase(id);
+
+            return RedirectToAction("CreateWorkoutPhase", new { program.Id });
+        }
+
+        // POST: MyWorkoutPlans/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ClearWorkoutDay(int id)
+        {
+            var day = workoutPhaseBusinessManager.ClearWorkoutDay(id);
+
+            return RedirectToAction("CreateExercise", new { id });
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteExercise(int id)
         {
             var exercise = exerciseBusinessManager.GetCustomExercise(id);
             var program = workoutProgramBusinessManager.GetWorkoutProgram(exercise.WorkoutProgram.Id);
-            exercise = await exerciseBusinessManager.DeleteCustomExercise(id);
+            exercise = await exerciseBusinessManager.DeleteCustomExercise(id, ModelType.CustomExercise);
 
-            return RedirectToAction("CreateExercise", new { program.Id });
+            return RedirectToAction("CreateExercise", new { exercise.WorkoutDay.Id });
         }
     }
 }

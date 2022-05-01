@@ -14,25 +14,50 @@ namespace WorkoutPlannerWebApp.Services
             this.context = context;
         }
 
-        public WorkoutPhase GetWorkoutPhase(int programId)
+        public WorkoutPhase GetWorkoutPhase(int id, ModelType modelType)
         {
-            return context.WorkoutPhases
-                .Include(p => p.WorkoutProgram)
-                .Include(p => p.WorkoutDays)
-                    .ThenInclude(d => d.CustomExercises)
-                        .ThenInclude(e => e.Exercise)
-                .FirstOrDefault(p => p.WorkoutProgram.Id == programId);
+            if (modelType.Equals(ModelType.WorkoutProgram))
+            {
+                return context.WorkoutPhases
+                    .Include(p => p.WorkoutProgram)
+                    .Include(p => p.WorkoutDays)
+                        .ThenInclude(d => d.CustomExercises)
+                            .ThenInclude(e => e.Exercise)
+                    .FirstOrDefault(p => p.WorkoutProgram.Id == id);
+            }
+            else
+            {
+                return context.WorkoutPhases
+                    .Include(p => p.WorkoutProgram)
+                    .Include(p => p.WorkoutDays)
+                        .ThenInclude(d => d.CustomExercises)
+                            .ThenInclude(e => e.Exercise)
+                    .FirstOrDefault(p => p.Id == id);
+            }
         }
 
-        public IEnumerable<WorkoutPhase> GetWorkoutPhaseList(int programId)
+        public IEnumerable<WorkoutPhase> GetWorkoutPhaseList(int programId, ModelType modelType)
         {
-            return context.WorkoutPhases
-                .Include(p => p.WorkoutProgram)
-                .Include(p => p.WorkoutDays)
-                    .ThenInclude(d => d.CustomExercises)
-                        .ThenInclude(e => e.Exercise)
-                .Where(p => p.WorkoutProgram.Id == programId)
-                .ToList();
+            if (modelType.Equals(ModelType.WorkoutProgram))
+            {
+                return context.WorkoutPhases
+                    .Include(p => p.WorkoutProgram)
+                    .Include(p => p.WorkoutDays)
+                        .ThenInclude(d => d.CustomExercises)
+                            .ThenInclude(e => e.Exercise)
+                    .Where(p => p.WorkoutProgram.Id == programId)
+                    .ToList();
+            }
+            else
+            {
+                return context.WorkoutPhases
+                    .Include(p => p.WorkoutProgram)
+                    .Include(p => p.WorkoutDays)
+                        .ThenInclude(d => d.CustomExercises)
+                            .ThenInclude(e => e.Exercise)
+                    .Where(p => p.Id == programId)
+                    .ToList();
+            }
         }
 
         public async Task<WorkoutPhase> AddWorkoutPhase(WorkoutPhase phase)

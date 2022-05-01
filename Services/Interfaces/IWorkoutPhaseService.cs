@@ -4,8 +4,8 @@ namespace WorkoutPlannerWebApp.Services.Interfaces
 {
     public interface IWorkoutPhaseService
     {
-        WorkoutPhase GetWorkoutPhase(int programId);
-        IEnumerable<WorkoutPhase> GetWorkoutPhaseList(int programId);
+        WorkoutPhase GetWorkoutPhase(int id, ModelType modelType);
+        IEnumerable<WorkoutPhase> GetWorkoutPhaseList(int id, ModelType modelType);
         Task<WorkoutPhase> AddWorkoutPhase(WorkoutPhase phase);
         WorkoutPhase UpdateWorkoutPhase(WorkoutPhase phase);
         Task<WorkoutPhase> RemoveWorkoutPhase(WorkoutPhase phase);

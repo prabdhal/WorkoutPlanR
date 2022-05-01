@@ -24,9 +24,55 @@
         <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.WorkoutProgram.Published)</dt>
         <dd class = "col-sm-10">@Html.DisplayFor(model => model.WorkoutProgram.Published)</dd>
     </dl>
+
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-11">
+                <h5>@Model.WorkoutPhase.Name</h5>
+                <div>@Model.WorkoutPhase.Duration</div>
+                <div>
+                    <p>@Model.WorkoutPhase.Content</p>
+                </div>
+            </div>
+            <div class="col-1">
+                <form asp-action="DeleteWorkoutPhase" asp-route-id="@Model.WorkoutPhase.Id">    
+                    <button class="btn btn-danger">delete phase</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <h5>Edit Day</h5>
+    <div class="row">
+    <div class="col-12">
+        <form asp-action="EditWorkoutDay">
+            <input asp-for="WorkoutProgram.Id" readonly hidden />
+            <input asp-for="WorkoutPhase.Id" readonly hidden />
+            <input asp-for="WorkoutDay.Id" readonly hidden />
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <br />
+            <div class="form-group">
+                <label asp-for="WorkoutDay.Name" class="control-label"></label>
+                <input asp-for="WorkoutDay.Name" class="form-control" />
+                <span asp-validation-for="WorkoutDay.Name" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Update" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
     
     <h5>Add Exercise</h5>
     <hr />
+    @if (!Model.CustomExercises.Any())
+    {
+        <p>There are no exercises added for @Model.WorkoutDay.Name as of yet.</p>
+    }
+    else
+    {
     <table class="col-12 table table-striped table-bordered table-hover table-responsive">
     <caption>List of exercises</caption>
       <thead class="thead-dark">
@@ -39,10 +85,6 @@
           <th scope="col"></th>
         </tr>
       </thead>
-            @if (!Model.CustomExercises.Any())
-            {
-                <p>There are no exercises added for this program as of yet.</p>
-            }
       <tbody> 
               @{ int idx = 0;
               @foreach (var exercise in Model.CustomExercises)
@@ -74,6 +116,7 @@
               }
         </tbody>
     </table>
+    }
 </div>
       
 <br />
@@ -82,7 +125,8 @@
 <div class="row">
     <div class="col-12">
         <form asp-action="CreateExercise">
-            <input asp-for="WorkoutProgram.Id" readonly hidden />
+            <input asp-for="WorkoutDay.Id" readonly hidden />
+            <input asp-for="WorkoutPhase.Id" readonly hidden />
 
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -116,7 +160,7 @@
     </div>
 </div>
 <div>
-    <a asp-action="Details" asp-route-id="@Model?.WorkoutProgram.Id" class="btn btn-success">Finish</a>
+    <a asp-action="CreateWorkoutPhase" asp-route-id="@Model.WorkoutProgram.Id">Back to List</a>
 </div>
 
 @section Scripts {

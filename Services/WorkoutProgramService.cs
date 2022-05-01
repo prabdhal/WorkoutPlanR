@@ -18,6 +18,7 @@ namespace WorkoutPlannerWebApp.Services
 
         public WorkoutProgram GetWorkoutProgram(int programId)
         {
+
              return context.WorkoutPrograms
                 .Include(p => p.WorkoutPhases)
                     .ThenInclude(ph => ph.WorkoutDays)

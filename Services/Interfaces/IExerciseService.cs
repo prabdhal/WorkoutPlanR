@@ -5,11 +5,9 @@ namespace WorkoutPlannerWebApp.Services.Interfaces
     public interface IExerciseService
     {
         Exercise GetExercise(int id);
-        CustomExercise GetCustomExercise(int dayId);
+        CustomExercise GetCustomExercise(int id, ModelType modelType);
         IEnumerable<Exercise> GetExerciseList();
-        IEnumerable<CustomExercise> GetCustomExerciseFromProgramList(int programId);
-        IEnumerable<CustomExercise> GetCustomExerciseFromPhaseList(int programId);
-        IEnumerable<CustomExercise> GetCustomExerciseFromDayList(int dayId);
+        IEnumerable<CustomExercise> GetCustomExerciseList(int id, ModelType modelType);
         Task<CustomExercise> AddCustomExercise(CustomExercise exercise);
         CustomExercise UpdateCustomExercise(CustomExercise exercise);
         Task<CustomExercise> RemoveCustomExercise(CustomExercise exercise);

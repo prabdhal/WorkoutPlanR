@@ -14,37 +14,71 @@ namespace WorkoutPlannerWebApp.Services
             this.context = context;
         }
 
-        public WorkoutDay GetWorkoutDay(int phaseId)
+        public WorkoutDay GetWorkoutDay(int id, ModelType modelType)
         {
-            return context.WorkoutDays
-                .Include(d => d.WorkoutProgram)
-                .Include(d => d.WorkoutPhase)
-                .Include(d => d.CustomExercises)
-                    .ThenInclude(e => e.Exercise)
-                .FirstOrDefault(d => d.WorkoutPhase.Id == phaseId);
+            if (modelType.Equals(ModelType.WorkoutProgram))
+            {
+                return context.WorkoutDays
+                    .Include(d => d.WorkoutProgram)
+                    .Include(d => d.WorkoutPhase)
+                    .Include(d => d.CustomExercises)
+                        .ThenInclude(e => e.Exercise)
+                    .FirstOrDefault(d => d.WorkoutProgram.Id == id);
+            }
+            else if (modelType.Equals(ModelType.WorkoutPhase))
+            {
+                return context.WorkoutDays
+                    .Include(d => d.WorkoutProgram)
+                    .Include(d => d.WorkoutPhase)
+                    .Include(d => d.CustomExercises)
+                        .ThenInclude(e => e.Exercise)
+                    .FirstOrDefault(d => d.WorkoutPhase.Id == id);
+            }
+            else
+            {
+                return context.WorkoutDays
+                    .Include(d => d.WorkoutProgram)
+                    .Include(d => d.WorkoutPhase)
+                    .Include(d => d.CustomExercises)
+                        .ThenInclude(e => e.Exercise)
+                    .FirstOrDefault(d => d.Id == id);
+            }
         }
 
-        public IEnumerable<WorkoutDay> GetWorkoutDayFromProgramList(int programId)
+        public IEnumerable<WorkoutDay> GetWorkoutDayList(int programId, ModelType modelType = ModelType.WorkoutProgram)
         {
-            return context.WorkoutDays
-                .Include(d => d.WorkoutProgram)
-                .Include(d => d.WorkoutPhase)
-                .Include(d => d.CustomExercises)
-                    .ThenInclude(e => e.Exercise)
-                .Where(d => d.WorkoutProgram.Id == programId)
-                .ToList();
+            if (modelType.Equals(ModelType.WorkoutProgram))
+            {
+                return context.WorkoutDays
+                    .Include(d => d.WorkoutProgram)
+                    .Include(d => d.WorkoutPhase)
+                    .Include(d => d.CustomExercises)
+                        .ThenInclude(e => e.Exercise)
+                    .Where(d => d.WorkoutProgram.Id == programId)
+                    .ToList();
+            }
+            else if (modelType.Equals(ModelType.WorkoutPhase))
+            {
+                return context.WorkoutDays
+                    .Include(d => d.WorkoutProgram)
+                    .Include(d => d.WorkoutPhase)
+                    .Include(d => d.CustomExercises)
+                        .ThenInclude(e => e.Exercise)
+                    .Where(d => d.WorkoutPhase.Id == programId)
+                    .ToList();
+            }
+            else 
+            {
+                return context.WorkoutDays
+                    .Include(d => d.WorkoutProgram)
+                    .Include(d => d.WorkoutPhase)
+                    .Include(d => d.CustomExercises)
+                        .ThenInclude(e => e.Exercise)
+                    .Where(d => d.Id == programId)
+                    .ToList();
+            }
         }
 
-        public IEnumerable<WorkoutDay> GetWorkoutDayFromPhaseList(int phaseId)
-        {
-            return context.WorkoutDays
-                .Include(d => d.WorkoutProgram)
-                .Include(d => d.WorkoutPhase)
-                .Include(d => d.CustomExercises)
-                    .ThenInclude(e => e.Exercise)
-                .Where(d => d.WorkoutPhase.Id == phaseId)
-                .ToList();
-        }
         public async Task<WorkoutDay> AddWorkoutDay(WorkoutDay day)
         {
             context.WorkoutDays.Add(day);

@@ -111,9 +111,9 @@ namespace WorkoutPlannerWebApp.BusinessManager
             if (program is null)
                 return new NotFoundResult();
             
-            var phases = workoutPhaseService.GetWorkoutPhaseList(programId);
-            var days = workoutDayService.GetWorkoutDayFromProgramList(programId);
-            var exercises = exerciseService.GetCustomExerciseFromProgramList(programId);
+            var phases = workoutPhaseService.GetWorkoutPhaseList(programId, ModelType.WorkoutProgram);
+            var days = workoutDayService.GetWorkoutDayList(programId, ModelType.WorkoutProgram);
+            var exercises = exerciseService.GetCustomExerciseList(programId, ModelType.WorkoutProgram);
 
             // Delete custom exercises per day
             foreach (var exercise in exercises)

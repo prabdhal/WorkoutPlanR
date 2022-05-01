@@ -4,9 +4,8 @@ namespace WorkoutPlannerWebApp.Services.Interfaces
 {
     public interface IWorkoutDayService
     {
-        WorkoutDay GetWorkoutDay(int phaseId);
-        IEnumerable<WorkoutDay> GetWorkoutDayFromProgramList(int phaseId);
-        IEnumerable<WorkoutDay> GetWorkoutDayFromPhaseList(int programId);
+        WorkoutDay GetWorkoutDay(int id, ModelType modelType);
+        IEnumerable<WorkoutDay> GetWorkoutDayList(int id, ModelType modelType);
         Task<WorkoutDay> AddWorkoutDay(WorkoutDay day);
         WorkoutDay UpdateWorkoutDay(WorkoutDay day);
         Task<WorkoutDay> RemoveWorkoutDay(WorkoutDay day);

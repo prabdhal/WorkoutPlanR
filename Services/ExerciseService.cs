@@ -20,14 +20,44 @@ namespace WorkoutPlannerWebApp.Services
                 .FirstOrDefault(e => e.Id == id);
         }
 
-        public CustomExercise GetCustomExercise(int id)
+        public CustomExercise GetCustomExercise(int id, ModelType modelType)
         {
-            return context.CustomExercises
-                .Include(e => e.WorkoutProgram)
-                .Include(e => e.WorkoutPhase)
-                .Include(e => e.WorkoutDay)
-                .Include(e => e.Exercise)
-                .FirstOrDefault(e => e.Id == id);
+            if (modelType == ModelType.WorkoutProgram)
+            {
+                return context.CustomExercises
+                    .Include(e => e.WorkoutProgram)
+                    .Include(e => e.WorkoutPhase)
+                    .Include(e => e.WorkoutDay)
+                    .Include(e => e.Exercise)
+                    .FirstOrDefault(e => e.WorkoutProgram.Id == id);
+            }
+            else if (modelType == ModelType.WorkoutPhase)
+            {
+                return context.CustomExercises
+                    .Include(e => e.WorkoutProgram)
+                    .Include(e => e.WorkoutPhase)
+                    .Include(e => e.WorkoutDay)
+                    .Include(e => e.Exercise)
+                    .FirstOrDefault(e => e.WorkoutPhase.Id == id);
+            }
+            else if (modelType == ModelType.WorkoutDay)
+            {
+                return context.CustomExercises
+                    .Include(e => e.WorkoutProgram)
+                    .Include(e => e.WorkoutPhase)
+                    .Include(e => e.WorkoutDay)
+                    .Include(e => e.Exercise)
+                    .FirstOrDefault(e => e.WorkoutDay.Id == id);
+            }
+            else
+            {
+                return context.CustomExercises
+                    .Include(e => e.WorkoutProgram)
+                    .Include(e => e.WorkoutPhase)
+                    .Include(e => e.WorkoutDay)
+                    .Include(e => e.Exercise)
+                    .FirstOrDefault(e => e.Id == id);
+            }
         }
 
         public IEnumerable<Exercise> GetExerciseList()
@@ -36,37 +66,48 @@ namespace WorkoutPlannerWebApp.Services
                 .ToList();
         }
 
-        public IEnumerable<CustomExercise> GetCustomExerciseFromProgramList(int programId)
+        public IEnumerable<CustomExercise> GetCustomExerciseList(int id, ModelType modelType)
         {
-            return context.CustomExercises
-                .Include(e => e.WorkoutProgram)
-                .Include(e => e.WorkoutPhase)
-                .Include(e => e.WorkoutDay)
-                .Include(e => e.Exercise)
-                .Where(e => e.WorkoutProgram.Id == programId)
-                .ToList();
-        }
-
-        public IEnumerable<CustomExercise> GetCustomExerciseFromPhaseList(int phaseId)
-        {
-            return context.CustomExercises
-                .Include(e => e.WorkoutProgram)
-                .Include(e => e.WorkoutPhase)
-                .Include(e => e.WorkoutDay)
-                .Include(e => e.Exercise)
-                .Where(e => e.WorkoutPhase.Id == phaseId)
-                .ToList();
-        }
-
-        public IEnumerable<CustomExercise> GetCustomExerciseFromDayList(int dayId)
-        {
-            return context.CustomExercises
-                .Include(e => e.WorkoutProgram)
-                .Include(e => e.WorkoutPhase)
-                .Include(e => e.WorkoutDay)
-                .Include(e => e.Exercise)
-                .Where(e => e.WorkoutDay.Id == dayId)
-                .ToList();
+            if (modelType == ModelType.WorkoutProgram)
+            {
+                return context.CustomExercises
+                    .Include(e => e.WorkoutProgram)
+                    .Include(e => e.WorkoutPhase)
+                    .Include(e => e.WorkoutDay)
+                    .Include(e => e.Exercise)
+                    .Where(e => e.WorkoutProgram.Id == id)
+                    .ToList();
+            }
+            else if (modelType == ModelType.WorkoutPhase)
+            {
+                return context.CustomExercises
+                    .Include(e => e.WorkoutProgram)
+                    .Include(e => e.WorkoutPhase)
+                    .Include(e => e.WorkoutDay)
+                    .Include(e => e.Exercise)
+                    .Where(e => e.WorkoutPhase.Id == id)
+                    .ToList();
+            }
+            else if (modelType == ModelType.WorkoutDay)
+            {
+                return context.CustomExercises
+                    .Include(e => e.WorkoutProgram)
+                    .Include(e => e.WorkoutPhase)
+                    .Include(e => e.WorkoutDay)
+                    .Include(e => e.Exercise)
+                    .Where(e => e.WorkoutDay.Id == id)
+                    .ToList();
+            }
+            else
+            {
+                return context.CustomExercises
+                    .Include(e => e.WorkoutProgram)
+                    .Include(e => e.WorkoutPhase)
+                    .Include(e => e.WorkoutDay)
+                    .Include(e => e.Exercise)
+                    .Where(e => e.Id == id)
+                    .ToList();
+            }
         }
 
         public async Task<CustomExercise> AddCustomExercise(CustomExercise exercise)
