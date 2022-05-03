@@ -57,19 +57,25 @@ namespace WorkoutPlannerWebApp.Controllers
         // GET: MyWorkoutPlans/CreateExercise/id
         public IActionResult CreateWorkoutPhase(int id)
         {
-            var createViewModel = workoutPhaseBusinessManager.GetCreateWorkoutPhaseMyWorkoutProgramViewModel(id);
+            var createViewModel = workoutPhaseBusinessManager.GetCreateWorkoutPhaseViewModel(id);
 
             return View(createViewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateWorkoutPhase(CreateWorkoutPhaseMyWorkoutProgramViewModel createViewModel)
+        public async Task<IActionResult> CreateWorkoutPhase(CreateWorkoutPhaseViewModel createViewModel)
         {
             var exercise = await workoutPhaseBusinessManager.CreateWorkoutPhase(createViewModel);
 
-            ModelState.Clear();
-            return RedirectToAction("CreateWorkoutPhase", new { createViewModel.WorkoutProgram.Id });
+            return RedirectToAction("ViewWorkoutPhases", new { createViewModel.WorkoutProgram.Id });
+        }
+
+        public IActionResult ViewWorkoutPhases(int id)
+        {
+            var viewModel = workoutPhaseBusinessManager.GetViewWorkoutPhasesViewModel(id);
+
+            return View(viewModel);
         }
 
         // GET: MyWorkoutPlans/CreateExercise/id
@@ -84,7 +90,7 @@ namespace WorkoutPlannerWebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateExercise(CreateExerciseMyWorkoutProgramViewModel createViewModel)
+        public async Task<IActionResult> CreateExercise(CreateExerciseViewModel createViewModel)
         {
             var exercise = await exerciseBusinessManager.CreateCustomExercise(createViewModel);
 
@@ -117,7 +123,14 @@ namespace WorkoutPlannerWebApp.Controllers
         {
             var program = workoutProgramBusinessManager.EditWorkoutProgram(editViewModel);
 
-            return RedirectToAction("CreateWorkoutPhase", new { editViewModel.WorkoutProgram.Id });
+            return RedirectToAction("ViewWorkoutPhases", new { editViewModel.WorkoutProgram.Id });
+        }
+
+        public async Task<IActionResult> EditWorkoutDay(int id)
+        {
+            var editViewModel = workoutPhaseBusinessManager.GetEditWorkoutDayViewModel(id);
+
+            return View(editViewModel);
         }
 
         // POST: MyWorkoutPlans/Edit/5
@@ -125,11 +138,27 @@ namespace WorkoutPlannerWebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditWorkoutDay(int id, CreateExerciseMyWorkoutProgramViewModel editViewModel)
+        public IActionResult EditWorkoutDay(int id, CreateExerciseViewModel editViewModel)
         {
             var day = workoutPhaseBusinessManager.EditWorkoutDay(editViewModel);
 
-            return RedirectToAction("CreateWorkoutPhase", new { editViewModel.WorkoutProgram.Id });
+            return RedirectToAction("ViewWorkoutPhases", new { editViewModel.WorkoutProgram.Id });
+        }
+
+        public IActionResult EditWorkoutPhase(int id)
+        {
+            var editViewModel = workoutPhaseBusinessManager.GetEditWorkoutPhaseViewModel(id);
+
+            return View(editViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditWorkoutPhase(EditWorkoutPhaseViewModel editViewModel)
+        {
+            var exercise = workoutPhaseBusinessManager.EditWorkoutPhase(editViewModel);
+
+            return RedirectToAction("ViewWorkoutPhases", new { editViewModel.WorkoutProgram.Id });
         }
 
         // POST: MyWorkoutPlans/Delete/5
@@ -139,7 +168,7 @@ namespace WorkoutPlannerWebApp.Controllers
         {
             var program = await workoutProgramBusinessManager.DeleteWorkoutProgram(id);
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index");
         }
 
         // POST: MyWorkoutPlans/Delete/5
@@ -152,7 +181,7 @@ namespace WorkoutPlannerWebApp.Controllers
             var program = workoutProgramBusinessManager.GetWorkoutProgram(phase.WorkoutProgram.Id);
             phase = await workoutPhaseBusinessManager.DeleteWorkoutPhase(id);
 
-            return RedirectToAction("CreateWorkoutPhase", new { program.Id });
+            return RedirectToAction("ViewWorkoutPhases", new { program.Id });
         }
 
         // POST: MyWorkoutPlans/Delete/5
@@ -160,9 +189,11 @@ namespace WorkoutPlannerWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ClearWorkoutDay(int id)
         {
-            var day = workoutPhaseBusinessManager.ClearWorkoutDay(id);
+            var day = workoutPhaseBusinessManager.GetWorkoutDay(id, ModelType.WorkoutDay);
+            var program = workoutProgramBusinessManager.GetWorkoutProgram(day.WorkoutProgram.Id);
+            var d = workoutPhaseBusinessManager.ClearWorkoutDay(id);
 
-            return RedirectToAction("CreateExercise", new { id });
+            return RedirectToAction("ViewWorkoutPhases", new { program.Id });
         }
 
         [HttpPost]

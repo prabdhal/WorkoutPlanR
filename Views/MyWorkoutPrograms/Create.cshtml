@@ -5,7 +5,7 @@
     ViewData["Title"] = "Create Workout Program";
 }
 
-<h1>Create Workout Program</h1>
+<h1>Create Your Workout Program</h1>
 
 <hr />
 <div class="row">
@@ -44,14 +44,16 @@
                 </label>
             </div>
             <br />
-            <div class="form-group">
-                <input type="submit" value="Add Workout Phases" class="btn btn-primary" />
+            <div class="row justify-content-between">
+                <span class="col-auto">
+                    <a asp-action="Index" class="btn btn-secondary">Back</a>
+                </span>
+                <span class="col-auto">
+                    <input type="submit" value="Continue" class="btn btn-primary" />
+                </span>
             </div>
         </form>
     </div>
-</div>
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
             <CKEditor:CKEditorControl ID="CKEditor" runat="server">

@@ -23,6 +23,7 @@ namespace WorkoutPlannerWebApp.Services
                 .Include(p => p.WorkoutPhases)
                     .ThenInclude(ph => ph.WorkoutDays)
                         .ThenInclude(e => e.CustomExercises)
+                            .ThenInclude(e => e.Exercise)
                 .Include(p => p.Publisher)
                 .FirstOrDefault(p => p.Id == programId);
         }

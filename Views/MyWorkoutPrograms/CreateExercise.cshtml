@@ -1,11 +1,11 @@
 ﻿@using WorkoutPlannerWebApp.HelperMethods
-@model WorkoutPlannerWebApp.ViewModels.CreateExerciseMyWorkoutProgramViewModel
+@model WorkoutPlannerWebApp.ViewModels.CreateExerciseViewModel
 
 @{
-    ViewData["Title"] = "Create Workout Program";
+    ViewData["Title"] = "Create Exercises";
 }
 
-<h1>My Workout Program</h1>
+<h1>Add Exercises</h1>
 
 <div>
     <h4>@Model.WorkoutProgram.Name</h4>
@@ -41,29 +41,7 @@
             </div>
         </div>
     </div>
-
-    <h5>Edit Day</h5>
-    <div class="row">
-    <div class="col-12">
-        <form asp-action="EditWorkoutDay">
-            <input asp-for="WorkoutProgram.Id" readonly hidden />
-            <input asp-for="WorkoutPhase.Id" readonly hidden />
-            <input asp-for="WorkoutDay.Id" readonly hidden />
-
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <br />
-            <div class="form-group">
-                <label asp-for="WorkoutDay.Name" class="control-label"></label>
-                <input asp-for="WorkoutDay.Name" class="form-control" />
-                <span asp-validation-for="WorkoutDay.Name" class="text-danger"></span>
-            </div>
-            <br />
-            <div class="form-group">
-                <input type="submit" value="Update" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+<br />
     
     <h5>Add Exercise</h5>
     <hr />
@@ -153,14 +131,18 @@
                 <span asp-validation-for="CustomExercise.MaxRepetition" class="text-danger"></span>
             </div>
             <br />
-            <div class="form-group">
-                <input type="submit" value="Add Exercise" class="btn btn-primary" />
-            </div>
+            <div class="row justify-content-between">
+                <span class="col-auto">
+                    <a asp-action="ViewWorkoutPhases" asp-route-id="@Model.WorkoutProgram.Id" class="btn btn-secondary">Back</a>
+                </span>
+                <span class="col-auto">
+                    <input type="submit" value="Add Exercise" class="btn btn-primary" />
+                </span>
+            </div>  
         </form>
     </div>
 </div>
 <div>
-    <a asp-action="CreateWorkoutPhase" asp-route-id="@Model.WorkoutProgram.Id">Back to List</a>
 </div>
 
 @section Scripts {

@@ -1,0 +1,42 @@
+﻿@using WorkoutPlannerWebApp.HelperMethods
+@model WorkoutPlannerWebApp.ViewModels.MyWorkoutProgramsViewModels.EditWorkoutDayViewModel
+
+@{
+    ViewData["Title"] = "Create Exercises";
+}
+
+<h1>Add Exercises</h1>
+
+<div>
+    <h4>@Model.WorkoutProgram.Name</h4>
+    <hr />
+
+    <h5>Edit Day</h5>
+<div class="row">
+    <div class="col-12">
+        <form asp-action="EditWorkoutDay">
+            <input asp-for="WorkoutProgram.Id" readonly hidden />
+            <input asp-for="WorkoutPhase.Id" readonly hidden />
+            <input asp-for="WorkoutDay.Id" readonly hidden />
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <br />
+            <div class="form-group">
+                <label asp-for="WorkoutDay.Name" class="control-label"></label>
+                <input asp-for="WorkoutDay.Name" class="form-control" />
+                <span asp-validation-for="WorkoutDay.Name" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Update" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+</div>
+      
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

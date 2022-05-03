@@ -28,13 +28,51 @@ namespace WorkoutPlannerWebApp.BusinessManager
             this.exerciseService = exerciseService;
         }
 
-        public CreateWorkoutPhaseMyWorkoutProgramViewModel GetCreateWorkoutPhaseMyWorkoutProgramViewModel(int programId)
+        public CreateWorkoutPhaseViewModel GetCreateWorkoutPhaseViewModel(int programId)
+        {
+            var program = workoutProgramService.GetWorkoutProgram(programId);
+
+            return new CreateWorkoutPhaseViewModel
+            {
+                WorkoutProgram = program,
+                WorkoutPhase = null,
+            };
+        }
+
+        public EditWorkoutPhaseViewModel GetEditWorkoutPhaseViewModel(int programId)
+        {
+            var program = workoutProgramService.GetWorkoutProgram(programId);
+
+            var phase = workoutPhaseService.GetWorkoutPhase(programId, ModelType.WorkoutProgram);
+
+            return new EditWorkoutPhaseViewModel
+            {
+                WorkoutProgram = program,
+                WorkoutPhase = phase,
+            };
+        }
+
+        public EditWorkoutDayViewModel GetEditWorkoutDayViewModel(int programId)
+        {
+            var program = workoutProgramService.GetWorkoutProgram(programId);
+            var phase = workoutPhaseService.GetWorkoutPhase(programId, ModelType.WorkoutProgram);
+            var day = workoutDayService.GetWorkoutDay(programId, ModelType.WorkoutProgram);
+
+            return new EditWorkoutDayViewModel
+            {
+                WorkoutProgram = program,
+                WorkoutPhase = phase,
+                WorkoutDay = day
+            };
+        }
+
+        public ViewWorkoutPhaseViewModel GetViewWorkoutPhasesViewModel(int programId)
         {
             var program = workoutProgramService.GetWorkoutProgram(programId);
 
             var phases = workoutPhaseService.GetWorkoutPhaseList(programId, ModelType.WorkoutProgram);
 
-            return new CreateWorkoutPhaseMyWorkoutProgramViewModel
+            return new ViewWorkoutPhaseViewModel
             {
                 WorkoutProgram = program,
                 WorkoutPhases = phases,
@@ -52,7 +90,18 @@ namespace WorkoutPlannerWebApp.BusinessManager
             return workoutPhaseService.GetWorkoutPhase(phaseId, ModelType.WorkoutPhase);
         }
 
-        public async Task<WorkoutPhase> CreateWorkoutPhase(CreateWorkoutPhaseMyWorkoutProgramViewModel createViewModel)
+        public ActionResult<WorkoutDay> EditWorkoutDay(CreateExerciseViewModel editViewModel)
+        {
+            var day = workoutDayService.GetWorkoutDay(editViewModel.WorkoutDay.Id, ModelType.WorkoutDay);
+
+            day.Name = editViewModel.WorkoutDay.Name;
+
+            workoutDayService.UpdateWorkoutDay(day);
+
+            return day;
+        }
+
+        public async Task<WorkoutPhase> CreateWorkoutPhase(CreateWorkoutPhaseViewModel createViewModel)
         {
             var program = workoutProgramService.GetWorkoutProgram(createViewModel.WorkoutProgram.Id);
             var phase = createViewModel.WorkoutPhase;
@@ -68,7 +117,9 @@ namespace WorkoutPlannerWebApp.BusinessManager
                 {
                     WorkoutProgram = program,
                     WorkoutPhase = phase,
-                    Name = "Rest",
+                    DayNumber = i + 1,
+                    Name = "Rest Day",
+                    Description = null,
                     CustomExercises = null,
                 };
                 workoutDays.Add(day);
@@ -80,15 +131,16 @@ namespace WorkoutPlannerWebApp.BusinessManager
             return phase;
         }
 
-        public ActionResult<WorkoutDay> EditWorkoutDay(CreateExerciseMyWorkoutProgramViewModel editViewModel)
+        public ActionResult<WorkoutPhase> EditWorkoutPhase(EditWorkoutPhaseViewModel editViewModel)
         {
-            var day = workoutDayService.GetWorkoutDay(editViewModel.WorkoutDay.Id, ModelType.WorkoutDay);
+            var phase = workoutPhaseService.GetWorkoutPhase(editViewModel.WorkoutPhase.Id, ModelType.WorkoutPhase);
 
-            day.Name = editViewModel.WorkoutDay.Name;
+            phase.Name = editViewModel.WorkoutPhase.Name;
+            phase.Duration = editViewModel.WorkoutPhase.Duration;
+            phase.Content = editViewModel.WorkoutPhase.Content;
 
-            workoutDayService.UpdateWorkoutDay(day);
-
-            return day;
+            workoutPhaseService.UpdateWorkoutPhase(phase);
+            return phase;
         }
 
         public async Task<WorkoutPhase> DeleteWorkoutPhase(int phaseId)

@@ -38,11 +38,11 @@ namespace WorkoutPlannerWebApp.BusinessManager
             return workoutProgramService.GetWorkoutProgram(programId);
         }
 
-        public IndexMyWorkoutProgramViewModel GetIndexMyWorkoutProgramsViewModel(string searchString)
+        public IndexViewModel GetIndexMyWorkoutProgramsViewModel(string searchString)
         {
             var programs = workoutProgramService.GetWorkoutProgramList(searchString ?? String.Empty);
 
-            return new IndexMyWorkoutProgramViewModel()
+            return new IndexViewModel()
             {
                 WorkoutPrograms = programs,
             };

@@ -2,7 +2,7 @@
 
 namespace WorkoutPlannerWebApp.ViewModels
 {
-  public class CreateExerciseMyWorkoutProgramViewModel
+  public class CreateExerciseViewModel
   {
     public WorkoutProgram WorkoutProgram { get; set; }
     public WorkoutPhase WorkoutPhase { get; set; }

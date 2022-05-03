@@ -43,9 +43,7 @@ namespace WorkoutPlannerWebApp.Controllers.Api
       var exercise = await _context.Exercises.FindAsync(id);
 
       if (exercise == null)
-      {
         return NotFound();
-      }
 
       return exercise;
     }
@@ -108,13 +106,11 @@ namespace WorkoutPlannerWebApp.Controllers.Api
 
     // DELETE: api/Exercises/5
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteExercise(string id)
+    public async Task<IActionResult> DeleteExercise(int id)
     {
       var exercise = await _context.Exercises.FindAsync(id);
       if (exercise == null)
-      {
         return NotFound();
-      }
 
       _context.Exercises.Remove(exercise);
       await _context.SaveChangesAsync();

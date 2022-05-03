@@ -44,7 +44,7 @@ namespace WorkoutPlannerWebApp.BusinessManager
             return exerciseService.GetExerciseList();
         }
 
-        public CreateExerciseMyWorkoutProgramViewModel GetCreateExerciseMyWorkoutProgramsViewModel(int id, ModelType modelType, out IEnumerable<Exercise> exercises)
+        public CreateExerciseViewModel GetCreateExerciseMyWorkoutProgramsViewModel(int id, ModelType modelType, out IEnumerable<Exercise> exercises)
         {
             var day = workoutDayService.GetWorkoutDay(id, modelType);
             var program = workoutProgramService.GetWorkoutProgram(day.WorkoutProgram.Id);
@@ -56,7 +56,7 @@ namespace WorkoutPlannerWebApp.BusinessManager
 
             exercises = e;
 
-            return new CreateExerciseMyWorkoutProgramViewModel
+            return new CreateExerciseViewModel
             {
                 WorkoutProgram = program,
                 WorkoutPhase = phase,
@@ -67,7 +67,7 @@ namespace WorkoutPlannerWebApp.BusinessManager
             };
         }
 
-        public async Task<CustomExercise> CreateCustomExercise(CreateExerciseMyWorkoutProgramViewModel createViewModel)
+        public async Task<CustomExercise> CreateCustomExercise(CreateExerciseViewModel createViewModel)
         {
             var customExercise = createViewModel.CustomExercise;
 

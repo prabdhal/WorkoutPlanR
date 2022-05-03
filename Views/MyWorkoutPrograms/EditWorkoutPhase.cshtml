@@ -1,15 +1,17 @@
-﻿@model WorkoutPlannerWebApp.ViewModels.MyWorkoutProgramsViewModels.CreateWorkoutPhaseViewModel
+﻿@model WorkoutPlannerWebApp.ViewModels.MyWorkoutProgramsViewModels.EditWorkoutPhaseViewModel
 
 @{
-    ViewData["Title"] = "Create Workout Phase";
+    ViewData["Title"] = "Edit Workout Phase";
 }
 
-<h1>Create Workout Phase</h1>
-<br />
+<h1>Edit Workout Phases</h1>
+
 <div class="row">
     <div class="col-12">
-        <form asp-action="CreateWorkoutPhase">
+        <form asp-action="EditWorkoutPhase">
             <input asp-for="WorkoutProgram.Id" readonly hidden />
+            <input asp-for="WorkoutPhase.Id" readonly hidden />
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="WorkoutPhase.Name" class="control-label"></label>
@@ -31,17 +33,15 @@
             <br />
             <div class="row justify-content-between">
                 <span class="col-auto">
-                    <a asp-action="ViewWorkoutPhases" asp-route-id="@Model.WorkoutProgram.Id" class="btn btn-secondary">Back</a>
+                    <a asp-action="Edit" asp-route-id="@Model.WorkoutProgram.Id" class="btn btn-secondary">Back</a>
                 </span>
                 <span class="col-auto">
-                    <input type="submit" value="Add" class="btn btn-primary" />
+                    <input type="submit" value="Update" class="btn btn-primary" />
                 </span>
             </div>  
         </form>
     </div>
 </div>
-
-<br /> 
 
 
 @section Scripts {
