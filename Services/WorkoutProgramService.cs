@@ -75,7 +75,14 @@ namespace WorkoutPlannerWebApp.Services
             return program;
         }
 
-        public WorkoutProgram UpdateWorkoutProgram(WorkoutProgram program)
+        public async Task<WorkoutProgram> UpdateWorkoutProgram(WorkoutProgram program)
+        {
+            context.WorkoutPrograms.Update(program);
+            await context.SaveChangesAsync();
+            return program;
+        }
+
+        public WorkoutProgram UpdateWorkoutProgramSync(WorkoutProgram program)
         {
             context.WorkoutPrograms.Update(program);
             context.SaveChanges();

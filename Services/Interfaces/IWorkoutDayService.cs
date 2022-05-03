@@ -7,7 +7,7 @@ namespace WorkoutPlannerWebApp.Services.Interfaces
         WorkoutDay GetWorkoutDay(int id, ModelType modelType);
         IEnumerable<WorkoutDay> GetWorkoutDayList(int id, ModelType modelType);
         Task<WorkoutDay> AddWorkoutDay(WorkoutDay day);
-        WorkoutDay UpdateWorkoutDay(WorkoutDay day);
+        Task<WorkoutDay> UpdateWorkoutDay(WorkoutDay day);
         Task<WorkoutDay> RemoveWorkoutDay(WorkoutDay day);
     }
 }

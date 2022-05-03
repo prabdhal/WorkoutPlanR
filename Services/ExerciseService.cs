@@ -117,10 +117,10 @@ namespace WorkoutPlannerWebApp.Services
             return exercise;
         }
 
-        public CustomExercise UpdateCustomExercise(CustomExercise exercise)
+        public async Task<CustomExercise> UpdateCustomExercise(CustomExercise exercise)
         {
             context.CustomExercises.Update(exercise);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             return exercise;
         }
 

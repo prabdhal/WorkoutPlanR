@@ -13,7 +13,7 @@ namespace WorkoutPlannerWebApp.BusinessManager.Interfaces
         ViewWorkoutPhaseViewModel GetViewWorkoutPhasesViewModel(int programId);
         WorkoutPhase GetWorkoutPhase(int id, ModelType modelType);
         WorkoutDay GetWorkoutDay(int id, ModelType modelType);
-        ActionResult<WorkoutDay> EditWorkoutDay(CreateExerciseViewModel editViewModel);
+        Task<ActionResult<WorkoutDay>> EditWorkoutDay(CreateExerciseViewModel editViewModel);
         Task<WorkoutPhase> CreateWorkoutPhase(CreateWorkoutPhaseViewModel createViewModel);
         ActionResult<WorkoutPhase> EditWorkoutPhase(EditWorkoutPhaseViewModel editViewModel);
         Task<WorkoutPhase> DeleteWorkoutPhase(int id);

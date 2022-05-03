@@ -2,10 +2,10 @@
 @model WorkoutPlannerWebApp.ViewModels.MyWorkoutProgramsViewModels.EditWorkoutDayViewModel
 
 @{
-    ViewData["Title"] = "Create Exercises";
+    ViewData["Title"] = "Edit Day Details";
 }
 
-<h1>Add Exercises</h1>
+<h1>Edit Day Details</h1>
 
 <div>
     <h4>@Model.WorkoutProgram.Name</h4>
@@ -28,8 +28,19 @@
             </div>
             <br />
             <div class="form-group">
-                <input type="submit" value="Update" class="btn btn-primary" />
+                <label asp-for="WorkoutDay.Description" class="control-label"></label>
+                <input asp-for="WorkoutDay.Description" class="form-control" />
+                <span asp-validation-for="WorkoutDay.Description" class="text-danger"></span>
             </div>
+            <br />
+            <div class="row justify-content-between">
+                <span class="col-auto">
+                    <a asp-action="ViewWorkoutPhases" asp-route-id="@Model.WorkoutProgram.Id" class="btn btn-secondary">Back</a>
+                </span>
+                <span class="col-auto">
+                    <input type="submit" value="Update" class="btn btn-primary" />
+                </span>
+            </div>  
         </form>
     </div>
 </div>

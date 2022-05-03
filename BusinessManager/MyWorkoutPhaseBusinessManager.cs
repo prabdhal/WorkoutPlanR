@@ -52,11 +52,11 @@ namespace WorkoutPlannerWebApp.BusinessManager
             };
         }
 
-        public EditWorkoutDayViewModel GetEditWorkoutDayViewModel(int programId)
+        public EditWorkoutDayViewModel GetEditWorkoutDayViewModel(int dayId)
         {
-            var program = workoutProgramService.GetWorkoutProgram(programId);
-            var phase = workoutPhaseService.GetWorkoutPhase(programId, ModelType.WorkoutProgram);
-            var day = workoutDayService.GetWorkoutDay(programId, ModelType.WorkoutProgram);
+            var day = workoutDayService.GetWorkoutDay(dayId, ModelType.WorkoutDay);
+            var phase = workoutPhaseService.GetWorkoutPhase(day.WorkoutPhase.Id, ModelType.WorkoutPhase);
+            var program = workoutProgramService.GetWorkoutProgram(day.WorkoutProgram.Id);
 
             return new EditWorkoutDayViewModel
             {
@@ -90,13 +90,16 @@ namespace WorkoutPlannerWebApp.BusinessManager
             return workoutPhaseService.GetWorkoutPhase(phaseId, ModelType.WorkoutPhase);
         }
 
-        public ActionResult<WorkoutDay> EditWorkoutDay(CreateExerciseViewModel editViewModel)
+        public async Task<ActionResult<WorkoutDay>> EditWorkoutDay(CreateExerciseViewModel editViewModel)
         {
             var day = workoutDayService.GetWorkoutDay(editViewModel.WorkoutDay.Id, ModelType.WorkoutDay);
+            var phase = workoutPhaseService.GetWorkoutPhase(day.WorkoutPhase.Id, ModelType.WorkoutPhase);
 
             day.Name = editViewModel.WorkoutDay.Name;
+            day.Description = editViewModel.WorkoutDay.Description;
 
-            workoutDayService.UpdateWorkoutDay(day);
+            var p = workoutPhaseService.UpdateWorkoutPhaseSync(phase);
+            var d = await workoutDayService.UpdateWorkoutDay(day);
 
             return day;
         }
@@ -139,7 +142,7 @@ namespace WorkoutPlannerWebApp.BusinessManager
             phase.Duration = editViewModel.WorkoutPhase.Duration;
             phase.Content = editViewModel.WorkoutPhase.Content;
 
-            workoutPhaseService.UpdateWorkoutPhase(phase);
+            workoutPhaseService.UpdateWorkoutPhaseSync(phase);
             return phase;
         }
 
@@ -181,7 +184,7 @@ namespace WorkoutPlannerWebApp.BusinessManager
             day.Name = "Rest";
             day.CustomExercises = null;
 
-            workoutDayService.UpdateWorkoutDay(day);
+            await workoutDayService.UpdateWorkoutDay(day);
 
             return day;
         }

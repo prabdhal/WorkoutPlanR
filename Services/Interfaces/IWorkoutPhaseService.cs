@@ -7,7 +7,8 @@ namespace WorkoutPlannerWebApp.Services.Interfaces
         WorkoutPhase GetWorkoutPhase(int id, ModelType modelType);
         IEnumerable<WorkoutPhase> GetWorkoutPhaseList(int id, ModelType modelType);
         Task<WorkoutPhase> AddWorkoutPhase(WorkoutPhase phase);
-        WorkoutPhase UpdateWorkoutPhase(WorkoutPhase phase);
+        Task<WorkoutPhase> UpdateWorkoutPhase(WorkoutPhase phase);
+        WorkoutPhase UpdateWorkoutPhaseSync(WorkoutPhase phase);
         Task<WorkoutPhase> RemoveWorkoutPhase(WorkoutPhase phase);
     }
 }

@@ -101,7 +101,7 @@ namespace WorkoutPlannerWebApp.BusinessManager
             program.UpdatedOn = DateTime.Now;
             program.Published = editViewModel.WorkoutProgram.Published;
 
-            program = workoutProgramService.UpdateWorkoutProgram(program);
+            program = workoutProgramService.UpdateWorkoutProgramSync(program);
             return program;
         }
 

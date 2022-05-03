@@ -67,7 +67,14 @@ namespace WorkoutPlannerWebApp.Services
             return phase;
         }
 
-        public WorkoutPhase UpdateWorkoutPhase(WorkoutPhase phase)
+        public async Task<WorkoutPhase> UpdateWorkoutPhase(WorkoutPhase phase)
+        {
+            context.WorkoutPhases.Update(phase);
+            await context.SaveChangesAsync();
+            return phase;
+        }
+
+        public WorkoutPhase UpdateWorkoutPhaseSync(WorkoutPhase phase)
         {
             context.WorkoutPhases.Update(phase);
             context.SaveChanges();

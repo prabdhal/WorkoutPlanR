@@ -69,7 +69,7 @@
                                 <div class="col-12">
                                     <h5>Day @day.DayNumber: @day.Name</h5>
                                     <p>@day.Description</p>
-                                    <a asp-action="EditWorkoutDay" asp-route-id="@Model.WorkoutProgram.Id" class="btn btn-success">Edit Day</a>
+                                    <a asp-action="EditWorkoutDay" asp-route-id="@day.Id" class="btn btn-success">Edit Day</a>
                                 </div>
                                 <div class="row col-2">
                                 @if (!day.CustomExercises.Any())

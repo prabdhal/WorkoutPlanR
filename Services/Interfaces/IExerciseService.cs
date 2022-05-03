@@ -9,7 +9,7 @@ namespace WorkoutPlannerWebApp.Services.Interfaces
         IEnumerable<Exercise> GetExerciseList();
         IEnumerable<CustomExercise> GetCustomExerciseList(int id, ModelType modelType);
         Task<CustomExercise> AddCustomExercise(CustomExercise exercise);
-        CustomExercise UpdateCustomExercise(CustomExercise exercise);
+        Task<CustomExercise> UpdateCustomExercise(CustomExercise exercise);
         Task<CustomExercise> RemoveCustomExercise(CustomExercise exercise);
     }
 }

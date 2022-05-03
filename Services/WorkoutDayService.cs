@@ -86,10 +86,17 @@ namespace WorkoutPlannerWebApp.Services
             return day;
         }
 
-        public WorkoutDay UpdateWorkoutDay(WorkoutDay day)
+        public async Task<WorkoutDay> UpdateWorkoutDay(WorkoutDay day)
         {
             context.WorkoutDays.Update(day);
-            context.SaveChangesAsync();
+            await context.SaveChangesAsync();
+            return day;
+        }
+
+        public WorkoutDay UpdateWorkoutDaySync(WorkoutDay day)
+        {
+            context.WorkoutDays.Update(day);
+            context.SaveChanges();
             return day;
         }
 
