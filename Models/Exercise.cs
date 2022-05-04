@@ -13,7 +13,7 @@ namespace WorkoutPlannerWebApp.Models
     public string Description { get; set; }
 
     [Url]
-    [Display(Name = "Reference Link")]
-    public string ReferenceLink { get; set; }
+    [Display(Name = "Tutorial Video Link")]
+    public string TutorialVideoLink { get; set; }
   }
 }

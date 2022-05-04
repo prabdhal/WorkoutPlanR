@@ -4,6 +4,7 @@ using WorkoutPlannerWebApp.BusinessManager.Interfaces;
 using WorkoutPlannerWebApp.Models;
 using WorkoutPlannerWebApp.Services.Interfaces;
 using WorkoutPlannerWebApp.ViewModels;
+using WorkoutPlannerWebApp.ViewModels.ExercisesViewModels;
 
 namespace WorkoutPlannerWebApp.BusinessManager
 {
@@ -27,21 +28,27 @@ namespace WorkoutPlannerWebApp.BusinessManager
             this.exerciseService = exerciseService;
         }
 
-        public CustomExercise GetCustomExercise(int exerciseId)
+
+
+
+        public IndexExercisesViewModel GetIndexExercisesViewModel()
         {
-            var exercise = exerciseService.GetCustomExercise(exerciseId, ModelType.CustomExercise);
-            var phase = workoutPhaseService.GetWorkoutPhase(exercise.WorkoutProgram.Id, ModelType.WorkoutProgram);
-            var day = workoutDayService.GetWorkoutDay(exercise.WorkoutProgram.Id, ModelType.WorkoutProgram);
+            var exercises = exerciseService.GetExerciseList();
 
-            exercise.WorkoutPhase = phase;
-            exercise.WorkoutDay = day;
-
-            return exercise;
+            return new IndexExercisesViewModel()
+            {
+                Exercises = exercises,
+            };
         }
 
-        public IEnumerable<Exercise> GetExercises()
+        public DetailExerciseViewModel GetDetailExerciseViewModel(int exerciseId)
         {
-            return exerciseService.GetExerciseList();
+            var exercise = exerciseService.GetExercise(exerciseId);
+
+            return new DetailExerciseViewModel()
+            {
+                Exercise = exercise,
+            };
         }
 
         public CreateExerciseViewModel GetCreateExerciseMyWorkoutProgramsViewModel(int id, ModelType modelType, out IEnumerable<Exercise> exercises)
@@ -62,9 +69,27 @@ namespace WorkoutPlannerWebApp.BusinessManager
                 WorkoutPhase = phase,
                 WorkoutDay = day,
                 Exercises = e,
+                Exercise = null,
                 CustomExercises = customExercises,
                 CustomExercise = null,
             };
+        }
+
+        public CustomExercise GetCustomExercise(int exerciseId)
+        {
+            var exercise = exerciseService.GetCustomExercise(exerciseId, ModelType.CustomExercise);
+            var phase = workoutPhaseService.GetWorkoutPhase(exercise.WorkoutProgram.Id, ModelType.WorkoutProgram);
+            var day = workoutDayService.GetWorkoutDay(exercise.WorkoutProgram.Id, ModelType.WorkoutProgram);
+
+            exercise.WorkoutPhase = phase;
+            exercise.WorkoutDay = day;
+
+            return exercise;
+        }
+
+        public IEnumerable<Exercise> GetExercises()
+        {
+            return exerciseService.GetExerciseList();
         }
 
         public async Task<CustomExercise> CreateCustomExercise(CreateExerciseViewModel createViewModel)

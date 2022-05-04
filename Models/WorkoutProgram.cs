@@ -9,18 +9,19 @@ namespace WorkoutPlannerWebApp.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Please enter a name for the workout program.")]
+        [Display(Name = "Program Name")]
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Please enter the difficulty of the workout program.")]
         public Difficulty Difficulty { get; set; }
 
         [Required(ErrorMessage = "Please enter a short description of the workout program.")]
-        [StringLength(100, ErrorMessage = "The {1} must be less than {2} characters")]
-        [Display(Name = "Short Description")]
-        public string ShortDescription { get; set; }
+        [StringLength(250, ErrorMessage = "The {0} must be less than {1} characters")]
+        [Display(Name = "Description")]
+        public string Description { get; set; }
 
-        [Display(Name = "Long Description")]
-        public string LongDescription { get; set; }
+        [Display(Name = "Program Details")]
+        public string ProgramDetails { get; set; }
 
         [Display(Name = "Created On")]
         [DisplayFormat(DataFormatString = "{0:MMM dd hh:mm tt}", ApplyFormatInEditMode = true)]

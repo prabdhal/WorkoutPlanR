@@ -21,3 +21,15 @@ body {
 .flex {
     display: flex !important;
 }
+
+.split-row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    padding: 5px 0px;
+}
+
+.split-row-col {
+    display: flex;
+    flex-direction: column;
+}

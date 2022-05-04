@@ -6,101 +6,42 @@
 }
 
 <h1>Add Exercises</h1>
-
+<br />
 <div>
-    <h4>@Model.WorkoutProgram.Name</h4>
-    <hr />
+    <h2>@Model.WorkoutProgram.Name</h2>
     <dl class="row">
-        <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.WorkoutProgram.Difficulty)</dt>
-        <dd class = "col-sm-10">@Html.DisplayFor(model => model.WorkoutProgram.Difficulty)</dd>
-        <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.WorkoutProgram.ShortDescription)</dt>
-        <dd class = "col-sm-10">@Html.DisplayFor(model => model.WorkoutProgram.ShortDescription)</dd>
-        <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.WorkoutProgram.CreatedOn)</dt>
-        <dd class = "col-sm-10">@Model.WorkoutProgram.CreatedOn.ToString("MM/dd/yy hh:mm tt")</dd>
-        <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.WorkoutProgram.UpdatedOn)</dt>
-        <dd class = "col-sm-10">@Model.WorkoutProgram.UpdatedOn.ToString("MM/dd/yy hh:mm tt")</dd>
-        <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.WorkoutProgram.LongDescription)</dt>
-        <dd class = "col-sm-10">@Html.DisplayFor(model => model.WorkoutProgram.LongDescription)</dd>
-        <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.WorkoutProgram.Published)</dt>
-        <dd class = "col-sm-10">@Html.DisplayFor(model => model.WorkoutProgram.Published)</dd>
+        <dt class="col-2">Difficulty</dt>
+        <dd class="col-10">@Model.WorkoutProgram.Difficulty</dd>
+        <dt class="col-2">Updated On</dt>
+        <dd class="col-10">@Model.WorkoutProgram.UpdatedOn.ToString("MM/dd/yy hh:mm tt")</dd>    
+        <dt class="col-2">Description</dt>
+        <dd class="col-10">@Model.WorkoutProgram.Description</dd>
+        <dt>Program Detail</dt>
+        <dd>@Model.WorkoutProgram.ProgramDetails</dd>
     </dl>
-
+    <hr />
+    
     <div class="container">
-        <div class="row justify-content-between">
-            <div class="col-11">
-                <h5>@Model.WorkoutPhase.Name</h5>
+        <div class="split-row">
+            <div class="split-row-col">
+                <h3>@Model.WorkoutPhase.Name</h3>
                 <div>@Model.WorkoutPhase.Duration</div>
                 <div>
-                    <p>@Model.WorkoutPhase.Content</p>
+                    <p>@Model.WorkoutPhase.PhaseDetails</p>
                 </div>
             </div>
-            <div class="col-1">
+            <div class="split-row-col">
                 <form asp-action="DeleteWorkoutPhase" asp-route-id="@Model.WorkoutPhase.Id">    
-                    <button class="btn btn-danger">delete phase</button>
+                    <button class="btn btn-danger">Delete Phase</button>
                 </form>
             </div>
         </div>
     </div>
 <br />
-    
-    <h5>Add Exercise</h5>
-    <hr />
-    @if (!Model.CustomExercises.Any())
-    {
-        <p>There are no exercises added for @Model.WorkoutDay.Name as of yet.</p>
-    }
-    else
-    {
-    <table class="col-12 table table-striped table-bordered table-hover table-responsive">
-    <caption>List of exercises</caption>
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Exercise</th>
-          <th scope="col">Sets x Reps</th>
-          <th scope="col">Description</th>
-          <th scope="col">Reference Link</th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody> 
-              @{ int idx = 0;
-              @foreach (var exercise in Model.CustomExercises)
-              {
-                    idx++;
-                    <tr>
-                  <td>@idx</td>
-                  <td>@exercise.Exercise.Name</td>
-                    @if (@exercise.MaxRepetition == null)
-                    {
-                        <td>@exercise.Sets x @exercise.MinRepetition</td>
-                    } else
-                    {
-                        <td>@exercise.Sets x @exercise.MinRepetition - @exercise.MaxRepetition</td>  
-                    }
-                  <td>@exercise.Exercise.Description</td>
-                  <td>
-                    @if (@exercise.Exercise.ReferenceLink != null){
-                    <a href="@exercise.Exercise.ReferenceLink" target="_blank">How to perform @exercise.Exercise.Name</a>
-                    } 
-                  </td>
-                  <td>
-                    <form asp-action="DeleteExercise" asp-route-id="@exercise.Id">    
-                      <button class="btn btn-danger">X</button>
-                    </form>
-                  </td>
-                </tr>
-              } 
-              }
-        </tbody>
-    </table>
-    }
-</div>
-      
-<br />
-<hr />
 
 <div class="row">
+    <h4>Add Exercise</h4>
+    <hr />
     <div class="col-12">
         <form asp-action="CreateExercise">
             <input asp-for="WorkoutDay.Id" readonly hidden />
@@ -108,13 +49,18 @@
 
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="CustomExercise.ExerciseId" class="control-label"></label> 
-                @Html.DropDownListFor(m => m.CustomExercise.ExerciseId, ViewBag.Exercises as SelectList, "-- Select Exercise --", htmlAttributes: new {@class = "form-control"})
+                <label asp-for="CustomExercise.ExerciseId" class="control-label">Exercise</label> 
+                @Html.DropDownListFor(m => m.CustomExercise.ExerciseId, 
+                    ViewBag.Exercises as SelectList, "-- Select Exercise --", htmlAttributes:
+                new 
+                {
+                    @class = "form-control searchable-dropdown"
+                })
                 <span asp-validation-for="CustomExercise.ExerciseId" class="text-danger"></span>
             </div>
             <br />
             <div class="form-group">
-                <label asp-for="CustomExercise.Sets" class="control-label"></label>
+                <label asp-for="CustomExercise.Sets" class="control-label" autofocus></label>
                 <input asp-for="CustomExercise.Sets" class="form-control" />
                 <span asp-validation-for="CustomExercise.Sets" class="text-danger"></span>
             </div>
@@ -131,9 +77,15 @@
                 <span asp-validation-for="CustomExercise.MaxRepetition" class="text-danger"></span>
             </div>
             <br />
+            <div class="form-group">
+                <label asp-for="CustomExercise.RestInterval" class="control-label"></label>
+                <input asp-for="CustomExercise.RestInterval" class="form-control" />
+                <span asp-validation-for="CustomExercise.RestInterval" class="text-danger"></span>
+            </div>
+            <br />
             <div class="row justify-content-between">
                 <span class="col-auto">
-                    <a asp-action="ViewWorkoutPhases" asp-route-id="@Model.WorkoutProgram.Id" class="btn btn-secondary">Back</a>
+                    <a asp-action="ViewWorkoutPhases" asp-route-id="@Model.WorkoutProgram.Id" class="btn btn-secondary">Return</a>
                 </span>
                 <span class="col-auto">
                     <input type="submit" value="Add Exercise" class="btn btn-primary" />
@@ -142,9 +94,69 @@
         </form>
     </div>
 </div>
-<div>
+      
+<br />
+    
+    <h4>Exercises</h4>
+    <hr />
+    @if (!Model.CustomExercises.Any())
+    {
+        <p>There are no exercises added for @Model.WorkoutDay.Name as of yet.</p>
+    }
+    else
+    {
+    <table class="table table-striped table-hover table-responsive">
+    <caption>List of exercises</caption>
+      <thead class="thead-dark">
+        <tr class="table-dark">
+          <th scope="col">#</th>
+          <th scope="col">Exercise</th>
+          <th scope="col">Sets x Reps</th>
+          <th scope="col">Description</th>
+          <th scope="col">Reference Link</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody> 
+              @{ int idx = 0;
+              @foreach (var exercise in Model.CustomExercises)
+              {
+                    idx++;
+                    <tr>
+                  <th scope="row">@idx</th>
+                  <td>@exercise.Exercise.Name</td>
+                    @if (@exercise.MaxRepetition == null || @exercise.MaxRepetition <= 0)
+                    {
+                        <td>@exercise.Sets x @exercise.MinRepetition</td>
+                    } else
+                    {
+                        <td>@exercise.Sets x @exercise.MinRepetition - @exercise.MaxRepetition</td>  
+                    }
+                  <td>@exercise.Exercise.Description</td>
+                  <td>
+                    @if (@exercise.Exercise.TutorialVideoLink != null){
+                    <a href="@exercise.Exercise.TutorialVideoLink" target="_blank">How to perform @exercise.Exercise.Name</a>
+                    } 
+                  </td>
+                  <td>
+                    <form asp-action="DeleteExercise" asp-route-id="@exercise.Id">    
+                      <button class="btn btn-danger">X</button>
+                    </form>
+                  </td>
+                </tr>
+              } 
+              }
+        </tbody>
+    </table>
+    }
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+$(document).ready(function() {
+    $('.searchable-dropdown').select2();
+});
+</script>
 }

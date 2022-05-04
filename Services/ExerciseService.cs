@@ -17,6 +17,7 @@ namespace WorkoutPlannerWebApp.Services
         public Exercise GetExercise(int id)
         {
             return context.Exercises
+                .OrderByDescending(e => e.Name)
                 .FirstOrDefault(e => e.Id == id);
         }
 

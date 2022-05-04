@@ -4,57 +4,98 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>@Model.WorkoutProgram.Name</h1>
-
-<div>
-    <h5>@Model.WorkoutProgram.Publisher.FirstName @Model.WorkoutProgram.Publisher.LastName</h5>
-    <p>Last Update: @Model.WorkoutProgram.UpdatedOn</p>
-    <hr />
+    <h1>@Model.WorkoutProgram.Name</h1>
     <dl class="row">
-        <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.WorkoutProgram.Difficulty)</dt>
-        <dd class = "col-sm-10">@Html.DisplayFor(model => model.WorkoutProgram.Difficulty)</dd>
-        <dd class = "col-sm-10">@Html.DisplayFor(model => model.WorkoutProgram.LongDescription)</dd>
+        <dt class="col-2">Difficulty</dt>
+        <dd class="col-10">@Model.WorkoutProgram.Difficulty</dd>
+        <dt class="col-2">Updated On</dt>
+        <dd class="col-10">@Model.WorkoutProgram.UpdatedOn.ToString("MM/dd/yy hh:mm tt")</dd>    
+        <dt class="col-2">Description</dt>
+        <dd class="col-10">@Model.WorkoutProgram.Description</dd>
+        <dt>Program Detail</dt>
+        <dd>@Model.WorkoutProgram.ProgramDetails</dd>
     </dl>
+    <hr />
 
-    @*<table class="table table-striped table-bordered table-hover table-responsive">
-      <caption>List of exercises</caption>
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Exercise</th>
-          <th scope="col">Sets x Reps</th>
-          <th scope="col">Description</th>
-          <th scope="col">Reference Link</th>
-        </tr>
-      </thead>
-      <tbody>
-        @{
-          int idx = 0;
-        @foreach (var exercise in Model.WorkoutProgram.CustomExercises)
-            {
-                    idx++;
-                    <tr>
-                  <th scope="row">@idx</th>
-                  <td>@exercise.Exercise.Name</td>
-                    @if (exercise.MaxRepetition == null)
-                    {
-                        <td>@exercise.Sets x @exercise.MinRepetition</td>
-                    } else
-                    {
-                        <td>@exercise.Sets x @exercise.MinRepetition - @exercise.MaxRepetition</td>  
-                    }
-                  <td>@exercise.Exercise.Description</td>
-                  <td>@if (@exercise.Exercise.ReferenceLink != null){
-                  <a href="@exercise.Exercise.ReferenceLink" target="_blank">How to perform @exercise.Exercise.Name</a>
-                  } </td>
-                </tr>
-            }
-            }
-      </tbody>
-    </table>*@
+    <h3>Workout Phases</h3>
+    @if (!Model.WorkoutProgram.WorkoutPhases.Any())
+    {
+        <p>You have not added any workout phases as of yet</p>
+    }
+    else
+    {
+    @foreach (var phase in Model.WorkoutProgram.WorkoutPhases)
+              {
+                <div class="container py-3">
+                        <div>
+                            <h4>@phase.Name</h4>
+                            <div><i>@phase.Duration</i></div>
+                            <div>
+                                <p>@phase.PhaseDetails</p>
+                            </div>
+                            <br>
+                        </div>
+                    <div>
+                        @*If all exercise days are empty set all to rest days*@
+                            @foreach (var day in @phase.WorkoutDays)
+                            {
+                        <div class="container">
+                            <div class="row justify-content-between">
+                                <div class="col-12">
+                                    <h5>Day @day.DayNumber: @day.Name</h5>
+                                    <p>@day.Description</p>
+                                </div>
+                            </div>
+                        @if (!day.CustomExercises.Any())
+                        {
+                            <p>This is a rest day, there are no exercises here.</p>
+                        }
+                        else
+                        {
+                        <table class="table table-striped table-hover table-responsive">
+                            <caption>List of exercises</caption>
+                            <thead class="table-dark">
+                                <tr>
+                                    <th scope="col">Exercise</th>
+                                    <th scope="col">Sets x Reps</th>
+                                    <th scope="col">Rest</th>
+                                </tr>
+                            </thead>
+                            <tbody> 
+                            @foreach (var exercise in @day.CustomExercises)
+                            {
+                                <tr>
+                                    <td>@exercise.Exercise.Name</td>
+                                    @if (@exercise.MaxRepetition == null)
+                                    {
+                                    <td>@exercise.Sets x @exercise.MinRepetition</td>
+                                    } else
+                                    {
+                                    <td>@exercise.Sets x @exercise.MinRepetition - @exercise.MaxRepetition</td>  
+                                    }
+                                    <td>@exercise.RestInterval mins</td>
+                                </tr>
+                            }  
+                            </tbody>
+                        </table>
+                            
+                        }
+                         </div>
+                            }
+                    </div>
+                </div>
+              } 
+    }
 </div>
       <br />
-    
-<div>
-    <a asp-action="Index">Back to List</a>
+      
+<div class="container">
+    <div class="row justify-content-between">
+        <span class="col-auto">
+            <a asp-action="Index" class="btn btn-secondary">Back</a>
+        </span>
+        <span class="col-auto">
+            <a asp-action="Edit" asp-route-id="@Model?.WorkoutProgram.Id" class="btn btn-success">Edit Workout Program</a>
+        </span>
+    </div>
 </div>

@@ -95,9 +95,9 @@ namespace WorkoutPlannerWebApp.BusinessManager
                 return new NotFoundResult();
 
             program.Name = editViewModel.WorkoutProgram.Name;
-            program.ShortDescription = editViewModel.WorkoutProgram.ShortDescription;
+            program.Description = editViewModel.WorkoutProgram.Description;
             program.Difficulty = editViewModel.WorkoutProgram.Difficulty;
-            program.LongDescription = editViewModel.WorkoutProgram.LongDescription;
+            program.ProgramDetails = editViewModel.WorkoutProgram.ProgramDetails;
             program.UpdatedOn = DateTime.Now;
             program.Published = editViewModel.WorkoutProgram.Published;
 

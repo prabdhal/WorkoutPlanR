@@ -1,32 +1,23 @@
 ﻿@model WorkoutPlannerWebApp.ViewModels.DetailMyWorkoutProgramViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "My Workout Program";
 }
 
-<h1>@Model.WorkoutProgram.Name</h1>
-
-<div>
-    
-    <h4>@Model.WorkoutProgram.Name</h4>
+    <h1>@Model.WorkoutProgram.Name</h1>
+    <dl class="row">
+        <dt class="col-2">Difficulty</dt>
+        <dd class="col-10">@Model.WorkoutProgram.Difficulty</dd>
+        <dt class="col-2">Updated On</dt>
+        <dd class="col-10">@Model.WorkoutProgram.UpdatedOn.ToString("MM/dd/yy hh:mm tt")</dd>    
+        <dt class="col-2">Description</dt>
+        <dd class="col-10">@Model.WorkoutProgram.Description</dd>
+        <dt>Program Detail</dt>
+        <dd>@Model.WorkoutProgram.ProgramDetails</dd>
+    </dl>
     <hr />
-    <div class="pb-3 row">
-        <dt class="col-sm-3">Difficulty</dt>
-        <dd class="col-sm-9">@Model.WorkoutProgram.Difficulty</dd>
-        <dt class="col-sm-3">Last Updated</dt>
-        <dd class="col-sm-9"><i>@Model.WorkoutProgram.UpdatedOn.ToString("MM/dd/yy hh:mm tt")</i></dd>
-    </div>
-    <dt>Description</dt>
-    <div>
-        <p>@Model.WorkoutProgram.ShortDescription</p>
-    </div>
-    <dt>Program Detail</dt>
-    <div>
-        <p>@Model.WorkoutProgram.LongDescription</p>
-    </div>
 
-    <h4>Workout Phases</h4>
-    <hr />
+    <h3>Workout Phases</h3>
     @if (!Model.WorkoutProgram.WorkoutPhases.Any())
     {
         <p>You have not added any workout phases as of yet</p>
@@ -35,13 +26,12 @@
     {
     @foreach (var phase in Model.WorkoutProgram.WorkoutPhases)
               {
-                <div class="container">
-                        <div class="col-12">
-                            <h5>@phase.Name</h5>
+                <div class="container py-3">
+                        <div>
+                            <h4>@phase.Name</h4>
                             <div><i>@phase.Duration</i></div>
-                            <br>
                             <div>
-                                <p>@phase.Content</p>
+                                <p>@phase.PhaseDetails</p>
                             </div>
                             <br>
                         </div>
@@ -62,13 +52,13 @@
                         }
                         else
                         {
-                        <table class="col-12 table table-striped table-bordered table-hover table-responsive">
+                        <table class="table table-striped table-hover table-responsive">
                             <caption>List of exercises</caption>
-                            <thead class="thead-dark">
+                            <thead class="table-dark">
                                 <tr>
                                     <th scope="col">Exercise</th>
                                     <th scope="col">Sets x Reps</th>
-                                    <th scope="col">Description</th>
+                                    <th scope="col">Rest</th>
                                 </tr>
                             </thead>
                             <tbody> 
@@ -83,12 +73,11 @@
                                     {
                                     <td>@exercise.Sets x @exercise.MinRepetition - @exercise.MaxRepetition</td>  
                                     }
-                                    <td>@exercise.Exercise.Description</td>
+                                    <td>@exercise.RestInterval mins</td>
                                 </tr>
                             }  
                             </tbody>
                         </table>
-                            
                         }
                          </div>
                             }
@@ -97,10 +86,15 @@
               } 
     }
 </div>
-</div>
       <br />
-
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.WorkoutProgram.Id" class="btn btn-success">Edit Workout Program</a>
-    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+      
+<div class="container">
+    <div class="row justify-content-between">
+        <span class="col-auto">
+            <a asp-action="Index" class="btn btn-secondary">Back</a>
+        </span>
+        <span class="col-auto">
+            <a asp-action="Edit" asp-route-id="@Model?.WorkoutProgram.Id" class="btn btn-success">Edit Workout Program</a>
+        </span>
+    </div>
 </div>

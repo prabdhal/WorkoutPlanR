@@ -99,7 +99,7 @@ namespace WorkoutPlannerWebApp.Controllers
         }
 
         // GET: MyWorkoutPlans/Details/5
-        public async Task<IActionResult> Details(int id)
+        public IActionResult Details(int id)
         {
             var detailViewModel = workoutProgramBusinessManager.GetDetailMyWorkoutProgramsViewModel(id);
 
@@ -107,7 +107,7 @@ namespace WorkoutPlannerWebApp.Controllers
         }
 
         // GET: MyWorkoutPlans/Edit/5
-        public async Task<IActionResult> Edit(int id)
+        public IActionResult Edit(int id)
         {
             var editViewModel = workoutProgramBusinessManager.GetEditMyWorkoutProgramsViewModel(id);
 
@@ -119,7 +119,7 @@ namespace WorkoutPlannerWebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, EditMyWorkoutProgramViewModel editViewModel)
+        public IActionResult Edit(int id, EditMyWorkoutProgramViewModel editViewModel)
         {
             var program = workoutProgramBusinessManager.EditWorkoutProgram(editViewModel);
 

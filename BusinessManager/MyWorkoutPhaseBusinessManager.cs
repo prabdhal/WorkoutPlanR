@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WorkoutPlannerWebApp.BusinessManager.Interfaces;
 using WorkoutPlannerWebApp.Models;
 using WorkoutPlannerWebApp.Services.Interfaces;
@@ -121,8 +120,8 @@ namespace WorkoutPlannerWebApp.BusinessManager
                     WorkoutProgram = program,
                     WorkoutPhase = phase,
                     DayNumber = i + 1,
-                    Name = "Rest Day",
-                    Description = null,
+                    Name = "Rest",
+                    Description = "During rest day, it's best to continue eating healthy and doing some light cardio and/or stretches for increased blood flow which may aid with recovery.",
                     CustomExercises = null,
                 };
                 workoutDays.Add(day);
@@ -140,7 +139,7 @@ namespace WorkoutPlannerWebApp.BusinessManager
 
             phase.Name = editViewModel.WorkoutPhase.Name;
             phase.Duration = editViewModel.WorkoutPhase.Duration;
-            phase.Content = editViewModel.WorkoutPhase.Content;
+            phase.PhaseDetails = editViewModel.WorkoutPhase.PhaseDetails;
 
             workoutPhaseService.UpdateWorkoutPhaseSync(phase);
             return phase;

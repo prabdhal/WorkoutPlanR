@@ -23,12 +23,15 @@ namespace WorkoutPlannerWebApp.Models
         public int Sets { get; set; }
 
         [Range(1, 50)]
-        [Required(ErrorMessage = "Please enter the minimum number of repetitions for each set.")]
+        [Required(ErrorMessage = "Please enter a value between 1 to 50.")]
         [Display(Name = "Minimum Repetitions")]
         public int MinRepetition { get; set; }
 
         [Range(0, 50)]
         [Display(Name = "Maximum Repetitions")]
         public int? MaxRepetition { get; set; }
+
+        [Display(Name = "Rest Interval")]
+        public int RestInterval{ get; set; }
     }
 }

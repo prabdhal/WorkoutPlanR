@@ -19,12 +19,6 @@
             </div>
             <br />
             <div class="form-group">
-                <label asp-for="WorkoutProgram.ShortDescription" class="control-label"></label>
-                <input asp-for="WorkoutProgram.ShortDescription" class="form-control" />
-                <span asp-validation-for="WorkoutProgram.ShortDescription" class="text-danger"></span>
-            </div>
-            <br />
-            <div class="form-group">
                 <label asp-for="WorkoutProgram.Difficulty" class="control-label"></label>
                 <select asp-for="WorkoutProgram.Difficulty" class="form-control" asp-items="Html.GetEnumSelectList<Difficulty>()">
                   <option value="">-- Select Difficulty --</option>
@@ -33,9 +27,15 @@
             </div>
             <br />
             <div class="form-group">
-                <label asp-for="WorkoutProgram.LongDescription" class="control-label"></label>
-                <textarea asp-for="WorkoutProgram.LongDescription" class="form-control" style="resize:none; min-height:200px;"></textarea>
-                <span asp-validation-for="WorkoutProgram.LongDescription" class="text-danger"></span>
+                <label asp-for="WorkoutProgram.Description" class="control-label"></label>
+                <input asp-for="WorkoutProgram.Description" class="form-control" />
+                <span asp-validation-for="WorkoutProgram.Description" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="WorkoutProgram.ProgramDetails" class="control-label"></label>
+                <textarea asp-for="WorkoutProgram.ProgramDetails" class="form-control" style="resize:none; min-height:200px;"></textarea>
+                <span asp-validation-for="WorkoutProgram.ProgramDetails" class="text-danger"></span>
             </div>
             <br />
             <div class="form-group form-check">

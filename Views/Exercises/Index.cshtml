@@ -1,0 +1,27 @@
+﻿@model WorkoutPlannerWebApp.ViewModels.ExercisesViewModels.IndexExercisesViewModel
+
+@{
+    ViewData["Title"] = "Exercises";
+}
+
+<h1>Exercises</h1>
+
+
+<table class="table">
+    <thead class="table-dark">
+        <tr>
+            <th scope="col">Exercise</th>
+            <th scope="col">Description</th>
+            <th scope="col">Tutorial</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var exercise in Model.Exercises) {
+        <tr>
+            <th scope="row"><a asp-action="Details" asp-route-id="@exercise.Id">@Html.DisplayFor(modelItem => exercise.Name)</a></th>
+            <td>@Html.DisplayFor(modelItem => exercise.Description)</td>
+            <td>@Html.DisplayFor(modelItem => exercise.TutorialVideoLink)</td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -38,7 +38,7 @@ namespace WorkoutPlannerWebApp.Services
                 .Where(p => p.Name.Contains(searchString) ||
                             p.Publisher.FirstName.Contains(searchString) ||
                             p.Publisher.LastName.Contains(searchString) ||
-                            p.ShortDescription.Contains(searchString))
+                            p.Description.Contains(searchString))
                 .ToList();
         }
 
@@ -52,7 +52,7 @@ namespace WorkoutPlannerWebApp.Services
                 .Where(p => p.Name.Contains(searchString) ||
                             p.Publisher.FirstName.Contains(searchString) ||
                             p.Publisher.LastName.Contains(searchString) ||
-                            p.ShortDescription.Contains(searchString))
+                            p.Description.Contains(searchString))
                 .Where(p => p.Published)
                 .ToList();
         }
