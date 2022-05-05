@@ -58,7 +58,7 @@ namespace WorkoutPlannerWebApp.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ReferenceLink = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    TutorialVideoLink = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -179,8 +179,8 @@ namespace WorkoutPlannerWebApp.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Difficulty = table.Column<int>(type: "int", nullable: false),
-                    ShortDescription = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    LongDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
+                    ProgramDetails = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PublisherId = table.Column<string>(type: "nvarchar(450)", nullable: true),
@@ -203,9 +203,9 @@ namespace WorkoutPlannerWebApp.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     WorkoutProgramId = table.Column<int>(type: "int", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Duration = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Duration = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhaseDetails = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -223,9 +223,11 @@ namespace WorkoutPlannerWebApp.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    DayNumber = table.Column<int>(type: "int", nullable: false),
                     WorkoutProgramId = table.Column<int>(type: "int", nullable: true),
                     WorkoutPhaseId = table.Column<int>(type: "int", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -255,7 +257,8 @@ namespace WorkoutPlannerWebApp.Migrations
                     ExerciseAPI = table.Column<int>(name: "Exercise API", type: "int", nullable: false),
                     Sets = table.Column<int>(type: "int", nullable: false),
                     MinRepetition = table.Column<int>(type: "int", nullable: false),
-                    MaxRepetition = table.Column<int>(type: "int", nullable: true)
+                    MaxRepetition = table.Column<int>(type: "int", nullable: true),
+                    RestInterval = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

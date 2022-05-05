@@ -43,10 +43,13 @@ nav {
     color: var(--black);
 }
 
-@media (min-width: 768px) {
-    html {
-    font-size: 16px;
-  }
+
+.details-col-label {
+    width: 100%;
+}
+
+.details-col-data {
+    width: 100%;
 }
 
 html {
@@ -135,9 +138,16 @@ hr.hr-red {
     color: black;
 }
 
+.details-col-label {
+    width: 15%;
+}
+.details-col-data {
+    width: 85%;
+}
+
+
 
 /* Exercises Index View Page */
-
 .default-table tbody tr th a {
     color: var(--black);
 }
@@ -304,4 +314,17 @@ tbody tr:nth-child(2n) {
     font-size: 1.5rem;
     outline: none;
     border: none;
+}
+
+@media only screen and (max-width: 768px) {
+
+    /* Custom Styles */
+
+    .details-col-label {
+        width: 100%;
+    }
+
+    .details-col-data {
+        width: 100%;
+    }
 }

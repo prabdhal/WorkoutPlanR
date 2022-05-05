@@ -1,0 +1,124 @@
+﻿
+===================== APIs
+[
+    {
+        "name": "Flat Bench Press",
+        "description": "The flat bench press involves both portions of the pectoralis major muscle but focuses on the lower (sternal) head as well as the anterior deltoid muscle.",
+        "tutorialVideoLink": "https://www.youtube.com/watch?v=rT7DgCr-3pg"
+    },
+    {
+        "name": "Decline Bench Press",
+        "description": "The bench is set to 15 to 30 degrees on a decline. This angle places your upper body on a downward slope, which activates the lower pectoral muscles as you push weights away from your body.",
+        "tutorialVideoLink": "https://www.youtube.com/watch?v=LfyQBUKR8SE"
+    },
+    {
+        "name": "Incline Bench Press",
+        "description": "The bench is positioned at about a 45-degree angle. The resulting inclined position targets your upper chest and the frontside of your shoulders more the the standard flat bench.",
+        "tutorialVideoLink": "https://www.youtube.com/watch?v=DbFgADa2PL8"
+    },
+    {
+        "name": "Goblet Squat",
+        "description": "A lower body exercise in which you hold a dumbbell or kettlebell with both hands in front of your chest. Then, you squat while holding the dumbbell. Your elbows should come between your knees. Works all the major muscle groups of the lower body, including the quadriceps, glutes, hamstrings, and calves.",
+        "tutorialVideoLink": "https://www.youtube.com/watch?v=MeIiIdhvXT4&t=6s"
+    },
+    {
+        "name": "Stepping Lunge",
+        "description": "Stand upright with dumbbells at your side, palms facing your body. Lunge forward as far as you can with your right leg, bending your trailing knee so it almost brushes the floor. Use the heel of your right foot to push your upper body back to the starting position. Repeat with the opposite leg. Increase muscle mass to build up strength and tone your body, especially your core, butt, and legs.",
+        "tutorialVideoLink": "https://www.youtube.com/watch?v=D7KaRcUTQeE&ab_channel=ScottHermanFitness"
+    },
+    {
+        "name": "Bent-Over Row",
+        "description": "The bent over row is a multi-jointed exercise that recruits several different muscles. It improves strength in the upper and lower back, glutes, hamstrings, lats, and shoulders.",
+        "tutorialVideoLink": "https://www.youtube.com/watch?v=9efgcAjQe7E&ab_channel=ScottHermanFitness"
+    },
+    {
+        "name": "Tricep Kickback",
+        "description": "The tricep kickback is an isolation exercise focused on the triceps brachii muscle (which is made up of a lateral head, medial head, and long head) in the back of your arm. Perform tricep kickbacks by bending forward and lifting your arms behind you.",
+        "tutorialVideoLink": "https://www.youtube.com/watch?v=6SS6K3lAwZ8"
+    },
+    {
+        "name": "Incline Bicep Curl",
+        "description": "The incline dumbbell curl targets the long head of the biceps brachii muscle. Incline dumbbell curls allow for a greater range of motion. When compared to a traditional biceps curl, the incline dumbbell curl stretches your arm and allows for a greater range of motion during the lift.",
+        "tutorialVideoLink": "https://www.youtube.com/watch?v=soxrZlIl35U"
+    },
+    {
+        "name": "Lateral Shoulder Raise",
+        "description": "Lateral raises work the trapezius muscle in your upper back as well as the deltoid muscle group in your shoulders—particularly the anterior and lateral deltoids. With the proper form, lateral raises enhance muscle growth (a process known as hypertrophy) and increase your range of motion.",
+        "tutorialVideoLink": "https://www.youtube.com/watch?v=3VcKaXpzqRo&ab_channel=ScottHermanFitness"
+    },
+    {
+        "name": "Shrugs",
+        "description": "With proper form, dumbbell shrugs can build your upper back and shoulder muscles. Adding dumbbell shrugs to your weight training routine can help you build the following muscle groups: trapezius, rhomboids, forearms",
+        "tutorialVideoLink": "https://www.youtube.com/watch?v=cJRVVxmytaM"
+    },
+    {
+        "name": "Standing Bicep Curl",
+        "description": "Bicep curls from the standing position engages the core, as well as the biceps. Because of this we have greater ability to push this exercise as far as loading goes, which might be beneficial for general strength.",
+        "tutorialVideoLink": "https://www.youtube.com/watch?v=sAq_ocpRh_I"
+    },
+    {
+        "name": "Close Grip Push-Ups",
+        "description": "Narrow-grip push-ups activate your pectoral muscles and triceps more than wide-grip push-ups.",
+        "tutorialVideoLink": "https://www.youtube.com/watch?v=NPmRYbIneTE&ab_channel=Criticalbench"
+    },
+    {
+        "name": "Arnold Press",
+        "description": "The magic of the Arnold press is that it works so many different muscles in the shoulders – but because of the rotation it requires, it can be a riskier exercise to perform than a standard press if you have any shoulder niggles.",
+        "tutorialVideoLink": "https://www.youtube.com/watch?v=X60-yTMOJfw&ab_channel=Bodybuilding.com"
+    },
+    {
+        "name": "Shoulder Press",
+        "description": "The shoulder press is one of the best exercises for strengthening your shoulders and upper back. The biggest benefactor of the shoulder press is the front portion of your shoulder muscle (anterior deltoid) but you'll also be working out your deltoids, triceps, trapezius and pecs.",
+        "tutorialVideoLink": "https://www.youtube.com/watch?v=qEwKCR5JCog&ab_channel=ScottHermanFitness"
+    },
+    {
+        "name": "Chest Fly",
+        "description": "The dumbbell fly targets all areas of the pecs, but most significantly the sternal fibres – those that attach directly to your sternum. Growth in this particular area creates the defined “chest separation” look.",
+        "tutorialVideoLink": "https://www.youtube.com/watch?v=eozdVDA78K0&t=73s&ab_channel=ScottHermanFitness"
+    },
+    {
+        "name": "Skull Crushers",
+        "description": "The upper arms are generally locked in a position perpendicular to the body, which means both the long and lateral triceps heads—the two biggest—are called into play.",
+        "tutorialVideoLink": "https://www.youtube.com/watch?v=d_KZxkY_0cM&ab_channel=ScottHermanFitness"
+    },
+    {
+        "name": "Lat Pulldown",
+        "description": "The lat pulldown works the latissimus dorsi, the largest muscle in the back, as well as your biceps, rear delts, rhomboids and traps.",
+        "tutorialVideoLink": "https://www.youtube.com/watch?v=an1BMInTXLk&ab_channel=MindPumpTV"
+    },
+    {
+        "name": "Seated Cable Row",
+        "description": "A seated cable row is a compound exercise that utilizes a weighted horizontal cable row machine to work muscle groups in your back and arms.",
+        "tutorialVideoLink": "https://www.youtube.com/watch?v=GZbfZ033f74&ab_channel=ScottHermanFitness"
+    },
+    {
+        "name": "Hammer Curl",
+        "description": "The hammer curl, also known as the dumbbell hammer curl or the neutral grip dumbbell curl, is a strength training exercise that targets your biceps and forearms.",
+        "tutorialVideoLink": "https://www.youtube.com/watch?v=zC3nLlEvin4&ab_channel=ScottHermanFitness"
+    },
+    {
+        "name": "Rope Face Pull",
+        "description": "Face Pulls primarily work the rear deltoids (shoulders), rhomboids and the external rotators (infraspinatus and teres minor). Keeping these muscles strong and conditioned is extremely important.",
+        "tutorialVideoLink": "https://www.youtube.com/watch?v=rep-qVOkqgk&ab_channel=ScottHermanFitness"
+    },
+    {
+        "name": "Sqaut",
+        "description": "The squat requires joint action at the hips, knees, and ankles. As a result, several muscle groups in both the lower and upper body are required to overcome the forces on these joints to execute the movement properly.",
+        "tutorialVideoLink": "https://www.youtube.com/watch?v=nFAscG0XUNY"
+    },
+    {
+        "name": "Leg Extension",
+        "description": "The leg extension, or knee extension, is a type of strength training exercise. It’s an excellent move for strengthening your quadriceps, which are in the front of your upper legs.",
+        "tutorialVideoLink": "https://www.youtube.com/watch?v=YyvSfVjQeL0&ab_channel=ScottHermanFitness"
+    },
+    {
+        "name": "Leg Curl",
+        "description": "This exercise primarily works the hamstrings, which consists of four muscles: the long head of the biceps femoris, the short head of the biceps femoris, the semimembranosus, and the semitendinosus.",
+        "tutorialVideoLink": "https://www.youtube.com/watch?v=1Tq3QdYUuHs"
+    },
+    {
+        "name": "Calf Raise",
+        "description": "The standing calf raise targets the calf muscle, specifically the gastrocnemius. Movements that are done with a bent knee (flexion) target the solues (which attaches below the knee joint).",
+        "tutorialVideoLink": "https://www.youtube.com/watch?v=3UWi44yN-wM&ab_channel=ScottHermanFitness"
+    }
+]

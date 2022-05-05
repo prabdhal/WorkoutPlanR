@@ -250,6 +250,9 @@ namespace WorkoutPlannerWebApp.Migrations
                     b.Property<int>("MinRepetition")
                         .HasColumnType("int");
 
+                    b.Property<int>("RestInterval")
+                        .HasColumnType("int");
+
                     b.Property<int>("Sets")
                         .HasColumnType("int");
 
@@ -291,7 +294,7 @@ namespace WorkoutPlannerWebApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ReferenceLink")
+                    b.Property<string>("TutorialVideoLink")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -314,6 +317,7 @@ namespace WorkoutPlannerWebApp.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("WorkoutPhaseId")
@@ -339,13 +343,15 @@ namespace WorkoutPlannerWebApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Duration")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhaseDetails")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("WorkoutProgramId")
@@ -369,14 +375,19 @@ namespace WorkoutPlannerWebApp.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
                     b.Property<int>("Difficulty")
                         .HasColumnType("int");
 
-                    b.Property<string>("LongDescription")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProgramDetails")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Published")
@@ -384,11 +395,6 @@ namespace WorkoutPlannerWebApp.Migrations
 
                     b.Property<string>("PublisherId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ShortDescription")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime>("UpdatedOn")
                         .HasColumnType("datetime2");

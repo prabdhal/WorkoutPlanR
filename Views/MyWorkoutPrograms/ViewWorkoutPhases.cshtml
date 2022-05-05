@@ -9,12 +9,12 @@
 <div>
     <h2>@Model.WorkoutProgram.Name</h2>
     <dl class="row">
-        <dt class="col-2">Difficulty</dt>
-        <dd class="col-10">@Model.WorkoutProgram.Difficulty</dd>
-        <dt class="col-2">Updated On</dt>
-        <dd class="col-10">@Model.WorkoutProgram.UpdatedOn.ToString("MM/dd/yy hh:mm tt")</dd>    
-        <dt class="col-2">Description</dt>
-        <dd class="col-10">@Model.WorkoutProgram.Description</dd>
+        <dt class="details-col-label">Difficulty</dt>
+        <dd class="details-col-data">@Model.WorkoutProgram.Difficulty</dd>
+        <dt class="details-col-label">Updated On</dt>
+        <dd class="details-col-data">@Model.WorkoutProgram.UpdatedOn.ToString("MM/dd/yy hh:mm tt")</dd>    
+        <dt class="details-col-label">Description</dt>
+        <dd class="details-col-data">@Model.WorkoutProgram.Description</dd>
         <dt>Program Detail</dt>
         <dd>@Model.WorkoutProgram.ProgramDetails</dd>
     </dl>

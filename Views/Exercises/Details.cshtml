@@ -9,29 +9,29 @@
 <div>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class = "details-col-label">
             Primary Muscle Groups
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "details-data">
             Chest, Legs
         </dd>
-        <dt class = "col-sm-2">
+        <dt class = "details-label">
             Secondary Muscle Groups
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "details-data">
             Chest, Legs
         </dd>
-        <dt class = "col-sm-2">
+        <dt class = "details-label">
             Description
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "details-data">
             @Model.Exercise.Description
         </dd>
-        <dt class = "col-sm-2">
+        <dt class = "details-label">
             Tutorial Video Link
         </dt>
-        <dd class = "col-sm-10">
-            <a href="@Model.Exercise.TutorialVideoLink" target="_blank">View how to do the @Model.Exercise.Name</a>
+        <dd class = "details-data">
+            <a href="@Model.Exercise.TutorialVideoLink" target="_blank" style="text-decoration: underline;">Click here to view how to do the @Model.Exercise.Name</a>
         </dd>
     </dl>
 </div>
