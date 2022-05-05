@@ -88,6 +88,13 @@ h5 {
     color: var(--normalRed);
 }
 
+.bg-cream {
+    background-color: var(--cream);
+}
+.bg-light-red {
+    background-color: var(--lightRed);
+}
+
 summary {
     font-weight: 600;
     color: var(--normalRed);
