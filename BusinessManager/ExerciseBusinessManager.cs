@@ -29,14 +29,13 @@ namespace WorkoutPlannerWebApp.BusinessManager
         }
 
 
-
-
-        public IndexExercisesViewModel GetIndexExercisesViewModel()
+        public IndexExercisesViewModel GetIndexExercisesViewModel(string searchString)
         {
-            var exercises = exerciseService.GetExerciseList();
+            var exercises = exerciseService.GetExerciseList(searchString);
 
             return new IndexExercisesViewModel()
             {
+                SearchString = searchString,
                 Exercises = exercises,
             };
         }
@@ -57,7 +56,7 @@ namespace WorkoutPlannerWebApp.BusinessManager
             var program = workoutProgramService.GetWorkoutProgram(day.WorkoutProgram.Id);
             var phase = workoutPhaseService.GetWorkoutPhase(day.WorkoutPhase.Id, ModelType.WorkoutPhase);
 
-            var e = exerciseService.GetExerciseList();
+            var e = exerciseService.GetExerciseList(null);
 
             var customExercises = exerciseService.GetCustomExerciseList(id, ModelType.WorkoutDay);
 
@@ -78,8 +77,8 @@ namespace WorkoutPlannerWebApp.BusinessManager
         public CustomExercise GetCustomExercise(int exerciseId)
         {
             var exercise = exerciseService.GetCustomExercise(exerciseId, ModelType.CustomExercise);
-            var phase = workoutPhaseService.GetWorkoutPhase(exercise.WorkoutProgram.Id, ModelType.WorkoutProgram);
-            var day = workoutDayService.GetWorkoutDay(exercise.WorkoutProgram.Id, ModelType.WorkoutProgram);
+            var day = workoutDayService.GetWorkoutDay(exercise.WorkoutDay.Id, ModelType.WorkoutDay);
+            var phase = workoutPhaseService.GetWorkoutPhase(day.WorkoutPhase.Id, ModelType.WorkoutPhase);
 
             exercise.WorkoutPhase = phase;
             exercise.WorkoutDay = day;
@@ -87,9 +86,9 @@ namespace WorkoutPlannerWebApp.BusinessManager
             return exercise;
         }
 
-        public IEnumerable<Exercise> GetExercises()
+        public IEnumerable<Exercise> GetExercises(string searchString)
         {
-            return exerciseService.GetExerciseList();
+            return exerciseService.GetExerciseList(searchString);
         }
 
         public async Task<CustomExercise> CreateCustomExercise(CreateExerciseViewModel createViewModel)

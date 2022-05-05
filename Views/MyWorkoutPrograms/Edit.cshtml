@@ -20,17 +20,17 @@
             </div>
             <br />
             <div class="form-group">
-                <label asp-for="WorkoutProgram.Description" class="control-label"></label>
-                <input asp-for="WorkoutProgram.Description" class="form-control" />
-                <span asp-validation-for="WorkoutProgram.Description" class="text-danger"></span>
-            </div>
-            <br />
-            <div class="form-group">
                 <label asp-for="WorkoutProgram.Difficulty" class="control-label"></label>
                 <select asp-for="WorkoutProgram.Difficulty" class="form-control" asp-items="Html.GetEnumSelectList<Difficulty>()">
                   <option value="">Please choose the difficulty</option>
                 </select>
                 <span asp-validation-for="WorkoutProgram.Difficulty" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="WorkoutProgram.Description" class="control-label"></label>
+                <input asp-for="WorkoutProgram.Description" class="form-control" />
+                <span asp-validation-for="WorkoutProgram.Description" class="text-danger"></span>
             </div>
             <br />
             <div class="form-group">
@@ -47,10 +47,10 @@
             <br />
             <div class="row justify-content-between">
                 <span class="col-auto">
-                    <a asp-action="Index" class="btn btn-secondary">Back</a>
+                    <a asp-action="Index" class="btn btn-dark">Back</a>
                 </span>
                 <span class="col-auto">
-                    <input type="submit" value="Continue" class="btn btn-primary" />
+                    <input type="submit" value="Edit Workout Phases" class="btn btn-red" />
                 </span>
             </div>
         </form>

@@ -33,5 +33,20 @@ namespace WorkoutPlannerWebApp.Controllers
 
             return View(detailViewModel);
         }
+        
+        public ActionResult PhaseDetails(int id)
+        {
+            var detailViewModel = workoutProgramsBusinessManager.GetPhaseDetailWorkoutProgramsViewModel(id);
+
+            return View(detailViewModel);
+        }
+
+        // GET: WorkoutPlansController/Details/5
+        public ActionResult FullDetails(int id)
+        {
+            var detailViewModel = workoutProgramsBusinessManager.GetFullDetailWorkoutProgramsViewModel(id);
+
+            return View(detailViewModel);
+        }
     }
 }

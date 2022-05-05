@@ -38,11 +38,11 @@ namespace WorkoutPlannerWebApp.BusinessManager
             };
         }
 
-        public EditWorkoutPhaseViewModel GetEditWorkoutPhaseViewModel(int programId)
+        public EditWorkoutPhaseViewModel GetEditWorkoutPhaseViewModel(int phaseId)
         {
-            var program = workoutProgramService.GetWorkoutProgram(programId);
+            var phase = workoutPhaseService.GetWorkoutPhase(phaseId, ModelType.WorkoutPhase);
 
-            var phase = workoutPhaseService.GetWorkoutPhase(programId, ModelType.WorkoutProgram);
+            var program = workoutProgramService.GetWorkoutProgram(phase.WorkoutProgram.Id);
 
             return new EditWorkoutPhaseViewModel
             {

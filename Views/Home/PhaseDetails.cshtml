@@ -1,0 +1,84 @@
+﻿@model WorkoutPlannerWebApp.ViewModels.WorkoutProgramsViewModel.PhaseDetailWorkoutProgramViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+    <h1>@Model.WorkoutProgram.Name</h1>
+    <br />
+    <dl class="row">
+        <dt class="col-2">Difficulty</dt>
+        <dd class="col-10">@Model.WorkoutProgram.Difficulty</dd>
+        <dt class="col-2">Updated On</dt>
+        <dd class="col-10">@Model.WorkoutProgram.UpdatedOn.ToString("MM/dd/yy hh:mm tt")</dd>    
+        <dt class="col-2">Description</dt>
+        <dd class="col-10">@Model.WorkoutProgram.Description</dd>
+        <dt>Program Detail</dt>
+        <dd>@Model.WorkoutProgram.ProgramDetails</dd>
+    </dl>
+    <hr />
+
+    <h3>Phase: @Model.WorkoutPhase.Name</h3>
+
+        <div>
+        @*If all exercise days are empty set all to rest days*@
+        @foreach (var day in @Model.WorkoutPhase.WorkoutDays)
+        {
+            <div class="workout-day-container">
+                <details>
+                    <summary>Day @day.DayNumber: @day.Name</summary>
+                    <p>@day.Description</p>
+                    <hr class="hr-red">
+                @if (!day.CustomExercises.Any())
+                {
+                    
+                }
+                else
+                {
+                <table class="table table-hover table-responsive">
+                    <caption>List of exercises</caption>
+                    <thead class="table-head-red">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Exercise</th>
+                            <th scope="col">Sets x Reps</th>
+                            <th scope="col">Rest</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-body-red"> 
+                    @{int idx = 0;
+                    @foreach (var exercise in @day.CustomExercises)
+                    {
+                        idx++;
+                        <tr>
+                            <th scope="row">@idx</th>
+                            <td><a asp-controller="Exercises" asp-action="Details" asp-route-id="@exercise.ExerciseId" target="_blank" class="custom-alink">@exercise.Exercise.Name</a></td>
+                            @if (@exercise.MaxRepetition == null)
+                            {
+                            <td>@exercise.Sets x @exercise.MinRepetition</td>
+                            } else
+                            {
+                            <td>@exercise.Sets x @exercise.MinRepetition - @exercise.MaxRepetition</td>  
+                            }
+                            <td>@exercise.RestInterval mins</td>
+                        </tr>
+                    }  }
+                    </tbody>
+                </table>   
+                } 
+                </details>
+            </div>
+        }
+        </div>
+<br />
+      
+<div class="container">
+    <div class="row justify-content-between">
+        <span class="col-auto">
+            <a asp-action="Details" asp-route-id="@Model.WorkoutProgram.Id" class="btn btn-dark">Back</a>
+        </span>
+        <span class="col-auto">
+            <a asp-action="FullDetails" asp-route-id="@Model.WorkoutProgram.Id" class="btn btn-red">Full Detail View</a>
+        </span>
+    </div>
+</div>

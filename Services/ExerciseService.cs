@@ -61,9 +61,12 @@ namespace WorkoutPlannerWebApp.Services
             }
         }
 
-        public IEnumerable<Exercise> GetExerciseList()
+        public IEnumerable<Exercise> GetExerciseList(string searchString)
         {
             return context.Exercises
+                .Where(e => e.Name.Contains(searchString ?? String.Empty) ||
+                            e.Description.Contains(searchString ?? String.Empty))   
+                .OrderBy(e => e.Name)
                 .ToList();
         }
 

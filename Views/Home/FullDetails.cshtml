@@ -1,7 +1,7 @@
-﻿@model WorkoutPlannerWebApp.ViewModels.DetailMyWorkoutProgramViewModel
+﻿@model WorkoutPlannerWebApp.ViewModels.WorkoutProgramsViewModel.FullDetailWorkoutProgramViewModel
 
 @{
-    ViewData["Title"] = "My Workout Program";
+    ViewData["Title"] = "Details";
 }
 
     <h1>@Model.WorkoutProgram.Name</h1>
@@ -80,7 +80,8 @@ else
                         </table>
                             
                         }
-                         </div>
+                        </details>
+                       </div>
                             }
                     </div>
                 </div>
@@ -89,14 +90,13 @@ else
 </div>
       <br />
       
-      
 <div class="container">
     <div class="row justify-content-between">
         <span class="col-auto">
-            <a asp-action="Index" class="btn btn-dark">Back</a>
+            <a asp-action="Index" class="btn btn-dark">View Workout Programs</a>
         </span>
         <span class="col-auto">
-            <a asp-action="Edit" asp-route-id="@Model?.WorkoutProgram.Id" class="btn btn-red">Edit Workout Program</a>
+            <a asp-action="Details" asp-route-id="@Model.WorkoutProgram.Id" class="btn btn-dark">Simplified Detail View</a>
         </span>
     </div>
 </div>

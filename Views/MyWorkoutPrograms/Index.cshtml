@@ -9,47 +9,65 @@
 @if (!@Model.WorkoutPrograms.Any())
 {
     <span>
-        <a asp-action="Create" class="btn btn-primary"><i class="fa-solid fa-plus"></i></a>
+        <a asp-action="Create" class="btn btn-red"><i class="fa-solid fa-plus"></i></a>
     </span>
     <span>Create your first workout program and publish it for everyone to see!</span>
 }
 else
 {
 <p>
-    <a asp-action="Create" class="btn btn-primary"><i class="fa-solid fa-plus"></i></a>
+    <a asp-action="Create" class="btn btn-red"><i class="fa-solid fa-plus"></i></a>
 </p>
-<table class="table table-striped table-hover table-responsive">
-  <caption>List of workout programs</caption>
-    <thead class="table-dark">
-        <tr>
-            <th scope="row">Workout Program</th>
-            <th scope="col">Difficulty</th>
-            <th scope="col">Description</th>
-            <th scope="col">Published</th>
-            <th scope="col"></th>
-        </tr>
-    </thead>
-    <tbody>
 @foreach (var program in Model.WorkoutPrograms) 
 {
-        <tr>
-            <th scope="row">@Html.DisplayFor(modelItem => program.Name)</th>
-            <td>@Html.DisplayFor(modelItem => program.Difficulty)</td>
-            <td>@Html.DisplayFor(modelItem => program.Description)</td>
-            <td>@Html.DisplayFor(modelItem => program.Published)</td>
-            <td>
-                <form asp-action="Edit" asp-route-id="@program.Id">
-                  <button type="submit" formmethod="get" class="fa fa-pen text-success my-1" style="border:none;font-size:20px;"></button>
-                </form>
-                <form asp-action="Details" asp-route-id="@program.Id">
-                  <button type="submit" formmethod="get" class="fa fa-circle-info text-primary my-1" style="border:none;font-size:20px;"></button>
-                </form>
-                <form asp-action="DeleteWorkoutProgram" asp-route-id="@program.Id">
-                  <button type="submit" class="fa fa-trash text-danger my-1" style="border:none;font-size:20px;"></button>
-                </form>
-            </td>
-        </tr>
+<div class="workout-program-container">
+    <div class="workout-program-info">
+        <h5><a asp-action="Details" asp-route-id="@program.Id">@program.Name</a></h5>
+        <div><b>@program.Difficulty</b></div>
+        <div><i>@program.Publisher.FirstName @program.Publisher.LastName</i></div>
+        <p>@program.Description</p>
+    </div>
+    <div class="workout-program-btns">
+        <a asp-action="Edit" asp-route-id="@program.Id" class="fa fa-pen text-success my-1"></a>
+        <button type="button" class="fa fa-trash text-danger my-1" data-bs-toggle="modal" data-bs-target="#deleteWorkoutProgramPopup" onclick="initializeDeletePopupRouteIdForWorkoutPhase(@program.Id)"></button>
+    </div>
+</div>
 }
-    </tbody>
-    </table>
+}
+
+
+<!-- Modal -->
+<div class="modal fade" id="deleteWorkoutProgramPopup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete Workout Program</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="deleteWorkoutProgramPopupText">
+      </div>
+      <div class="modal-footer">
+        <form id="deleteWorkoutProgramForm" method="post">
+            <button type="submit" class="btn btn-red" data-bs-dismiss="modal">Delete</button>
+            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancel</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section Scripts{
+    <script>
+        const deleteWorkoutPhaseForm = document.querySelector('#deleteWorkoutProgramForm');
+        const deleteWorkoutPhasePopupText = document.querySelector('#deleteWorkoutProgramPopupText');
+        
+        function initializeDeletePopupRouteIdForWorkoutPhase(programId) {
+            deleteWorkoutPhaseForm.action = `/MyWorkoutPrograms/DeleteWorkoutProgram/${programId}`;
+            deleteWorkoutPhasePopupText.textContent = `Are you sure that you want to delete the workout program?`;
+        }
+
+        function passWorkoutProgramName(programName) {
+            deleteWorkoutPhasePopupText.textContent = `Are you sure that you want to delete the ${programName} workout program?`;
+        }
+    </script>
 }

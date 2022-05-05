@@ -22,18 +22,11 @@
     <hr />
     
     <div class="container">
-        <div class="split-row">
-            <div class="split-row-col">
-                <h3>@Model.WorkoutPhase.Name</h3>
-                <div>@Model.WorkoutPhase.Duration</div>
-                <div>
-                    <p>@Model.WorkoutPhase.PhaseDetails</p>
-                </div>
-            </div>
-            <div class="split-row-col">
-                <form asp-action="DeleteWorkoutPhase" asp-route-id="@Model.WorkoutPhase.Id">    
-                    <button class="btn btn-danger">Delete Phase</button>
-                </form>
+        <div class="">
+            <h3>@Model.WorkoutPhase.Name</h3>
+            <div>@Model.WorkoutPhase.Duration</div>
+            <div>
+                <p>@Model.WorkoutPhase.PhaseDetails</p>
             </div>
         </div>
     </div>
@@ -85,10 +78,10 @@
             <br />
             <div class="row justify-content-between">
                 <span class="col-auto">
-                    <a asp-action="ViewWorkoutPhases" asp-route-id="@Model.WorkoutProgram.Id" class="btn btn-secondary">Return</a>
+                    <a asp-action="ViewWorkoutPhases" asp-route-id="@Model.WorkoutProgram.Id" class="btn btn-dark">Return</a>
                 </span>
                 <span class="col-auto">
-                    <input type="submit" value="Add Exercise" class="btn btn-primary" />
+                    <input type="submit" value="Add Exercise" class="btn btn-red" />
                 </span>
             </div>  
         </form>
@@ -105,15 +98,15 @@
     }
     else
     {
-    <table class="table table-striped table-hover table-responsive">
+    <table class="table ">
     <caption>List of exercises</caption>
       <thead class="thead-dark">
         <tr class="table-dark">
           <th scope="col">#</th>
           <th scope="col">Exercise</th>
           <th scope="col">Sets x Reps</th>
-          <th scope="col">Description</th>
-          <th scope="col">Reference Link</th>
+          <th scope="col">Rest Interval</th>
+          <th scope="col">Tutorial Video Link</th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -132,7 +125,7 @@
                     {
                         <td>@exercise.Sets x @exercise.MinRepetition - @exercise.MaxRepetition</td>  
                     }
-                  <td>@exercise.Exercise.Description</td>
+                  <td>@exercise.RestInterval</td>
                   <td>
                     @if (@exercise.Exercise.TutorialVideoLink != null){
                     <a href="@exercise.Exercise.TutorialVideoLink" target="_blank">How to perform @exercise.Exercise.Name</a>
@@ -140,7 +133,7 @@
                   </td>
                   <td>
                     <form asp-action="DeleteExercise" asp-route-id="@exercise.Id">    
-                      <button class="btn btn-danger">X</button>
+                      <button class="btn btn-dark">X</button>
                     </form>
                   </td>
                 </tr>

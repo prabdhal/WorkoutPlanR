@@ -6,9 +6,17 @@
 
 <h1>Exercises</h1>
 
-
-<table class="table">
-    <thead class="table-dark">
+<div class="py-4">
+  <form asp-action="Index">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+      <input asp-for="SearchString" type="text" class="form-control" placeholder="Search exercises..." />
+      <span asp-validation-for="SearchString" class="text-danger"></span>
+    </div>
+  </form>
+</div>
+<table class="table default-table">
+    <thead>
         <tr>
             <th scope="col">Exercise</th>
             <th scope="col">Description</th>
@@ -18,9 +26,9 @@
     <tbody>
 @foreach (var exercise in Model.Exercises) {
         <tr>
-            <th scope="row"><a asp-action="Details" asp-route-id="@exercise.Id">@Html.DisplayFor(modelItem => exercise.Name)</a></th>
-            <td>@Html.DisplayFor(modelItem => exercise.Description)</td>
-            <td>@Html.DisplayFor(modelItem => exercise.TutorialVideoLink)</td>
+            <th scope="row"><a asp-action="Details" asp-route-id="@exercise.Id">@exercise.Name</a></th>
+            <td>@exercise.Description</td>
+            <td><a href="@exercise.TutorialVideoLink" target="_blank">View how to do the @exercise.Name</a></td>
         </tr>
 }
     </tbody>

@@ -201,10 +201,11 @@ namespace WorkoutPlannerWebApp.Controllers
         public async Task<IActionResult> DeleteExercise(int id)
         {
             var exercise = exerciseBusinessManager.GetCustomExercise(id);
-            var program = workoutProgramBusinessManager.GetWorkoutProgram(exercise.WorkoutProgram.Id);
+            var day = workoutPhaseBusinessManager.GetWorkoutDay(exercise.WorkoutDay.Id, ModelType.WorkoutDay);
+            var program = workoutProgramBusinessManager.GetWorkoutProgram(day.WorkoutProgram.Id);
             exercise = await exerciseBusinessManager.DeleteCustomExercise(id, ModelType.CustomExercise);
 
-            return RedirectToAction("CreateExercise", new { exercise.WorkoutDay.Id });
+            return RedirectToAction("CreateExercise", new { day.Id });
         }
     }
 }

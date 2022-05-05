@@ -1,9 +1,50 @@
+:root {
+    --black: #010A10;
+    --lightBlack: #211D21;
+    --white: #FFFBF2;
+    --cream: #DFE2DB;
+    --darkRed: #800000;
+    --medRed: #A50113;
+    --normalRed: #A50113;
+    --lightRed: #C10206;
+    --darkGrey: #A9A9A9;
+    --medGrey: #C0C0C0;
+    --normalGrey: #D3D3D3;
+    --lightGrey: #E8E8E8;
+}
+
 html {
-  font-size: 14px;
+    font-size: 1rem;
+}
+
+body {
+    font-size: 1rem;
+    font-family: 'Barlow', sans-serif;
+    font-family: 'Work Sans', sans-serif;
+}
+
+nav {
+    font-family: 'Barlow', sans-serif;
+    font-weight: 500;
+    background-color: var(--darkRed);
+    color: var(--lightRed);
+}
+
+.nav-link {
+    color: var(--cream);
+}
+.nav-link:hover {
+    color: var(--black);
+}
+.navbar-brand {
+    color: var(--cream);
+}
+.navbar-brand:hover {
+    color: var(--black);
 }
 
 @media (min-width: 768px) {
-  html {
+    html {
     font-size: 16px;
   }
 }
@@ -14,8 +55,193 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    font-family: 'Work Sans', sans-serif;
+    margin-bottom: 60px;
+    font-size: 1rem;
 }
+
+h1 {
+    font-family: 'Barlow', sans-serif;
+    font-weight: 700;
+}
+
+h2 {
+    font-family: 'Barlow', sans-serif;
+    font-weight: 600;
+}
+
+h3 {
+    font-family: 'Barlow', sans-serif;
+    font-weight: 600;
+}
+
+h4 {
+    font-family: 'Barlow', sans-serif;
+    font-weight: 600;
+}
+
+h5 {
+    font-weight: 600;
+    color: var(--normalRed);
+}
+
+summary {
+    font-weight: 600;
+    color: var(--normalRed);
+    font-size: 1.5rem;
+    list-style: none;
+    font-family: 'Barlow', sans-serif;
+}
+
+table {
+    font-family: 'Work Sans', sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+a:hover {
+    color: white;
+}
+
+/* Custom Styles */
+.btn-dark {
+    background-color: var(--lightBlack);
+    color: white;
+}
+.btn-dark:hover {
+}
+
+.btn-red {
+    background-color: var(--lightRed);
+    color: white;
+}
+.btn-red:hover {
+    color: white;
+}
+
+hr.hr-red {
+    color: var(--darkRed);
+}
+
+.custom-alink {
+    color: white;
+    text-decoration: none;
+}
+
+.custom-alink:hover {
+    color: black;
+}
+
+
+/* Exercises Index View Page */
+
+.default-table tbody tr th a {
+    color: var(--black);
+}
+.default-table tbody tr th a:hover {
+    color: var(--lightRed);
+}
+
+
+.default-table tbody tr td a {
+    color: var(--black);
+}
+.default-table tbody tr td a:hover {
+    color: var(--lightRed);
+}
+
+.default-table tbody tr:nth-child(1n+1) {
+    background-color: var(--cream);
+    color: black;
+}
+
+.default-table tbody tr:nth-child(2n) {
+    background-color: var(--white);
+    color: black;
+}
+
+/* Exercises Details View Page */
+
+dd a {
+    color: var(--black);
+}
+dd a:hover {
+    color: var(--lightRed);
+}
+
+
+/* HOME / DETAILS VIEW */
+.workout-phase-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+    margin: 5px 0px;
+    box-shadow: 1px 1px 8px var(--darkGrey);
+}
+
+.workout-phase-container h5 a {
+    font-family: 'Barlow', sans-serif;
+    font-size: 1.5rem;
+    color: var(--normalRed);
+    text-decoration: none;
+}
+
+.workout-phase-container div b {
+    font-weight: 600;
+}
+
+/* HOME / PHASE DETAILS VIEW */
+div.workout-day-container {
+    padding: 20px 20px;
+}
+
+thead {
+    background-color: var(--lightBlack);
+    color: white;
+}
+
+tbody tr:nth-child(1n+1) {
+    background-color: var(--normalRed);
+    color: white;
+}
+
+tbody tr:nth-child(2n) {
+    background-color: var(--lightRed);
+    color: white;
+}
+
+
+
+/* My Workout Programs / View Workout Phases */
+.workout-phase-container-edit {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 5px 0px;
+}
+
+.workout-phase-info-edit {
+    display: flex;
+    flex-direction: column;
+}
+
+.workout-phase-info-edit h4 {
+    font-family: 'Barlow', sans-serif;
+    font-weight: 600;
+}
+
+.workout-phase-btns-edit {
+    display: flex;
+    flex-direction: column;
+}
+.workout-phase-btns-edit a {
+    font-size: 1.5rem;
+}
+
 
 /* Create Workout Phase View Page */
 .flex {
@@ -32,4 +258,50 @@ body {
 .split-row-col {
     display: flex;
     flex-direction: column;
+}
+
+
+/* WorkoutPrograms Index View Page */
+.workout-program-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+    margin: 5px 0;
+    box-shadow: 1px 1px 8px var(--darkGrey);
+}
+
+.workout-program-info {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Barlow', sans-serif;
+}
+
+.workout-program-info h5 a {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--normalRed);
+    text-decoration: none;
+}
+
+.workout-program-info div i {
+    font-weight: 600;
+}
+
+.workout-program-info div b {
+    font-weight: 600;
+    font-family: 'Barlow', sans-serif;
+}
+
+.workout-program-btns {
+    display: flex;
+    flex-direction: column;
+}
+
+.workout-program-btns a, button {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.5rem;
+    outline: none;
+    border: none;
 }
