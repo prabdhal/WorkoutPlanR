@@ -71,9 +71,9 @@ namespace WorkoutPlannerWebApp.Controllers
             return RedirectToAction("ViewWorkoutPhases", new { createViewModel.WorkoutProgram.Id });
         }
 
-        public IActionResult ViewWorkoutPhases(int id)
+        public IActionResult ViewWorkoutPhases(int id, int? dayId = null)
         {
-            var viewModel = workoutPhaseBusinessManager.GetViewWorkoutPhasesViewModel(id);
+            var viewModel = workoutPhaseBusinessManager.GetViewWorkoutPhasesViewModel(id, dayId);
 
             return View(viewModel);
         }
@@ -119,9 +119,9 @@ namespace WorkoutPlannerWebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, EditMyWorkoutProgramViewModel editViewModel)
+        public async Task<IActionResult> Edit(int id, EditMyWorkoutProgramViewModel editViewModel)
         {
-            var program = workoutProgramBusinessManager.EditWorkoutProgram(editViewModel);
+            var program = await workoutProgramBusinessManager.EditWorkoutProgram(editViewModel);
 
             return RedirectToAction("ViewWorkoutPhases", new { editViewModel.WorkoutProgram.Id });
         }
@@ -138,9 +138,9 @@ namespace WorkoutPlannerWebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditWorkoutDay(int id, CreateExerciseViewModel editViewModel)
+        public async Task<IActionResult> EditWorkoutDay(int id, CreateExerciseViewModel editViewModel)
         {
-            var day = workoutPhaseBusinessManager.EditWorkoutDay(editViewModel);
+            var day = await workoutPhaseBusinessManager.EditWorkoutDay(editViewModel);
 
             return RedirectToAction("ViewWorkoutPhases", new { editViewModel.WorkoutProgram.Id });
         }
@@ -206,6 +206,26 @@ namespace WorkoutPlannerWebApp.Controllers
             exercise = await exerciseBusinessManager.DeleteCustomExercise(id, ModelType.CustomExercise);
 
             return RedirectToAction("CreateExercise", new { day.Id });
+        }
+
+        [HttpGet("CopyWorkoutDay/{id}/{dayId}")]
+        public IActionResult CopyWorkoutDay(int id, int dayId)
+        {
+            var viewModel = workoutPhaseBusinessManager.GetViewWorkoutPhasesViewModel(id, dayId);
+
+            return RedirectToAction("ViewWorkoutPhases", new { id, dayId });
+        }
+
+
+        [HttpGet("PasteWorkoutDay/{id}/{copyDayId}/{pasteDayId}")]
+        public async Task<IActionResult> PasteWorkoutDay(int id, int copyDayId, int pasteDayId)
+        {
+            var day = await workoutPhaseBusinessManager.PasteWorkoutDay(copyDayId, pasteDayId);
+
+            var viewModel = workoutPhaseBusinessManager.GetViewWorkoutPhasesViewModel(id, null);
+            int? i = null;
+
+            return RedirectToAction("ViewWorkoutPhases", new { id, i });
         }
     }
 }

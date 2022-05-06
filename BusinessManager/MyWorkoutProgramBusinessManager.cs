@@ -88,7 +88,7 @@ namespace WorkoutPlannerWebApp.BusinessManager
             return program;
         }
 
-        public ActionResult<WorkoutProgram> EditWorkoutProgram(EditMyWorkoutProgramViewModel editViewModel)
+        public async Task<ActionResult<WorkoutProgram>> EditWorkoutProgram(EditMyWorkoutProgramViewModel editViewModel)
         {
             var program = workoutProgramService.GetWorkoutProgram(editViewModel.WorkoutProgram.Id);
             if (program is null)
@@ -101,7 +101,7 @@ namespace WorkoutPlannerWebApp.BusinessManager
             program.UpdatedOn = DateTime.Now;
             program.Published = editViewModel.WorkoutProgram.Published;
 
-            program = workoutProgramService.UpdateWorkoutProgramSync(program);
+            program = await workoutProgramService.UpdateWorkoutProgramSync(program);
             return program;
         }
 

@@ -65,7 +65,7 @@ namespace WorkoutPlannerWebApp.BusinessManager
             };
         }
 
-        public ViewWorkoutPhaseViewModel GetViewWorkoutPhasesViewModel(int programId)
+        public ViewWorkoutPhaseViewModel GetViewWorkoutPhasesViewModel(int programId, int? dayId)
         {
             var program = workoutProgramService.GetWorkoutProgram(programId);
 
@@ -76,6 +76,7 @@ namespace WorkoutPlannerWebApp.BusinessManager
                 WorkoutProgram = program,
                 WorkoutPhases = phases,
                 WorkoutPhase = null,
+                CopyWorkoutLinkId = dayId,
             };
         }
 
@@ -186,6 +187,45 @@ namespace WorkoutPlannerWebApp.BusinessManager
             await workoutDayService.UpdateWorkoutDay(day);
 
             return day;
+        }
+
+        public async Task<WorkoutDay> PasteWorkoutDay(int copyDayId, int pasteDayId)
+        {
+            var copyDay = workoutDayService.GetWorkoutDay(copyDayId, ModelType.WorkoutDay);
+            var pasteDay = workoutDayService.GetWorkoutDay(pasteDayId, ModelType.WorkoutDay);
+
+            pasteDay.Name = copyDay.Name;
+            pasteDay.Description = copyDay.Description;
+            
+            foreach (var exercise in pasteDay.CustomExercises)
+            {
+                var day = await exerciseService.RemoveCustomExercise(exercise);
+            }
+            pasteDay.CustomExercises = null;
+
+            List<CustomExercise> exerciseList = new List<CustomExercise>();
+
+            foreach (var exercise in copyDay.CustomExercises)
+            {
+                var customExercise = new CustomExercise
+                {
+                    ExerciseId = exercise.ExerciseId,
+                    Exercise = exercise.Exercise,
+                    Sets = exercise.Sets,
+                    MinRepetition = exercise.MinRepetition,
+                    MaxRepetition = exercise.MaxRepetition,
+                    RestInterval = exercise.RestInterval,
+                    WorkoutProgram = pasteDay.WorkoutProgram,
+                    WorkoutPhase = pasteDay.WorkoutPhase,
+                    WorkoutDay = pasteDay,
+                };
+                var day = await exerciseService.AddCustomExercise(customExercise);
+                exerciseList.Add(customExercise);
+            }
+            pasteDay.CustomExercises = exerciseList;
+
+            var d = await workoutDayService.UpdateWorkoutDay(pasteDay);
+            return d;
         }
     }
 }

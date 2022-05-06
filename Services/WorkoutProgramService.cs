@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using WorkoutPlannerWebApp.Data;
 using WorkoutPlannerWebApp.Models;
 using WorkoutPlannerWebApp.Services.Interfaces;
@@ -19,13 +18,13 @@ namespace WorkoutPlannerWebApp.Services
         public WorkoutProgram GetWorkoutProgram(int programId)
         {
 
-             return context.WorkoutPrograms
-                .Include(p => p.WorkoutPhases)
-                    .ThenInclude(ph => ph.WorkoutDays)
-                        .ThenInclude(e => e.CustomExercises)
-                            .ThenInclude(e => e.Exercise)
-                .Include(p => p.Publisher)
-                .FirstOrDefault(p => p.Id == programId);
+            return context.WorkoutPrograms
+               .Include(p => p.WorkoutPhases)
+                   .ThenInclude(ph => ph.WorkoutDays)
+                       .ThenInclude(e => e.CustomExercises)
+                           .ThenInclude(e => e.Exercise)
+               .Include(p => p.Publisher)
+               .FirstOrDefault(p => p.Id == programId);
         }
 
         public IEnumerable<WorkoutProgram> GetWorkoutProgramList(string searchString)
@@ -70,7 +69,7 @@ namespace WorkoutPlannerWebApp.Services
 
         public async Task<WorkoutProgram> AddWorkoutProgram(WorkoutProgram program)
         {
-            context.WorkoutPrograms.Add(program);   
+            context.WorkoutPrograms.Add(program);
             await context.SaveChangesAsync();
             return program;
         }
@@ -82,10 +81,10 @@ namespace WorkoutPlannerWebApp.Services
             return program;
         }
 
-        public WorkoutProgram UpdateWorkoutProgramSync(WorkoutProgram program)
+        public async Task<WorkoutProgram> UpdateWorkoutProgramSync(WorkoutProgram program)
         {
             context.WorkoutPrograms.Update(program);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             return program;
         }
 

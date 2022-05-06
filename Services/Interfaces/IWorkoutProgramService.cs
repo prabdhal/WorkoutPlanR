@@ -10,7 +10,7 @@ namespace WorkoutPlannerWebApp.Services.Interfaces
         IEnumerable<WorkoutProgram> GetWorkoutProgramList(ApplicationUser user);
         Task<WorkoutProgram> AddWorkoutProgram(WorkoutProgram program);
         Task<WorkoutProgram> UpdateWorkoutProgram(WorkoutProgram program);
-        WorkoutProgram UpdateWorkoutProgramSync(WorkoutProgram program);
+        Task<WorkoutProgram> UpdateWorkoutProgramSync(WorkoutProgram program);
         Task<WorkoutProgram> RemoveWorkoutProgram(WorkoutProgram program);
     }
 }

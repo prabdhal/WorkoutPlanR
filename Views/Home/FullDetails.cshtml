@@ -38,10 +38,8 @@ else
                             <br>
                         </div>
                     <div>
-                        @{ int id = 0;
                         @foreach (var day in @phase.WorkoutDays)
                         {
-                        id++;
                         <div class="workout-day-container">
                             <details>
                                 <summary>Day @day.DayNumber: @day.Name</summary>
@@ -64,8 +62,10 @@ else
                                 </tr>
                             </thead>
                             <tbody> 
+                            @{ int id = 0;
                             @foreach (var exercise in @day.CustomExercises)
                             {
+                                id++;
                                 <tr>
                                     <th scope="row">@id</th>
                                     <td><a asp-controller="Exercises" asp-action="Details" asp-route-id="@exercise.ExerciseId" target="_blank" class="custom-alink">@exercise.Exercise.Name</a></td>
@@ -78,14 +78,14 @@ else
                                     }
                                     <td>@exercise.RestInterval mins</td>
                                 </tr>
-                            } 
+                            } }
                             </tbody>
                         </table>
                             
                         }
                         </details>
                        </div>
-                        }}
+                        }
                     </div>
                 </div>
               } 

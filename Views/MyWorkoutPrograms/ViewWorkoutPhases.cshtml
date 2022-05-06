@@ -54,13 +54,24 @@
                 <summary>Day @day.DayNumber: @day.Name</summary>
                 <p>@day.Description</p>
                 <div class="mb-1">
-                    <a asp-action="EditWorkoutDay" asp-route-id="@day.Id" class="btn btn-dark col-auto">Edit Day</a>
+                    <a asp-action="EditWorkoutDay" asp-route-id="@day.Id" class="btn btn-dark">Edit Day</a>
                     <a class="btn btn-red" asp-area="" asp-controller="MyWorkoutPrograms" asp-action="CreateExercise" asp-route-id="@day.Id">Add Exercises</a>
                     @*<form class="flex col-auto" asp-action="ClearWorkoutDay" asp-route-id="@day.Id">   
                         <input asp-for="WorkoutProgram.Id" readonly hidden />
                         <input asp-for="WorkoutPhase.Id" readonly hidden />
                         <button type="submit" class="btn btn-danger">Reset Day</button>
                     </form>*@
+                    @if (Model.CopyWorkoutLinkId == day.Id)
+                    {
+                    } 
+                    else if (Model.CopyWorkoutLinkId != null)
+                    {
+                        @Html.ActionLink("Paste", "PasteWorkoutDay", new { id = Model.WorkoutProgram.Id, copyDayId = Model.CopyWorkoutLinkId, pasteDayId = day.Id }, new { @class="btn btn-red"})
+                    }
+                    else 
+                    {
+                        @Html.ActionLink("Copy", "CopyWorkoutDay", new { id = Model.WorkoutProgram.Id, dayId = day.Id }, new { @class="btn btn-red"})
+                    }
                 </div>
                 @if (!day.CustomExercises.Any())
                 {
