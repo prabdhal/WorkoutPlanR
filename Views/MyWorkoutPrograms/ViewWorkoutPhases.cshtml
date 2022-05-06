@@ -53,21 +53,32 @@
             <details>
                 <summary>Day @day.DayNumber: @day.Name</summary>
                 <p>@day.Description</p>
-                <div class="mb-1">
-                    <a asp-action="EditWorkoutDay" asp-route-id="@day.Id" class="btn btn-dark">Edit Day</a>
-                    <a class="btn btn-red" asp-area="" asp-controller="MyWorkoutPrograms" asp-action="CreateExercise" asp-route-id="@day.Id">Add Exercises</a>
-                    @Html.ActionLink("Clear", "ClearWorkoutDay", new { id = Model.WorkoutProgram.Id, dayId = @day.Id }, new { @class="btn btn-dark"})
-                    @if (Model.CopyWorkoutLinkId == day.Id)
-                    {
-                    } 
-                    else if (Model.CopyWorkoutLinkId != null)
-                    {
-                        @Html.ActionLink("Paste", "PasteWorkoutDay", new { id = Model.WorkoutProgram.Id, copyDayId = Model.CopyWorkoutLinkId, pasteDayId = day.Id }, new { @class="btn btn-red"})
-                    }
-                    else 
-                    {
-                        @Html.ActionLink("Copy", "CopyWorkoutDay", new { id = Model.WorkoutProgram.Id, dayId = day.Id }, new { @class="btn btn-red"})
-                    }
+                <div class="mb-1 flex justify-content-between">
+                    <div class="flex">
+                        <a class="btn btn-dark" asp-action="EditWorkoutDay" asp-route-id="@day.Id">Edit Day</a>
+                        @if (day.CustomExercises.Any())
+                        {
+                            <a class="btn btn-red mx-2" asp-area="" asp-controller="MyWorkoutPrograms" asp-action="CreateExercise" asp-route-id="@day.Id">Edit Exercises</a>
+                        }
+                        else 
+                        {
+                            <a class="btn btn-red mx-2" asp-area="" asp-controller="MyWorkoutPrograms" asp-action="CreateExercise" asp-route-id="@day.Id">Add Exercises</a>
+                        }
+                    </div>
+                    <div class="flex">
+                        @Html.ActionLink("Clear", "ClearWorkoutDay", new { id = Model.WorkoutProgram.Id, dayId = @day.Id }, new { @class="btn btn-dark mx-2"})
+                        @if (Model.CopyWorkoutLinkId == day.Id)
+                        {
+                        } 
+                        else if (Model.CopyWorkoutLinkId != null)
+                        {
+                            @Html.ActionLink("Paste", "PasteWorkoutDay", new { id = Model.WorkoutProgram.Id, copyDayId = Model.CopyWorkoutLinkId, pasteDayId = day.Id }, new { @class="btn btn-red"})
+                        }
+                        else 
+                        {
+                            @Html.ActionLink("Copy", "CopyWorkoutDay", new { id = Model.WorkoutProgram.Id, dayId = day.Id }, new { @class="btn btn-red"})
+                        }
+                    </div>
                 </div>
                 @if (!day.CustomExercises.Any())
                 {
