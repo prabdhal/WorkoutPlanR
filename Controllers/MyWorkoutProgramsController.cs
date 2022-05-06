@@ -184,16 +184,15 @@ namespace WorkoutPlannerWebApp.Controllers
             return RedirectToAction("ViewWorkoutPhases", new { program.Id });
         }
 
-        // POST: MyWorkoutPlans/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult ClearWorkoutDay(int id)
+        [HttpGet("ClearWorkoutDay/{id}/{dayId}")]
+        public async Task<IActionResult> ClearWorkoutDay(int id, int dayId)
         {
-            var day = workoutPhaseBusinessManager.GetWorkoutDay(id, ModelType.WorkoutDay);
-            var program = workoutProgramBusinessManager.GetWorkoutProgram(day.WorkoutProgram.Id);
-            var d = workoutPhaseBusinessManager.ClearWorkoutDay(id);
+            var day = workoutPhaseBusinessManager.GetWorkoutDay(dayId, ModelType.WorkoutDay);
+            var program = workoutProgramBusinessManager.GetWorkoutProgram(id);
+            var d = await workoutPhaseBusinessManager.ClearWorkoutDay(dayId);
+            int? i = null;
 
-            return RedirectToAction("ViewWorkoutPhases", new { program.Id });
+            return RedirectToAction("ViewWorkoutPhases", new { id, i });
         }
 
         [HttpPost]

@@ -122,7 +122,7 @@ namespace WorkoutPlannerWebApp.BusinessManager
                     WorkoutPhase = phase,
                     DayNumber = i + 1,
                     Name = "Rest",
-                    Description = "During rest day, it's best to continue eating healthy and doing some light cardio and/or stretches for increased blood flow which may aid with recovery.",
+                    Description = null,
                     CustomExercises = null,
                 };
                 workoutDays.Add(day);
@@ -182,6 +182,7 @@ namespace WorkoutPlannerWebApp.BusinessManager
 
             // reset day
             day.Name = "Rest";
+            day.Description = null;
             day.CustomExercises = null;
 
             await workoutDayService.UpdateWorkoutDay(day);
