@@ -19,6 +19,17 @@
     <hr />
 
     <h3>Phase: @Model.WorkoutPhase.Name</h3>
+    @if (Model.WorkoutPhase.Duration > 1)
+    {
+    <div><i>@Model.WorkoutPhase.Duration Weeks</i></div>
+    }
+    else 
+    {
+    <div><i>@Model.WorkoutPhase.Duration Week</i></div>
+    }
+    <div>
+        <p>@Model.WorkoutPhase.PhaseDetails</p>
+    </div>
 
         <div>
         @*If all exercise days are empty set all to rest days*@

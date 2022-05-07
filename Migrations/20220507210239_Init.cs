@@ -204,8 +204,8 @@ namespace WorkoutPlannerWebApp.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     WorkoutProgramId = table.Column<int>(type: "int", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Duration = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhaseDetails = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Duration = table.Column<int>(type: "int", nullable: false),
+                    PhaseDetails = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {

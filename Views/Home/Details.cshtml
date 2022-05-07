@@ -31,7 +31,14 @@ else
         idx++;
         <div class="workout-phase-container">
             <h5><a asp-action="PhaseDetails" asp-route-id="@phase.Id">Phase @idx: @phase.Name</a></h5>
-            <div><b>@phase.Duration</b></div>
+            @if (phase.Duration > 1)
+            {
+            <div><i>@phase.Duration Weeks</i></div>
+            }
+            else 
+            {
+            <div><i>@phase.Duration Week</i></div>
+            }
             <p>@phase.PhaseDetails</p>
             <br>
         </div>

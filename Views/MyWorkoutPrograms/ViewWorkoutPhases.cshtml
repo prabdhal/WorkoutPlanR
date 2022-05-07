@@ -38,7 +38,14 @@
         <div class="workout-phase-container-edit">
             <div class="workout-phase-info-edit">
                 <h4>Phase @idx: @phase.Name</h4>
-                <div>@phase.Duration</div>
+                @if (phase.Duration > 1)
+                {
+                <div>@phase.Duration Weeks</div>
+                }
+                else 
+                {
+                <div>@phase.Duration Week</div>
+                }
                 <div><p>@phase.PhaseDetails</p></div>
             </div>
             <div class="workout-phase-btns-edit">

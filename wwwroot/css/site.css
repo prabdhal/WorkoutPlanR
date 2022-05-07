@@ -94,6 +94,9 @@ h5 {
 .bg-light-red {
     background-color: var(--lightRed);
 }
+.text-red {
+    color: var(--lightRed);
+}
 
 summary {
     font-weight: 600;

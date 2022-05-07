@@ -8,12 +8,16 @@ using WorkoutPlannerWebApp.EmailServices;
 using WorkoutPlannerWebApp.Models;
 using WorkoutPlannerWebApp.Services;
 using WorkoutPlannerWebApp.Services.Interfaces;
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
+using Azure.Core;
+using Microsoft.Azure.Services.AppAuthentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var connectionString = builder.Configuration.GetConnectionString("DevelopmentConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -40,7 +44,6 @@ builder.Services.ConfigureApplicationCookie(o =>
 builder.Services.Configure<DataProtectionTokenProviderOptions>(o =>
                 o.TokenLifespan = TimeSpan.FromHours(3));
 
-
 // Email Sender Setup
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
@@ -57,6 +60,16 @@ builder.Services.AddScoped<IExerciseBusinessManager, ExerciseBusinessManager>();
 builder.Services.AddScoped<IWorkoutProgramBusinessManager, WorkoutProgramBusinessManager>();
 builder.Services.AddScoped<IMyWorkoutProgramBusinessManager, MyWorkoutProgramBusinessManager>();
 builder.Services.AddScoped<IMyWorkoutPhaseBusinessManager, MyWorkoutPhaseBusinessManager>();
+
+// Azure Key Vault Setup
+if (builder.Environment.IsProduction())
+{
+    var keyVaultEndpoint = new Uri("https://workoutplannervault.vault.azure.net/");
+
+    builder.Configuration.AddAzureKeyVault(
+        keyVaultEndpoint,
+        new DefaultAzureCredential());
+}
 
 var app = builder.Build();
 

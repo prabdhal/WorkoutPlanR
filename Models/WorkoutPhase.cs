@@ -13,8 +13,9 @@ namespace WorkoutPlannerWebApp.Models
         [Display(Name = "Phase Name")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Please enter the duration of this workout phase in week(s).")]
-        public string Duration { get; set; }
+        [Range(1, 52)]
+        [Display(Name = "Phase Duration")]
+        public int Duration { get; set; }
          
         [Display(Name = "Phase Details")]
         public string PhaseDetails { get; set; }

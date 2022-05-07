@@ -24,7 +24,14 @@
     <div class="container">
         <div class="">
             <h3>@Model.WorkoutPhase.Name</h3>
-            <div>@Model.WorkoutPhase.Duration</div>
+            @if (Model.WorkoutPhase.Duration > 1)
+            {
+            <div><i>@Model.WorkoutPhase.Duration Weeks</i></div>
+            }
+            else 
+            {
+            <div><i>@Model.WorkoutPhase.Duration Week</i></div>
+            }
             <div>
                 <p>@Model.WorkoutPhase.PhaseDetails</p>
             </div>
@@ -33,7 +40,8 @@
 <br />
 
 <div class="row">
-    <h4>Add Exercise</h4>
+    <h4>Day @Model.WorkoutDay.DayNumber: @Model.WorkoutDay.Name</h4>
+    <p>@Model.WorkoutDay.Description</p>
     <hr />
     <div class="col-12">
         <form asp-action="CreateExercise">

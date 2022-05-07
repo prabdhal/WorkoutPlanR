@@ -11,6 +11,7 @@ namespace WorkoutPlannerWebApp.Models
         public WorkoutPhase WorkoutPhase { get; set; }
         public WorkoutDay WorkoutDay { get; set; }
 
+        [Display(Name = "Exercise")]
         public int ExerciseId { get; set; }
 
         [Display(Name = "Exercise")]
