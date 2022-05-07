@@ -12,7 +12,7 @@ using WorkoutPlannerWebApp.Data;
 namespace WorkoutPlannerWebApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220505174248_Init")]
+    [Migration("20220507004542_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

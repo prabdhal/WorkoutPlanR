@@ -1,6 +1,9 @@
 #nullable disable
 using System.ComponentModel.DataAnnotations;
 using WorkoutPlannerWebApp.HelperMethods;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using WorkoutPlannerWebApp.Data;
 
 namespace WorkoutPlannerWebApp.Models
 {
