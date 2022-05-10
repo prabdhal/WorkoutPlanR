@@ -38,9 +38,11 @@ namespace WorkoutPlannerWebApp.BusinessManager
             return workoutProgramService.GetWorkoutProgram(programId);
         }
 
-        public IndexViewModel GetIndexMyWorkoutProgramsViewModel(string searchString)
+        public async Task<IndexViewModel> GetIndexMyWorkoutProgramsViewModel(ClaimsPrincipal claims)
         {
-            var programs = workoutProgramService.GetWorkoutProgramList(searchString ?? String.Empty);
+            var user = await userManager.GetUserAsync(claims);
+
+            var programs = workoutProgramService.GetWorkoutProgramList(user);
 
             return new IndexViewModel()
             {

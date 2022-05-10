@@ -23,7 +23,6 @@ namespace WorkoutPlannerWebApp.EmailServices
 
         public Task SendEmailAsync(string email, string subject, string message)
         {
-            Console.WriteLine(Configuration["SendGridKey"]);
             return Execute(Configuration["SendGridKey"], subject, message, email);
         }
 
