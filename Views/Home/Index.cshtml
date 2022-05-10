@@ -15,18 +15,18 @@
             <p>Register and create your free workout program now!</p>
             @if (User.Identity.IsAuthenticated)
             {
-            <a asp-controller="MyWorkoutPrograms" asp-action="Create" class="hero-button btn">Create Program</a>   
+            <a asp-controller="MyWorkoutPrograms" asp-action="Create" class="btn hero-btn">Create Program</a>   
             }
             else
             {
-            <a asp-controller="MyWorkoutPrograms" asp-action="Index" class="hero-button btn">Get Started</a>    
+            <a asp-controller="MyWorkoutPrograms" asp-action="Index" class="btn hero-btn">Get Started</a>    
             }
         </div>
     </div>
 </div>
 
 
-<div class="container">
+<div class="container mt-5">
     <h1>Workout Programs</h1>
 
 <div class="py-4">

@@ -4,7 +4,10 @@
     ViewData["Title"] = "Register confirmation";
 }
 
-<h1>@ViewData["Title"]</h1>
+<div class="account-container">
+<div class="account-card">
+        
+<h1 class="text-red">@ViewData["Title"]</h1>
 @{
     if (@Model.DisplayConfirmAccountLink)
     {
@@ -20,4 +23,7 @@
 </p>
     }
 }
+</div>
+</div>
+
 

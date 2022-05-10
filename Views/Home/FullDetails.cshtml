@@ -1,10 +1,10 @@
 ﻿@model WorkoutPlannerWebApp.ViewModels.WorkoutProgramsViewModel.FullDetailWorkoutProgramViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = @Model.WorkoutProgram.Name + " Full Detail";
 }
 
-<div class="container">
+<div class="container mt-5">
     <h1>@Model.WorkoutProgram.Name</h1>
     <br />
     <dl class="row">

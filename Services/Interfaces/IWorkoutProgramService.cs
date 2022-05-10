@@ -7,7 +7,7 @@ namespace WorkoutPlannerWebApp.Services.Interfaces
         WorkoutProgram GetWorkoutProgram(int id);
         IEnumerable<WorkoutProgram> GetWorkoutProgramList(string searchString);
         IEnumerable<WorkoutProgram> GetPublishedWorkoutProgramList(string searchString);
-        IEnumerable<WorkoutProgram> GetWorkoutProgramList(ApplicationUser user);
+        Task<IEnumerable<WorkoutProgram>> GetWorkoutProgramList(ApplicationUser user);
         Task<WorkoutProgram> AddWorkoutProgram(WorkoutProgram program);
         Task<WorkoutProgram> UpdateWorkoutProgram(WorkoutProgram program);
         Task<WorkoutProgram> UpdateWorkoutProgramSync(WorkoutProgram program);

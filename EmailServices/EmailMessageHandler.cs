@@ -34,9 +34,9 @@ namespace WorkoutPlannerWebApp.EmailServices
                 $"<br/>" +
                 $"<br/>" +
                 "Prabdeep Dhaliwal" +
-                "<br/>" +
-                "<br/>" +
-                "https://workoutplanr.azurewebsites.net/");
+                $"<br/>" +
+                $"<br/>" +
+                $"<a href='https://workoutplanr.azurewebsites.net/'>https://workoutplanr.azurewebsites.net/</a>");
         }
     }
 }

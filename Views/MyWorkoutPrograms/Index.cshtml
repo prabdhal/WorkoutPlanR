@@ -1,10 +1,10 @@
 ﻿@model WorkoutPlannerWebApp.ViewModels.IndexViewModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "My Workout Programs";
 }
 
-<div class="container">
+<div class="container mt-5">
 <h1>My Workout Programs</h1>
 <br />
 @if (!@Model.WorkoutPrograms.Any())
@@ -29,8 +29,8 @@ else
         <p>@program.Description</p>
     </div>
     <div class="workout-program-btns">
-        <a asp-action="Edit" asp-route-id="@program.Id" class="fa fa-pen text-success my-1"></a>
-        <button type="button" class="fa fa-trash text-danger my-1" data-bs-toggle="modal" data-bs-target="#deleteWorkoutProgramPopup" onclick="initializeDeletePopupRouteIdForWorkoutPhase(@program.Id)"></button>
+        <a asp-action="Edit" asp-route-id="@program.Id" class="fa fa-pen workout-program-edit-btn"></a>
+        <button type="button" class="fa fa-trash workout-program-del-btn" data-bs-toggle="modal" data-bs-target="#deleteWorkoutProgramPopup" onclick="initializeDeletePopupRouteIdForWorkoutPhase(@program.Id)"></button>
     </div>
 </div>
 }

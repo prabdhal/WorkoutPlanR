@@ -56,15 +56,15 @@ namespace WorkoutPlannerWebApp.Services
                 .ToList();
         }
 
-        public IEnumerable<WorkoutProgram> GetWorkoutProgramList(ApplicationUser user)
+        public async Task<IEnumerable<WorkoutProgram>> GetWorkoutProgramList(ApplicationUser user)
         {
-            return context.WorkoutPrograms
+            return await context.WorkoutPrograms
                 .Include(p => p.WorkoutPhases)
                     .ThenInclude(ph => ph.WorkoutDays)
                         .ThenInclude(e => e.CustomExercises)
                 .Include(p => p.Publisher)
                 .Where(p => p.Publisher == user)
-                .ToList();
+                .ToListAsync();
         }
 
         public async Task<WorkoutProgram> AddWorkoutProgram(WorkoutProgram program)

@@ -38,6 +38,11 @@ nav {
 .nav-link:hover {
     color: var(--black);
 }
+.active {
+    color: var(--cream) !important;
+    background-color: var(--lightRed) !important;
+}
+
 .navbar-brand {
     color: var(--cream);
 }
@@ -87,7 +92,7 @@ a {
 }
 
 a:hover {
-    color: white;
+    color: var(--lightRed);
 }
 
 
@@ -105,6 +110,10 @@ a:hover {
 }
 .btn-red:hover {
     color: white;
+}
+
+text-red {
+    color: var(--lightRed);
 }
 
 hr.hr-red {
@@ -140,8 +149,8 @@ hr.hr-red {
 }
 
 
-/* Home Index View Page */
 
+/* Home Index View Page */
 .hero-container {
     width: 100%;
     height: 500px;
@@ -168,12 +177,17 @@ hr.hr-red {
     color: white;
 }
 
-.hero-button {
+.hero-btn {
     color: black;
-    background-color: var(--cream);
     padding: 5px;
+    color: var(--cream);
+    background-color: var(--lightRed);
+    transition: 200ms;
 }
-
+.hero-btn:hover {
+    color: var(--cream);
+    transform: scale(1.1);
+}
 
 /* Exercises Index View Page */
 .default-table tbody tr th a {
@@ -301,15 +315,18 @@ tbody tr:nth-child(2n) {
 
 /* WorkoutPrograms Index View Page */
 .workout-program-container {
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     padding: 10px;
     margin: 5px 0;
     box-shadow: 1px 1px 8px var(--darkGrey);
+    transition: 200ms;
 }
 
 .workout-program-info {
+    width: 100%;
     display: flex;
     flex-direction: column;
     font-family: 'Barlow', sans-serif;
@@ -320,6 +337,10 @@ tbody tr:nth-child(2n) {
     font-weight: 700;
     color: var(--normalRed);
     text-decoration: none;
+    transition: 200ms;
+}
+.workout-program-info h5 a:hover {
+    color: var(--black);
 }
 
 .workout-program-info div i {
@@ -332,17 +353,80 @@ tbody tr:nth-child(2n) {
 }
 
 .workout-program-btns {
+    width: 10%;
+    max-width: 25px;
     display: flex;
     flex-direction: column;
+    margin: 0 auto;
+    padding: 0 2px;
+    align-items: center;
 }
 
-.workout-program-btns a, button {
-    display: flex;
-    flex-direction: column;
+.workout-program-edit-btn {
     font-size: 1.5rem;
-    outline: none;
+    color: var(--black) !important;
+}
+
+.workout-program-del-btn {
+    font-size: 1.5rem;
+    color: var(--lightRed) !important;
+    margin: 25px 0 0 0;
+    background: none;
     border: none;
 }
+
+
+
+
+
+/* Account style */
+
+.account-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../imgs/victor-freitas-WvDYdXDzkhs-unsplash.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.account-card {
+    display: block;
+    max-width: 500px;
+    width: 90%;
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 150px auto;
+}
+
+.account-card-lg {
+    display: block;
+    max-width: 800px;
+    width: 90%;
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 150px auto;
+}
+
+.account-btn {
+    color: var(--cream);
+    background-color: var(--lightRed);
+    transition: 200ms;
+}
+.account-btn:hover {
+    color: var(--cream);
+    transform: scale(1.02);
+}
+
+
+
+
+
+
+
 
 @media only screen and (max-width: 768px) {
 
@@ -355,4 +439,8 @@ tbody tr:nth-child(2n) {
     .details-col-data {
         width: 100%;
     }
+
+    /* Account style */
 }
+
+
