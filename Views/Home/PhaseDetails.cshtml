@@ -4,6 +4,7 @@
     ViewData["Title"] = "Details";
 }
 
+<div class="container">
     <h1>@Model.WorkoutProgram.Name</h1>
     <br />
     <dl class="row">
@@ -92,4 +93,5 @@
             <a asp-action="FullDetails" asp-route-id="@Model.WorkoutProgram.Id" class="btn btn-red">Full Detail View</a>
         </span>
     </div>
+</div>
 </div>

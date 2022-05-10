@@ -1,10 +1,33 @@
-﻿@model WorkoutPlannerWebApp.ViewModels.IndexWorkoutProgramViewModel
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@model WorkoutPlannerWebApp.ViewModels.IndexWorkoutProgramViewModel
+
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Workout Programs</h1>
+<div class="hero-container">
+    <div class="hero-image">
+        <div class="hero-text">
+            <h1>Free Workout Programs</h1>
+            <p>Register and create your free workout program now!</p>
+            @if (User.Identity.IsAuthenticated)
+            {
+            <a asp-controller="MyWorkoutPrograms" asp-action="Create" class="hero-button btn">Create Program</a>   
+            }
+            else
+            {
+            <a asp-controller="MyWorkoutPrograms" asp-action="Index" class="hero-button btn">Get Started</a>    
+            }
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <h1>Workout Programs</h1>
 
 <div class="py-4">
   <form asp-action="Index">
@@ -25,3 +48,4 @@
     </div>
 </div>
 }
+</div>

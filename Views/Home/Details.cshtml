@@ -4,6 +4,8 @@
     ViewData["Title"] = "Details";
 }
 
+
+<div class="container">
     <h1>@Model.WorkoutProgram.Name</h1>
     <br />
     <dl class="row">
@@ -56,4 +58,5 @@ else
             <a asp-action="FullDetails" asp-route-id="@Model.WorkoutProgram.Id" class="btn btn-red">View Full Details</a>
         </span>
     </div>
+</div>
 </div>

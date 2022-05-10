@@ -14,13 +14,15 @@
 }
 
 html {
+    height: 100%;
     font-size: 1rem;
 }
 
 body {
-    font-size: 1rem;
-    font-family: 'Barlow', sans-serif;
+    height: 100%;
     font-family: 'Work Sans', sans-serif;
+    margin-bottom: 60px;
+    font-size: 1rem;
 }
 
 nav {
@@ -41,26 +43,6 @@ nav {
 }
 .navbar-brand:hover {
     color: var(--black);
-}
-
-
-.details-col-label {
-    width: 100%;
-}
-
-.details-col-data {
-    width: 100%;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-    font-family: 'Work Sans', sans-serif;
-    margin-bottom: 60px;
-    font-size: 1rem;
 }
 
 h1 {
@@ -88,16 +70,6 @@ h5 {
     color: var(--normalRed);
 }
 
-.bg-cream {
-    background-color: var(--cream);
-}
-.bg-light-red {
-    background-color: var(--lightRed);
-}
-.text-red {
-    color: var(--lightRed);
-}
-
 summary {
     font-weight: 600;
     color: var(--normalRed);
@@ -112,12 +84,12 @@ table {
 
 a {
     text-decoration: none;
-    color: white;
 }
 
 a:hover {
     color: white;
 }
+
 
 /* Custom Styles */
 .btn-dark {
@@ -155,6 +127,52 @@ hr.hr-red {
     width: 85%;
 }
 
+.bg-cream {
+    background-color: var(--cream);
+}
+
+.bg-light-red {
+    background-color: var(--lightRed);
+}
+
+.text-red {
+    color: var(--lightRed);
+}
+
+
+/* Home Index View Page */
+
+.hero-container {
+    width: 100%;
+    height: 500px;
+    margin-bottom: 10px;
+}
+
+.hero-image {
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../imgs/victor-freitas-WvDYdXDzkhs-unsplash.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+.hero-text {
+    width: 80%;
+    text-align: left;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+}
+
+.hero-button {
+    color: black;
+    background-color: var(--cream);
+    padding: 5px;
+}
 
 
 /* Exercises Index View Page */
