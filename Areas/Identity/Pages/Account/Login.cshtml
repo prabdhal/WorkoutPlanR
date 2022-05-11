@@ -2,10 +2,9 @@
 @model LoginModel
 
 @{
+    Layout = "_IdentityLayout";
     ViewData["Title"] = "Login";
 }
-
-<div class="account-container">
     <div class="account-card">
 <h1 class="text-red">@ViewData["Title"]</h1>
 <h2>Login to your account.</h2>
@@ -49,7 +48,6 @@
                 </div>
             </form>
         </section>
-</div>
 </div>
 
 @section Scripts {

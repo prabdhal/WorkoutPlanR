@@ -19,7 +19,7 @@
     @*Select2 https://select2.org/getting-started/installation*@
     <link href="~/css/select2.min.css" rel="stylesheet" />
 </head>
-<body>
+<body class="account-background">
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm box-shadow">
             <div class="container-fluid">
@@ -53,13 +53,13 @@
         </nav>
     </header>
     <div>
-        <main role="main" class="pb-5">
+        <main role="main">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container py-5">
+    <footer class="footer text-muted p-5 w-100" style="position:absolute; bottom:0;">
+        <div class="container">
             &copy; WorkoutPlanr @DateTime.Now.Year
         </div>
     </footer>

@@ -1,7 +1,7 @@
 ﻿@{
     if (ViewData.TryGetValue("ParentLayout", out var parentLayout))
     {
-        Layout = (string)parentLayout;
+    Layout = "_IdentityLayout";
     }
     else
     {
@@ -9,10 +9,7 @@
     }
 }
 
-<div class="account-container">
 <div class="account-card-lg">
-
-<div>
 <h1 class="text-red">Manage Your Account</h1>
     <h2>Change your account settings</h2>
     <hr />
@@ -24,7 +21,6 @@
             @RenderBody()
         </div>
     </div>
-</div>
 </div>
 </div>
 

@@ -1,11 +1,11 @@
 ﻿@page
 @model RegisterModel
 @{
+    Layout = "_IdentityLayout";
     ViewData["Title"] = "Register";
 }
 
 
-<div class="account-container">
     <div class="account-card">
 <h1 class="text-red">@ViewData["Title"]</h1>
 <h2>Create a new account.</h2>
@@ -44,7 +44,6 @@
             <br />
             <button id="registerSubmit" type="submit" class="btn btn-lg account-btn">Register</button>
         </form>
-</div>
 </div>
 
 @section Scripts {
