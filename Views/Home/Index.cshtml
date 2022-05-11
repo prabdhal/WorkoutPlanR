@@ -49,4 +49,18 @@
     </div>
 </div>
 }
+@if (Model.PageNumber > 0)
+{
+    <a href="@Url.Action("Index", new { page = Model.PageNumber - 1 })" 
+       class="btn btn-default">
+        &laquo; Prev
+    </a>
+}
+@if (Model.PageNumber < Model.MaxPage)
+{
+    <a href="@Url.Action("Index", new { page = Model.PageNumber + 1 })" 
+       class="btn btn-default">
+        Next &raquo;
+    </a>
+}
 </div>

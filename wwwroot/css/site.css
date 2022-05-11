@@ -148,6 +148,14 @@ hr.hr-red {
     color: var(--lightRed);
 }
 
+.my-footer{
+    position: absolute;
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    text-align: center;
+}
+
 
 
 /* Home Index View Page */
@@ -190,6 +198,10 @@ hr.hr-red {
 }
 
 /* Exercises Index View Page */
+.exercise-thead {
+    background-color: var(--lightRed);
+}
+
 .default-table tbody tr th a {
     color: var(--black);
 }
@@ -215,8 +227,33 @@ hr.hr-red {
     color: black;
 }
 
-/* Exercises Details View Page */
+.exercise-btn {
+    color: var(--cream);
+    background-color: var(--lightRed);
+    transition: 200ms;
+}
+.exercise-btn:hover {
+    color: var(--cream);
+    transform: scale(1.1);
+}
 
+thead {
+    background-color: var(--lightBlack);
+    color: white;
+}
+
+tbody tr:nth-child(1n+1) {
+    background-color: var(--normalRed);
+    color: white;
+}
+
+tbody tr:nth-child(2n) {
+    background-color: var(--lightRed);
+    color: white;
+}
+
+
+/* Exercises Details View Page */
 dd a {
     color: var(--black);
 }

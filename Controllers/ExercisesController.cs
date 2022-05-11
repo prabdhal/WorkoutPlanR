@@ -13,9 +13,9 @@ namespace WorkoutPlannerWebApp.Controllers
         }
 
         // GET: Exercises
-        public IActionResult Index(string searchString)
+        public IActionResult Index(string searchString, int page = 0)
         {
-            var indexViewModel = exerciseBusinessManager.GetIndexExercisesViewModel(searchString);
+            var indexViewModel = exerciseBusinessManager.GetIndexExercisesViewModel(searchString, page);
 
             return View(indexViewModel);
         }

@@ -45,15 +45,23 @@ namespace WorkoutPlannerWebApp.BusinessManager
             return await workoutProgramService.GetWorkoutProgramList(user);
         }
 
-        public async Task<IndexViewModel> GetIndexMyWorkoutProgramsViewModel(ClaimsPrincipal claims)
+        public async Task<IndexViewModel> GetIndexMyWorkoutProgramsViewModel(ClaimsPrincipal claims, int page = 0)
         {
             var user = await userManager.GetUserAsync(claims);
 
             var programs = await workoutProgramService.GetWorkoutProgramList(user);
 
+            const int pageSize = 10;
+            var count = programs.Count();
+            var data = programs.Skip(page * pageSize).Take(pageSize).ToList();
+
+            var maxPage = (count / pageSize) - (count % pageSize == 0 ? 1 : 0);
+
             return new IndexViewModel()
             {
-                WorkoutPrograms = programs,
+                WorkoutPrograms = data,
+                PageNumber = page,
+                MaxPage = maxPage,
             };
         }
 

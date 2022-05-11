@@ -23,14 +23,22 @@ namespace WorkoutPlannerWebApp.BusinessManager
             this.workoutPhaseService = workoutPhaseService;
         }
 
-        public IndexWorkoutProgramViewModel GetIndexWorkoutProgramsViewModel(string searchString)
+        public IndexWorkoutProgramViewModel GetIndexWorkoutProgramsViewModel(string searchString, int page = 0)
         {
             var programs = workoutProgramService.GetPublishedWorkoutProgramList(searchString ?? String.Empty);
+            
+            const int pageSize = 10;
+            var count = programs.Count();
+            var data = programs.Skip(page * pageSize).Take(pageSize).ToList();
+
+            var maxPage = (count / pageSize) - (count % pageSize == 0 ? 1 : 0);
 
             return new IndexWorkoutProgramViewModel
             {
-                WorkoutPrograms = programs,
+                WorkoutPrograms = data,
                 SearchString = searchString,
+                PageNumber = page,
+                MaxPage = maxPage,
             };
         }
 

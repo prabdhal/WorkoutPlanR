@@ -6,7 +6,7 @@ namespace WorkoutPlannerWebApp.BusinessManager.Interfaces
 {
     public interface IExerciseBusinessManager
     {
-        IndexExercisesViewModel GetIndexExercisesViewModel(string searchString);
+        IndexExercisesViewModel GetIndexExercisesViewModel(string searchString, int page = 0);
         DetailExerciseViewModel GetDetailExerciseViewModel(int exerciseId);
         CreateExerciseViewModel GetCreateExerciseMyWorkoutProgramsViewModel(int programId, ModelType modelType, out IEnumerable<Exercise> exercises);
         CustomExercise GetCustomExercise(int exerciseId);

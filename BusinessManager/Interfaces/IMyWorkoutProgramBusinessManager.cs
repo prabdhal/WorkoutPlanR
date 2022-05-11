@@ -7,7 +7,7 @@ namespace WorkoutPlannerWebApp.BusinessManager.Interfaces
 {
     public interface IMyWorkoutProgramBusinessManager
     {
-        Task<IndexViewModel> GetIndexMyWorkoutProgramsViewModel(ClaimsPrincipal claims);
+        Task<IndexViewModel> GetIndexMyWorkoutProgramsViewModel(ClaimsPrincipal claims, int page = 0);
         CreateMyWorkoutProgramViewModel GetCreateMyWorkoutProgramsViewModel();
         DetailMyWorkoutProgramViewModel GetDetailMyWorkoutProgramsViewModel(int programId);
         EditMyWorkoutProgramViewModel GetEditMyWorkoutProgramsViewModel(int programId);

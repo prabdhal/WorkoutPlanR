@@ -24,7 +24,7 @@
     <h3>Workout Phases</h3>
     <br />
     <a asp-action="CreateWorkoutPhase" asp-route-id="@Model?.WorkoutProgram.Id" class="btn btn-red">Add Workout Phase</a>
-
+    <br />
     @if (!Model.WorkoutPhases.Any())
     {
         <p>You have not added any workout phases as of yet</p>
@@ -50,8 +50,8 @@
                 <div><p>@phase.PhaseDetails</p></div>
             </div>
             <div class="workout-phase-btns-edit">
-                <a asp-action="EditWorkoutPhase" asp-route-id="@phase.Id" class="fa fa-pen text-success my-1"></a>
-                <button type="button" class="fa fa-trash text-danger my-1" data-bs-toggle="modal" data-bs-target="#deleteWorkoutPhasePopup" onclick="initializeDeletePopupRouteIdForWorkoutPhase(@phase.Id)"></button>
+                <a asp-action="EditWorkoutPhase" asp-route-id="@phase.Id" class="fa fa-pen workout-program-edit-btn"></a>
+                <button type="button" class="fa fa-trash workout-program-del-btn" data-bs-toggle="modal" data-bs-target="#deleteWorkoutPhasePopup" onclick="initializeDeletePopupRouteIdForWorkoutPhase(@phase.Id)"></button>
             </div>
         </div>
         <div>

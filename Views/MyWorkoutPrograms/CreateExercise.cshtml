@@ -107,10 +107,10 @@
     }
     else
     {
-    <table class="table ">
+    <table class="table default-table">
     <caption>List of exercises</caption>
-      <thead class="thead-dark">
-        <tr class="table-dark">
+      <thead class="exercise-thead">
+        <tr>
           <th scope="col">#</th>
           <th scope="col">Exercise</th>
           <th scope="col">Sets x Reps</th>
@@ -127,7 +127,7 @@
                     <tr>
                   <th scope="row">@idx</th>
                   <td>@exercise.Exercise.Name</td>
-                    @if (@exercise.MaxRepetition == null || @exercise.MaxRepetition <= 0)
+                    @if (@exercise.MaxRepetition == null || @exercise.MaxRepetition <= 0 || @exercise.MinRepetition == @exercise.MaxRepetition)
                     {
                         <td>@exercise.Sets x @exercise.MinRepetition</td>
                     } else
@@ -153,6 +153,7 @@
     }
 </div>
 </div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

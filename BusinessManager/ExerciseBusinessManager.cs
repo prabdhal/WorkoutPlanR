@@ -29,14 +29,23 @@ namespace WorkoutPlannerWebApp.BusinessManager
         }
 
 
-        public IndexExercisesViewModel GetIndexExercisesViewModel(string searchString)
+        public IndexExercisesViewModel GetIndexExercisesViewModel(string searchString, int page = 0)
         {
             var exercises = exerciseService.GetExerciseList(searchString);
+
+            const int pageSize = 10;
+            var count = exercises.Count();
+            var data = exercises.Skip(page * pageSize).Take(pageSize).ToList();
+
+            var maxPage = (count / pageSize) - (count % pageSize == 0 ? 1 : 0);
+
 
             return new IndexExercisesViewModel()
             {
                 SearchString = searchString,
-                Exercises = exercises,
+                Exercises = data,
+                PageNumber = page,
+                MaxPage = maxPage,
             };
         }
 
