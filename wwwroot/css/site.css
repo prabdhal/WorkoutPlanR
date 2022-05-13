@@ -75,14 +75,6 @@ h5 {
     color: var(--normalRed);
 }
 
-summary {
-    font-weight: 600;
-    color: var(--normalRed);
-    font-size: 1.5rem;
-    list-style: none;
-    font-family: 'Barlow', sans-serif;
-}
-
 table {
     font-family: 'Work Sans', sans-serif;
 }
@@ -122,6 +114,15 @@ hr.hr-red {
 
 .custom-alink {
     color: white;
+    text-decoration: none;
+}
+
+.black-alink {
+    color: black;
+    text-decoration: none;
+}
+.black-alink:hover {
+    color: var(--lightRed);
     text-decoration: none;
 }
 
@@ -199,7 +200,7 @@ hr.hr-red {
 
 /* Exercises Index View Page */
 .exercise-thead {
-    background-color: var(--lightRed);
+    background-color: var(--darkRed);
 }
 
 .default-table tbody tr th a {
@@ -294,15 +295,43 @@ thead {
 }
 
 tbody tr:nth-child(1n+1) {
-    background-color: var(--normalRed);
-    color: white;
+    background-color: var(--cream);
+    color: black;
 }
 
 tbody tr:nth-child(2n) {
-    background-color: var(--lightRed);
-    color: white;
+    background-color: white;
+    color: black;
 }
 
+.workout-day-summary {
+    font-weight: 600;
+    color: var(--normalRed);
+    font-size: 1.2rem;
+    font-family: 'Barlow', sans-serif;
+    transition: 200ms;
+}
+@keyframes slideDown {
+    0% {
+        opacity: 0;
+        height: 0;
+    }
+
+    100% {
+        opacity: 1;
+        height: var(--details-height-open, '100%');
+    }
+}
+
+.workout-day-summary h5 span {
+    cursor: pointer;
+}
+
+.workout-day-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
 
 
 /* My Workout Programs / View Workout Phases */

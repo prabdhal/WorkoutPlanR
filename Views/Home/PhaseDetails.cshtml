@@ -37,23 +37,24 @@
         @foreach (var day in @Model.WorkoutPhase.WorkoutDays)
         {
             <div class="workout-day-container">
-                <details>
-                    <summary>Day @day.DayNumber: @day.Name</summary>
+                <details open>
+                    <summary class="workout-day-summary">Day @day.DayNumber: @day.Name</summary>
                     <p>@day.Description</p>
-                    <hr class="hr-red">
                 @if (!day.CustomExercises.Any())
                 {
                     
                 }
                 else
                 {
-                <table class="table table-hover table-responsive">
+                    <hr class="hr-red">
+                <table class="table">
                     <caption>List of exercises</caption>
-                    <thead class="table-head-red">
+                    <thead class="exercise-thead">
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Exercise</th>
-                            <th scope="col">Sets x Reps</th>
+                            <th scope="col">Sets</th>
+                            <th scope="col">Reps</th>
                             <th scope="col">Rest</th>
                         </tr>
                     </thead>
@@ -64,13 +65,14 @@
                         idx++;
                         <tr>
                             <th scope="row">@idx</th>
-                            <td><a asp-controller="Exercises" asp-action="Details" asp-route-id="@exercise.ExerciseId" target="_blank" class="custom-alink">@exercise.Exercise.Name</a></td>
-                            @if (@exercise.MaxRepetition == null)
+                            <td><a asp-controller="Exercises" asp-action="Details" asp-route-id="@exercise.ExerciseId" target="_blank" class="black-alink">@exercise.Exercise.Name</a></td>
+                            <td>@exercise.Sets</td>
+                            @if (exercise.MaxRepetition == null || exercise.MaxRepetition == exercise.MinRepetition)
                             {
-                            <td>@exercise.Sets x @exercise.MinRepetition</td>
+                            <td>@exercise.MinRepetition</td>
                             } else
                             {
-                            <td>@exercise.Sets x @exercise.MinRepetition - @exercise.MaxRepetition</td>  
+                            <td>@exercise.MinRepetition - @exercise.MaxRepetition</td>  
                             }
                             <td>@exercise.RestInterval mins</td>
                         </tr>

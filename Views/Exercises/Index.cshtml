@@ -11,7 +11,7 @@
   <form asp-action="Index">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
-      <input asp-for="SearchString" type="text" class="form-control" placeholder="Search exercises..." />
+      <input asp-for="SearchString" type="text" class="form-control" id="searchExercise" placeholder="Search exercises..." />
       <span asp-validation-for="SearchString" class="text-danger"></span>
     </div>
   </form>
