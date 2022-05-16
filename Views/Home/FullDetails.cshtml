@@ -74,9 +74,9 @@ else
                             @{ int id = 0;
                             @foreach (var exercise in @day.CustomExercises)
                             {
-                                idx++;
+                                id++;
                                 <tr>
-                                    <th scope="row">@idx</th>
+                                    <th scope="row">@id</th>
                                     <td><a asp-controller="Exercises" asp-action="Details" asp-route-id="@exercise.ExerciseId" target="_blank" class="black-alink">@exercise.Exercise.Name</a></td>
                                     <td>@exercise.Sets</td>
                                     @if (exercise.MaxRepetition == null || exercise.MaxRepetition == exercise.MinRepetition)

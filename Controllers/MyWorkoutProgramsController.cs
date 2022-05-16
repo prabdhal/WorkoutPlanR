@@ -66,7 +66,7 @@ namespace WorkoutPlannerWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateWorkoutPhase(CreateWorkoutPhaseViewModel createViewModel)
         {
-            var exercise = await workoutPhaseBusinessManager.CreateWorkoutPhase(createViewModel);
+            var phase = await workoutPhaseBusinessManager.CreateWorkoutPhase(createViewModel);
 
             return RedirectToAction("ViewWorkoutPhases", new { createViewModel.WorkoutProgram.Id });
         }

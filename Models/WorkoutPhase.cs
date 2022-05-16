@@ -16,7 +16,7 @@ namespace WorkoutPlannerWebApp.Models
         [Range(1, 52)]
         [Display(Name = "Phase Duration")]
         public int Duration { get; set; }
-         
+
         [Display(Name = "Phase Details")]
         public string PhaseDetails { get; set; }
         

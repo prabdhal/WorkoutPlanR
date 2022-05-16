@@ -47,7 +47,10 @@
                 {
                 <div>@phase.Duration Week</div>
                 }
-                <div><p>@phase.PhaseDetails</p></div>
+                @if (phase.PhaseDetails is not null)
+                {
+                    <div><p>@phase.PhaseDetails</p></div>
+                }
             </div>
             <div class="workout-phase-btns-edit">
                 <a asp-action="EditWorkoutPhase" asp-route-id="@phase.Id" class="fa fa-pen workout-program-edit-btn"></a>

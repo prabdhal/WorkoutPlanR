@@ -38,6 +38,7 @@ namespace WorkoutPlannerWebApp.Services
                             p.Publisher.FirstName.Contains(searchString) ||
                             p.Publisher.LastName.Contains(searchString) ||
                             p.Description.Contains(searchString))
+                .OrderByDescending(p => p.UpdatedOn)
                 .ToList();
         }
 
@@ -53,6 +54,7 @@ namespace WorkoutPlannerWebApp.Services
                             p.Publisher.LastName.Contains(searchString) ||
                             p.Description.Contains(searchString))
                 .Where(p => p.Published)
+                .OrderByDescending(p => p.UpdatedOn)
                 .ToList();
         }
 
@@ -64,6 +66,7 @@ namespace WorkoutPlannerWebApp.Services
                         .ThenInclude(e => e.CustomExercises)
                 .Include(p => p.Publisher)
                 .Where(p => p.Publisher == user)
+                .OrderByDescending(p => p.UpdatedOn)
                 .ToListAsync();
         }
 

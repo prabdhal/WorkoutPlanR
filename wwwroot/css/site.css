@@ -451,10 +451,18 @@ tbody tr:nth-child(2n) {
     width: 100%;
     height: 100%;
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../imgs/victor-freitas-WvDYdXDzkhs-unsplash.jpg');
-    background-position: center;
+    background-position: center center;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: cover cover;
     position: relative;
+}
+
+.account-body {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    align-self: center;
 }
 
 .account-card {
@@ -464,7 +472,8 @@ tbody tr:nth-child(2n) {
     background: white;
     padding: 10px;
     border-radius: 5px;
-    margin: 150px auto;
+    margin: 75px auto;
+    justify-content: center;
 }
 
 .account-card-lg {
